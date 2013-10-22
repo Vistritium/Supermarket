@@ -1,0 +1,31 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>pl.lodz.pl.ftims.supermarket</groupId>
+	<artifactId>frontend</artifactId>
+	<packaging>pom</packaging>
+	<name>SuperMarket [FE]</name>
+
+	<parent>
+		<artifactId>supermarket</artifactId>
+		<groupId>pl.lodz.pl.ftims</groupId>
+		<version>1.0.0-alpha-1-snapshot</version>
+	</parent>
+
+	<modules>
+		<module>web</module>
+		<module>standalone</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Internal dependencies -->
+			<dependency>
+				<groupId>pl.lodz.pl.ftims.supermarket.backend</groupId>
+				<artifactId>api</artifactId>
+				<version>${project.parent.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>
