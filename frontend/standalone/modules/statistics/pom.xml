@@ -29,5 +29,9 @@
 			<groupId>pl.lodz.pl.ftims.supermarket.frontend.standalone</groupId>
 			<artifactId>api</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>pl.lodz.pl.ftims.supermarket.frontend.standalone</groupId>
+			<artifactId>core</artifactId>
+		</dependency>
 	</dependencies>
 </project>
