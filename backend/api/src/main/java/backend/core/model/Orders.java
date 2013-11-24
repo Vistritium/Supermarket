@@ -16,11 +16,21 @@ import java.util.Date;
  */
 public class Orders {
     private int idOrders;
-    private int count;
+    private int productCount;
     private Date date;
     private int sold;
-    private int idProduct;
-    private int idUser;
+    private Products product;
+    private Users user;
+
+    public Orders(int productCount, Date date, int sold, Products product, Users user) {
+        this.productCount = productCount;
+        this.date = date;
+        this.sold = sold;
+        this.product = product;
+        this.user = user;
+    }
+
+  
 
     public int getIdOrders() {
         return idOrders;
@@ -30,13 +40,14 @@ public class Orders {
         this.idOrders = idOrders;
     }
 
-    public int getCount() {
-        return count;
+    public int getProductCount() {
+        return productCount;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setProductCount(int productCount) {
+        this.productCount = productCount;
     }
+
 
     public Date getDate() {
         return date;
@@ -54,20 +65,26 @@ public class Orders {
         this.sold = sold;
     }
 
-    public int getIdProduct() {
-        return idProduct;
+    public Products getProduct() {
+        return product;
     }
 
-    public void setIdProduct(int idProduct) {
-        this.idProduct = idProduct;
+    public void setProduct(Products product) {
+        this.product = product;
     }
 
-    public int getIdUser() {
-        return idUser;
+    public Users getUser() {
+        return user;
     }
 
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
+    public void setUser(Users user) {
+        this.user = user;
     }
+
+
+
+    
+
+
     
 }

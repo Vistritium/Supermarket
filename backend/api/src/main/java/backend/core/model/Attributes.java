@@ -14,23 +14,24 @@ import java.util.Set;
  *
  * @author Andrzej
  */
-public class Category {
-    private int idCategory;
+public class Attributes {
+    private int idAttributes;
     private String name;
     private Set<Products> products = new HashSet<Products>(0);
-    private Set<Attributes> attributes = new HashSet<Attributes>(0);
+    private Set<AttrValues> values = new HashSet<AttrValues>(0);
+    private Set<Category> category = new HashSet<Category>(0);
 
-    public Category(String name) {
+    public Attributes(String name) {
         this.name = name;
     }
 
     
-    public int getIdCategory() {
-        return idCategory;
+    public int getIdAttributes() {
+        return idAttributes;
     }
 
-    public void setIdCategory(int idCategory) {
-        this.idCategory = idCategory;
+    public void setIdAttributes(int idAttributes) {
+        this.idAttributes = idAttributes;
     }
 
     public String getName() {
@@ -49,13 +50,23 @@ public class Category {
         this.products = products;
     }
 
-    public Set<Attributes> getAttributes() {
-        return attributes;
+
+    public Set<Category> getCategory() {
+        return category;
     }
 
-    public void setAttributes(Set<Attributes> attributes) {
-        this.attributes = attributes;
+    public void setCategory(Set<Category> category) {
+        this.category = category;
     }
 
+    public Set<AttrValues> getValues() {
+        return values;
+    }
+
+    public void setValues(Set<AttrValues> values) {
+        this.values = values;
+    }
+
+  
     
 }

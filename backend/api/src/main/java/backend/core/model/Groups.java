@@ -7,7 +7,6 @@ package backend.core.model;
  */
 
 
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,7 +28,7 @@ public class Groups {
     }
 
     public Groups() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("trololo."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public int getIdgroups() {

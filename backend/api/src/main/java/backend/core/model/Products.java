@@ -18,16 +18,20 @@ import java.util.Set;
 public class Products {
     private int idProducts;
     private String name;
-    private int idCategory;
+    private Category category;
     private int count;
     private float price;
+    private int manufacturer;
     private Set<Suppliers> suppliers = new HashSet<Suppliers>(0);
+    private Set<Attributes> attributes = new HashSet<Attributes>(0);
+    private Set<Orders> orders = new HashSet<Orders>(0);
 
-    public Products(String name, int idCategory, int count, float price) {
+    public Products(String name, Category category, int count, float price, int manufacturer) {
         this.name = name;
-        this.idCategory = idCategory;
+        this.category = category;
         this.count = count;
         this.price = price;
+        this.manufacturer = manufacturer;
     }
 
     public Products() {
@@ -57,13 +61,14 @@ public class Products {
         this.name = name;
     }
 
-    public int getIdCategory() {
-        return idCategory;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setIdCategory(int idCategory) {
-        this.idCategory = idCategory;
+    public void setCategory(Category category) {
+        this.category = category;
     }
+
 
     public int getCount() {
         return count;
@@ -79,6 +84,30 @@ public class Products {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public int getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(int manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public Set<Attributes> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(Set<Attributes> attributes) {
+        this.attributes = attributes;
+    }
+
+    public Set<Orders> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Orders> orders) {
+        this.orders = orders;
     }
 
     

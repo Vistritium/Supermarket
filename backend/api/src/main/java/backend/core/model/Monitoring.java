@@ -7,7 +7,6 @@ package backend.core.model;
  */
 
 
-
 import java.util.Date;
 
 /**
@@ -21,6 +20,14 @@ public class Monitoring {
     private Date date;
     private String action;
 
+    public Monitoring(String product, String user, Date date, String action) {
+        this.product = product;
+        this.user = user;
+        this.date = date;
+        this.action = action;
+    }
+
+    
     public int getIdMonitoring() {
         return idMonitoring;
     }

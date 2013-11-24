@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.mycompany.amm.model.Attributes" table="Attributes" >
+        <id name="idAttributes" type="java.lang.Integer">
+            <column name="idAttributes" />
+            <generator class="identity" />
+        </id>
+        
+        <property name="name" type="string">
+            <column name="name" length="45" not-null="true" />
+        </property>
+         
+        <set name="products" table="products_has_attributes" 
+        	inverse="false" lazy="true" fetch="select" cascade="all" >
+            <key>
+                <column name="idAttributes" not-null="true" />
+            </key>
+            <many-to-many entity-name="com.mycompany.amm.model.Products">
+                <column name="idProducts" not-null="true" />
+            </many-to-many>
+        </set>  
+        
+        <set name="category" table="attributes_has_category" 
+        	inverse="false" lazy="true" fetch="select" cascade="all" >
+            <key>
+                <column name="idAttributes" not-null="true" />
+            </key>
+            <many-to-many entity-name="com.mycompany.amm.model.Category">
+                <column name="idCategory" not-null="true" />
+            </many-to-many>
+        </set>  
+        
+        <set name="values" table="Values" 
+				inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idAttributes" not-null="true" />
+            </key>
+            <one-to-many class="com.mycompany.amm.model.AttrValues" />
+        </set>
+        
+    </class>
+</hibernate-mapping>

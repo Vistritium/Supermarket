@@ -28,7 +28,7 @@ public class Users {
     private Date hired;
     private Date last_login;
     private Set<Groups> groups = new HashSet<Groups>(0);
-
+    //private Set<Orders> orders = new HashSet<Orders>(0);
     public Users(String name, String surname, String password, String salt, Date hired, Date last_login) {
         this.name = name;
         this.surname = surname;
@@ -104,7 +104,15 @@ public class Users {
     public void setGroups(Set<Groups> groups) {
         this.groups = groups;
     }
+/*
+    public Set<Orders> getOrders() {
+        return orders;
+    }
 
+    public void setOrders(Set<Orders> orders) {
+        this.orders = orders;
+    }
+*/
 
     @Override
     public String toString() {

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.mycompany.amm.model.MonitoringWorkers">
+        <id name="idMW">
+            <column name="idMW" />
+            <generator class="identity" />
+        </id>
+                
+        <property name="come" type="java.util.Date">
+            <column name="come" length="45" not-null="false" />
+        </property>
+        
+        <property name="goOut" type="java.util.Date">
+            <column name="goOut" length="45" not-null="false" />
+        </property>
+        
+        <property name="breakBegin" type="java.util.Date">
+            <column name="breakBegin" length="45" not-null="false" />
+        </property>
+        
+        <property name="breakEnd" type="java.util.Date">
+            <column name="breakEnd" length="45" not-null="false" />
+        </property>
+        
+        <property name="amountHours" type="java.lang.Integer">
+            <column name="amountHours" length="11"/>
+        </property>
+        
+
+        
+    </class>
+</hibernate-mapping>

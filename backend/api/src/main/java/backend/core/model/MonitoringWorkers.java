@@ -20,17 +20,17 @@ public class MonitoringWorkers {
     private Date goOut;
     private Date breakBegin;
     private Date breakEnd;
-    private int ammountHours;
+    private int amountHours;
 
     public MonitoringWorkers() {
     }
 
-    public MonitoringWorkers(Date come, Date goOut, Date breakBegin, Date breakEnd, int ammountHours) {
+    public MonitoringWorkers(Date come, Date goOut, Date breakBegin, Date breakEnd, int amountHours) {
         this.come = come;
         this.goOut = goOut;
         this.breakBegin = breakBegin;
         this.breakEnd = breakEnd;
-        this.ammountHours = ammountHours;
+        this.amountHours = amountHours;
     }
 
     public int getIdMW() {
@@ -73,13 +73,15 @@ public class MonitoringWorkers {
         this.breakEnd = breakEnd;
     }
 
-    public int getAmmountHours() {
-        return ammountHours;
+    public int getAmountHours() {
+        return amountHours;
     }
 
-    public void setAmmountHours(int ammountHours) {
-        this.ammountHours = ammountHours;
+    public void setAmountHours(int amountHours) {
+        this.amountHours = amountHours;
     }
+
+
     
     
 }

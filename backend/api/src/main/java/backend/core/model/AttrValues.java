@@ -7,14 +7,22 @@ package backend.core.model;
  */
 
 
-
 /**
  *
  * @author Andrzej
  */
-public class Values {
+public class AttrValues {
     private int idValues;
     private String name;
+    private Attributes attribute;
+
+    public AttrValues(String name, Attributes attribute) {
+        this.name = name;
+        this.attribute = attribute;
+    }
+
+    public AttrValues() {
+    }
 
     public int getIdValues() {
         return idValues;
@@ -31,5 +39,17 @@ public class Values {
     public void setName(String name) {
         this.name = name;
     }
+
+
+
+    public Attributes getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(Attributes attribute) {
+        this.attribute = attribute;
+    }
+
+    
     
 }
