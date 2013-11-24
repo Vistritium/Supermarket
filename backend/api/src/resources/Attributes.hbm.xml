@@ -5,7 +5,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.mycompany.amm.model.Attributes" table="Attributes" >
+    <class name="backend.core.model.Attributes" table="Attributes" >
         <id name="idAttributes" type="java.lang.Integer">
             <column name="idAttributes" />
             <generator class="identity" />
@@ -20,7 +20,7 @@
             <key>
                 <column name="idAttributes" not-null="true" />
             </key>
-            <many-to-many entity-name="com.mycompany.amm.model.Products">
+            <many-to-many entity-name="backend.core.model.Products">
                 <column name="idProducts" not-null="true" />
             </many-to-many>
         </set>  
@@ -30,7 +30,7 @@
             <key>
                 <column name="idAttributes" not-null="true" />
             </key>
-            <many-to-many entity-name="com.mycompany.amm.model.Category">
+            <many-to-many entity-name="backend.core.model.Category">
                 <column name="idCategory" not-null="true" />
             </many-to-many>
         </set>  
@@ -40,7 +40,7 @@
             <key>
                 <column name="idAttributes" not-null="true" />
             </key>
-            <one-to-many class="com.mycompany.amm.model.AttrValues" />
+            <one-to-many class="backend.core.model.AttrValues" />
         </set>
         
     </class>

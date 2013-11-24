@@ -5,7 +5,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.mycompany.amm.model.Pracownik">
+    <class name="backend.core.model.Pracownik">
         <id name="id">
                 
             <generator class="native"></generator>

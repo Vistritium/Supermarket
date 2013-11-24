@@ -5,13 +5,13 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.mycompany.amm.model.AttrValues" table="AttrValues" >
+    <class name="backend.core.model.AttrValues" table="AttrValues" >
         <id name="idValues"  type="java.lang.Integer">
             <column name="idValues" />
             <generator class="identity" />
         </id>
         
-        <many-to-one name="attribute" class="com.mycompany.amm.model.Attributes" fetch="select">
+        <many-to-one name="attribute" class="backend.core.model.Attributes" fetch="select">
             <column name="idAttributes" not-null="true" />
         </many-to-one>
         

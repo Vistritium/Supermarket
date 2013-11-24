@@ -5,7 +5,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.mycompany.amm.model.Groups">
+    <class name="backend.core.model.Groups">
         <id name="idgroups" type="java.lang.Integer">
             <column name="idgroups" />
             <generator class="identity" />
@@ -25,7 +25,7 @@
             <key>
                 <column name="idgroups" not-null="true" />
             </key>
-            <many-to-many entity-name="com.mycompany.amm.model.Users">
+            <many-to-many entity-name="backend.core.model.Users">
                 <column name="idusers" not-null="true" />
             </many-to-many>
         </set>

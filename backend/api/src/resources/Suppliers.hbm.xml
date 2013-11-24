@@ -5,7 +5,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.mycompany.amm.model.Suppliers">
+    <class name="backend.core.model.Suppliers">
         <id name="idSuppliers">
             <column name="idSuppliers" />
             <generator class="identity" />
@@ -21,7 +21,7 @@
             <key>
                 <column name="idSuppliers" not-null="true" />
             </key>
-            <many-to-many entity-name="com.mycompany.amm.model.Products">
+            <many-to-many entity-name="backend.core.model.Products">
                 <column name="idProducts" not-null="true" />
             </many-to-many>
         </set>

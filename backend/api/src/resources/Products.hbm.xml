@@ -5,7 +5,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.mycompany.amm.model.Products">
+    <class name="backend.core.model.Products">
         <id name="idProducts">
             <column name="idProducts" />
             <generator class="identity" />
@@ -32,7 +32,7 @@
             <key>
                 <column name="idProducts" not-null="true" />
             </key>
-            <many-to-many entity-name="com.mycompany.amm.model.Suppliers">
+            <many-to-many entity-name="backend.core.model.Suppliers">
                 <column name="idSuppliers" not-null="true" />
             </many-to-many>
         </set>
@@ -42,7 +42,7 @@
             <key>
                 <column name="idProducts" not-null="true" />
             </key>
-            <many-to-many entity-name="com.mycompany.amm.model.Attributes">
+            <many-to-many entity-name="backend.core.model.Attributes">
                 <column name="idAttributes" not-null="true" />
             </many-to-many>
         </set>
@@ -51,10 +51,10 @@
             <key>
                 <column name="idProducts" not-null="true" />
             </key>
-            <one-to-many class="com.mycompany.amm.model.Orders" />
+            <one-to-many class="backend.core.model.Orders" />
         </set>
         
-        <many-to-one name="category" class="com.mycompany.amm.model.Category" fetch="select">
+        <many-to-one name="category" class="backend.core.model.Category" fetch="select">
             <column name="idCategory" not-null="true" />
         </many-to-one>
         

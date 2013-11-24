@@ -5,7 +5,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.mycompany.amm.model.Monitoring">
+    <class name="backend.core.model.Monitoring">
         <id name="idMonitoring">
             <column name="idMonitoring" />
             <generator class="identity" />
