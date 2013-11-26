@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="backend.core.model.Users">
+        <id name="idusers">
+            <column name="idusers" />
+            <generator class="identity" />
+        </id>
+        
+        <property name="name" type="string">
+            <column name="name" length="45" not-null="true" />
+        </property>
+        
+        <property name="surname" type="string">
+            <column name="surname" length="45" not-null="true" />
+        </property>
+        
+        <property name="password" type="string">
+            <column name="password" length="45" not-null="true" />
+        </property>
+        <property name="salt" type="string">
+            <column name="salt" length="45" not-null="false" />
+        </property>
+        
+        <property name="hired" type="java.util.Date">
+            <column name="hired" length="45" not-null="false" />
+        </property>
+        
+        <property name="last_login" type="java.util.Date">
+            <column name="last_login" length="45" not-null="false" />
+        </property>
+        
+        <set name="Groups" table="groups_has_users" 
+        	inverse="false" lazy="true" fetch="select" cascade="all" >
+            <key>
+                <column name="idusers" not-null="true" />
+            </key>
+            <many-to-many entity-name="backend.core.model.Groups">
+                <column name="idgroups" not-null="true" />
+            </many-to-many>
+        </set>
+        
+
+        
+    </class>
+</hibernate-mapping>

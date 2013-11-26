@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="backend.core.model.Groups">
+        <id name="idgroups" type="java.lang.Integer">
+            <column name="idgroups" />
+            <generator class="identity" />
+        </id>
+        
+        <property name="name" type="string">
+            <column name="name" length="45" not-null="true" />
+        </property>
+        
+        <property name="description" type="string">
+            <column name="description" length="500" not-null="true" unique="false" />
+        </property>
+        <property name="salary" type="java.lang.Float"/>
+        
+        <set name="Users" table="groups_has_users" 
+        	inverse="false" lazy="true" fetch="select" cascade="all" >
+            <key>
+                <column name="idgroups" not-null="true" />
+            </key>
+            <many-to-many entity-name="backend.core.model.Users">
+                <column name="idusers" not-null="true" />
+            </many-to-many>
+        </set>
+        
+    </class>
+</hibernate-mapping>
