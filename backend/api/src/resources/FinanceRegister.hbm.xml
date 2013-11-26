@@ -5,7 +5,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.mycompany.amm.model.FinanceRegister">
+    <class name="backend.core.model.FinanceRegister">
         <id name="idFR">
             <column name="idFR" />
             <generator class="identity" />
@@ -27,7 +27,7 @@
             <column name="description" length="45" not-null="true" />
         </property>
         
-        <many-to-one name="user" class="com.mycompany.amm.model.Users" fetch="select">
+        <many-to-one name="user" class="backend.core.model.Users" fetch="select">
             <column name="iduser" not-null="true" />
         </many-to-one>
         

@@ -1,9 +1,9 @@
-package backend.api;
 
-import static org.junit.Assert.*;
 
 import org.hibernate.SessionFactory;
 import org.junit.Test;
+
+import backend.api.FinanceManagement;
 
 public class FinanceManagementTest {
 
