@@ -13,6 +13,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import backend.core.model.Category;
+import backend.core.model.FinanceRegister;
 import backend.core.model.Manufacturers;
 import backend.core.model.Products;
 
@@ -50,6 +51,7 @@ public class StorageManagement {
             cfg.addResource("Groups.hbm.xml");
             cfg.addResource("Monitoring.hbm.xml");
             cfg.addResource("MonitoringWorkers.hbm.xml");
+            cfg.addResource("FinanceRegister.hbm.xml");
 
             sf = cfg.buildSessionFactory();
         }
@@ -126,5 +128,22 @@ public class StorageManagement {
      public boolean removeManufacturer(int idManufacturer)
     {
         return false;
+    }
+     
+     
+    public boolean addFinanceRegisterRecord(FinanceRegister fr)
+    {
+        return false;
+    }
+    
+    public FinanceRegister getFinanceRegisterRecord()
+    {
+        FinanceRegister fr = new FinanceRegister();
+        return fr;
+    }
+    public FinanceRegister[] getFinanceRegisterRecords()
+    {
+        FinanceRegister fr[] = new FinanceRegister[1];
+        return fr;
     }
 }

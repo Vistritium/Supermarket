@@ -48,7 +48,7 @@ public class View {
             cfg.addResource("Groups.hbm.xml");
             cfg.addResource("Monitoring.hbm.xml");
             cfg.addResource("MonitoringWorkers.hbm.xml");
-
+            cfg.addResource("FinanceRegister.hbm.xml");
             sf = cfg.buildSessionFactory();
         }
 

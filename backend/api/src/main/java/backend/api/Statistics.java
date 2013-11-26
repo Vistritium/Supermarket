@@ -8,6 +8,7 @@ package backend.api;
 
 
 
+import backend.core.model.FinanceRegister;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -48,7 +49,8 @@ public class Statistics {
             cfg.addResource("Groups.hbm.xml");
             cfg.addResource("Monitoring.hbm.xml");
             cfg.addResource("MonitoringWorkers.hbm.xml");
-
+            cfg.addResource("FinanceRegister.hbm.xml");
+            
             sf = cfg.buildSessionFactory();
         }
 
@@ -75,4 +77,21 @@ public class Statistics {
     {
         return false;
     }
+    
+    public boolean addFinanceRegisterRecord(FinanceRegister fr)
+    {
+        return false;
+    }
+    
+    public FinanceRegister getFinanceRegisterRecord()
+    {
+        FinanceRegister fr = new FinanceRegister();
+        return fr;
+    }
+    public FinanceRegister[] getFinanceRegisterRecords()
+    {
+        FinanceRegister fr[] = new FinanceRegister[1];
+        return fr;
+    }
+    
 }
