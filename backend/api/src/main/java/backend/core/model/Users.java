@@ -1,12 +1,10 @@
-package backend.core.model;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
-
+package backend.core.model;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -28,7 +26,8 @@ public class Users {
     private Date hired;
     private Date last_login;
     private Set<Groups> groups = new HashSet<Groups>(0);
-    //private Set<Orders> orders = new HashSet<Orders>(0);
+    private Set<Orders> orders = new HashSet<Orders>(0);
+    private Set<FinanceRegister> financeRegister = new HashSet<FinanceRegister>(0);
     public Users(String name, String surname, String password, String salt, Date hired, Date last_login) {
         this.name = name;
         this.surname = surname;
@@ -104,7 +103,7 @@ public class Users {
     public void setGroups(Set<Groups> groups) {
         this.groups = groups;
     }
-/*
+
     public Set<Orders> getOrders() {
         return orders;
     }
@@ -112,7 +111,15 @@ public class Users {
     public void setOrders(Set<Orders> orders) {
         this.orders = orders;
     }
-*/
+
+    public Set<FinanceRegister> getFinanceRegister() {
+        return financeRegister;
+    }
+
+    public void setFinanceRegister(Set<FinanceRegister> financeRegister) {
+        this.financeRegister = financeRegister;
+    }
+
 
     @Override
     public String toString() {
