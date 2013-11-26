@@ -14,6 +14,8 @@ import org.hibernate.cfg.Configuration;
 
 import backend.core.model.Groups;
 import backend.core.model.Users;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -65,7 +67,22 @@ public class HumanResources {
     
     public boolean addUser(Users user)
     {
-        return false;
+        Session s = getInstance().openSession();
+        try {
+            Transaction tx = s.beginTransaction();
+
+            try {
+                s.save(user);
+
+                tx.commit();
+                return true;
+            } catch (Exception e) {
+                tx.rollback();
+                return false;
+            }
+        } finally {
+            s.close();
+        }
     }
     
      public Users[] getUsers(int IdGroup)
