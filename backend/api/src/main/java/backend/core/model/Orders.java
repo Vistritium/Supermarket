@@ -31,7 +31,7 @@ public class Orders {
   
 
     public int getIdOrders() {
-        return idOrders;
+        return idOrders ;
     }
 
     public void setIdOrders(int idOrders) {
