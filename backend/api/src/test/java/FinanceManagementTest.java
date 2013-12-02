@@ -9,6 +9,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import backend.api.FinanceManagement;
+import backend.core.SessionFactoryManager;
 import backend.core.model.Users;
 
 public class FinanceManagementTest {
@@ -18,7 +19,7 @@ public class FinanceManagementTest {
 	public void test() {
 	
 		FinanceManagement financeManagement = new FinanceManagement();
-		SessionFactory instance = FinanceManagement.getInstance();
+		SessionFactory instance = SessionFactoryManager.INSTANCE.getSessionFactory();
 		
 	}
 	
@@ -26,7 +27,7 @@ public class FinanceManagementTest {
 	@Test
 	public void queryTest() {
 		
-		 Session s = FinanceManagement.getInstance().openSession();
+		 Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
 	        try {
 	             //pracownik = (Pracownik) s.load(Pracownik.class, id);
 
