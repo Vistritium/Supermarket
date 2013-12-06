@@ -34,8 +34,8 @@ public class ModelDialog extends JDialog {
 		//Set fields
 		this.panel=panel;
 		
-		Component [] components=this.panel.getComponents();
-		for(int i=0; i<components.length; i++) components[i].setEnabled(false);
+		//Component [] components=this.panel.getComponents();
+		//for(int i=0; i<components.length; i++) components[i].setEnabled(false);
 	}
 	
 	//Close window and activate panel.

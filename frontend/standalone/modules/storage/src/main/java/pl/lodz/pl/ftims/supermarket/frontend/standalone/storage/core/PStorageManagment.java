@@ -15,11 +15,15 @@ import java.util.List;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import backend.api.StorageManagement;
 import backend.core.model.Products;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 
@@ -106,6 +110,7 @@ public class PStorageManagment extends JPanel {
 		bEditSelectedProduct = new JButton("Edytuj produkt");
 		bEditSelectedProduct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				editSelectedProduct();
 			}
 		});
 		GridBagConstraints gbc_bEditSelectedProduct = new GridBagConstraints();
@@ -115,6 +120,11 @@ public class PStorageManagment extends JPanel {
 		contentPanel.add(bEditSelectedProduct, gbc_bEditSelectedProduct);
 		
 		bDeleteSelectedProduct = new JButton("Usuń produkt");
+		bDeleteSelectedProduct.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				removeSelectedProduct();
+			}
+		});
 		GridBagConstraints gbc_bDeleteSelectedProduct = new GridBagConstraints();
 		gbc_bDeleteSelectedProduct.insets = new Insets(0, 0, 5, 5);
 		gbc_bDeleteSelectedProduct.gridx = 2;
@@ -122,6 +132,11 @@ public class PStorageManagment extends JPanel {
 		contentPanel.add(bDeleteSelectedProduct, gbc_bDeleteSelectedProduct);
 		
 		bManageCategories = new JButton("Zarządzaj kategoriami");
+		bManageCategories.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				manageCategories();
+			}
+		});
 		GridBagConstraints gbc_bManageCategories = new GridBagConstraints();
 		gbc_bManageCategories.insets = new Insets(0, 0, 5, 5);
 		gbc_bManageCategories.gridx = 3;
@@ -129,6 +144,11 @@ public class PStorageManagment extends JPanel {
 		contentPanel.add(bManageCategories, gbc_bManageCategories);
 		
 		bManageSuppliers = new JButton("Zarządzaj dostawcami");
+		bManageSuppliers.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				manageSuppliers();
+			}
+		});
 		GridBagConstraints gbc_bManageSuppliers = new GridBagConstraints();
 		gbc_bManageSuppliers.insets = new Insets(0, 0, 5, 0);
 		gbc_bManageSuppliers.gridx = 4;
@@ -150,7 +170,7 @@ public class PStorageManagment extends JPanel {
 		
 		lblNazwa = new JLabel("Nazwa:");
 		GridBagConstraints gbc_lblNazwa = new GridBagConstraints();
-		gbc_lblNazwa.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblNazwa.anchor = GridBagConstraints.EAST;
 		gbc_lblNazwa.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNazwa.gridx = 0;
 		gbc_lblNazwa.gridy = 3;
@@ -184,7 +204,7 @@ public class PStorageManagment extends JPanel {
 		
 		lblNewLabel_1 = new JLabel("Cena:");
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_1.gridx = 0;
 		gbc_lblNewLabel_1.gridy = 4;
@@ -217,7 +237,7 @@ public class PStorageManagment extends JPanel {
 		
 		lblIlo = new JLabel("Ilość:");
 		GridBagConstraints gbc_lblIlo = new GridBagConstraints();
-		gbc_lblIlo.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblIlo.anchor = GridBagConstraints.EAST;
 		gbc_lblIlo.insets = new Insets(0, 0, 0, 5);
 		gbc_lblIlo.gridx = 0;
 		gbc_lblIlo.gridy = 5;
@@ -254,6 +274,33 @@ public class PStorageManagment extends JPanel {
 		if(secure==1) new DAddProduct(contentPanel);
 	}
 	
+	private void editSelectedProduct(){ 
+		if(tProducts.getSelectedRow()!=-1) new DEditProduct(contentPanel, products[tProducts.getSelectedRow()]);
+	}
+	
+	private void manageCategories(){
+		new DManageCategories(contentPanel);
+	}
+	
+	private void manageSuppliers(){
+		new DManageSuppliers(contentPanel);
+	}
+	
+	private void removeSelectedProduct(){
+		if(tProducts.getSelectedRow()!=-1){
+			int answer=JOptionPane.showOptionDialog(
+					this, 
+					"Czy na pewno chcesz usunąć produkt o nazwie "+products[tProducts.getSelectedRow()].getName()+"?", 
+					"Usuwanie produktu.", 
+					JOptionPane.YES_NO_OPTION, 
+					JOptionPane.QUESTION_MESSAGE,
+					null,
+					null,
+					null
+					);
+		}
+	}
+	
 	//Update methods
 	public void updateProductsList(){
 		products=apiSM.getProducts(1, ID_PRODUCT);
@@ -270,14 +317,13 @@ public class PStorageManagment extends JPanel {
 		tableModel.addColumn("Ilość");
 		tableModel.addColumn("Cena");
 		
-		Object[] ex={"Masło extra", "Milkovita", "Nabiał", "10", "3.20"};
 		
 		for(int i=0; i<products.length; i++){
 			
 			products[i]=new Products();
 			
-			products[i].setName("Piwo");
-			products[i].setCount(22);
+			products[i].setName("Piwo"+i);
+			products[i].setCount(22+i);
 			products[i].setPrice(2.8f);
 			
 			Object[] exx={
@@ -289,7 +335,6 @@ public class PStorageManagment extends JPanel {
 			};
 			tableModel.addRow(exx);
 		}
-		tableModel.addRow(ex);
 
 	}
 }
