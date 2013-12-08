@@ -81,7 +81,7 @@ public class FinanceManagementTest {
 	             List<Users> result =q.list();
 	             if (result.isEmpty() || result.size()==0)
 	            	 System.out.println("nima");
-	             System.out.println((Users) result);
+	             //System.out.println((Users) result);
 
 	         } finally {
 	             s.close();

@@ -8,14 +8,20 @@ package backend.api;
 
 
 
+import java.util.List;
+
 import backend.core.SessionFactoryManager;
 import backend.core.model.FinanceRegister;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import backend.core.model.Monitoring;
 import backend.core.model.MonitoringWorkers;
+import backend.core.model.Users;
 
 /**
  *
@@ -25,42 +31,102 @@ public class Statistics {
 
 	private static SessionFactory sf = SessionFactoryManager.INSTANCE.getSessionFactory();
 
-    public Monitoring[] getRecords()
+    public List<Monitoring> getRecords()
     {
-        Monitoring m[] = new Monitoring[1];
-        return m;
+    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+        try {
+        	
+            Query query = s.createQuery("select m from Monitoring m");
+            
+            List<Monitoring> monitor =  query.list();
+            return monitor;
+
+        } finally {
+            s.close();
+        }
     }
     
-    public MonitoringWorkers[] getRecordsMonitoringWorkers()
+    public List<MonitoringWorkers> getRecordsMonitoringWorkers()
     {
-        MonitoringWorkers m[] = new MonitoringWorkers[1];
-        return m;
+    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+        try {
+        	
+            Query query = s.createQuery("select m from MonitoringWorkers m");
+            
+            List<MonitoringWorkers> monitor =  query.list();
+            return monitor;
+
+        } finally {
+            s.close();
+        }
     }
     
-    public boolean setRecords(Monitoring m)
+    public void setRecords(Monitoring m)
     {
-        return false;
+    	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	try
+        {
+    		Transaction tx = session.beginTransaction();
+    
+            session.update(m);
+            tx.commit();
+               
+        }
+    	finally {
+    		session.close();
+        }
     }
     
-    public boolean setRecordsMonitoringWorkers(MonitoringWorkers m)
+    public void setRecordsMonitoringWorkers(MonitoringWorkers m)
     {
-        return false;
+    	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	try
+        {
+    		Transaction tx = session.beginTransaction();
+    
+            session.update(m);
+            tx.commit();
+               
+        }
+    	finally {
+    		session.close();
+        }
     }
     
     public boolean addFinanceRegisterRecord(FinanceRegister fr)
     {
-        return false;
+        Session s = sf.openSession();
+        try {
+            Transaction tx = s.beginTransaction();
+
+            try {
+                s.save(fr);
+
+                tx.commit();
+                return true;
+            } catch (Exception e) {
+                tx.rollback();
+                return false;
+            }
+        } finally {
+            s.close();
+        }
     }
     
-    public FinanceRegister getFinanceRegisterRecord()
+    public List<FinanceRegister> getFinanceRegisterRecord()
     {
-        FinanceRegister fr = new FinanceRegister();
-        return fr;
+    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+        try {
+        	
+            Query query = s.createQuery("select m from FinanceRegister m");
+            
+            List<FinanceRegister> monitor =  query.list();
+            return monitor;
+
+        } finally {
+            s.close();
+        }
     }
-    public FinanceRegister[] getFinanceRegisterRecords()
-    {
-        FinanceRegister fr[] = new FinanceRegister[1];
-        return fr;
-    }
+
     
 }

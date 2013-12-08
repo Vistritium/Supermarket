@@ -86,7 +86,7 @@ public class StorageManagement {
     	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
         try {
         	
-            Query query = s.createQuery("select u from Users u");
+            Query query = s.createQuery("select p from Products p");
             
             List<Products> prod =  query.list();
             return prod;
