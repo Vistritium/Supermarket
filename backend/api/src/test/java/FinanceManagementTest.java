@@ -1,10 +1,12 @@
 
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -45,5 +47,54 @@ public class FinanceManagementTest {
 		
 		
 	}
+	
+	
+	@Test
+	public void poidTest()
+	{
+		int idUser = 2;
+    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+        try {
 
+            Query q = s.createQuery("select u from Users u where "+idUser+"=u.idusers");        
+
+            List<Users> result =q.list();
+            if (result.isEmpty() || result.size()==0)
+            	System.out.println("null");
+            System.out.println((Users) result.get(0));
+
+        } finally {
+            s.close();
+        }
+
+	}
+	@Ignore
+	@Test
+	public void removeUser()
+	{
+
+		Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	try
+        {
+    		
+    		Transaction tx = session.beginTransaction();
+    		
+    		
+    		Users user = (Users) session.load(Users.class, 2);
+            if (null != user)
+            {
+                session.delete(user);
+            }
+            tx.commit();
+            
+            
+        } catch (Exception e)
+        {
+        	System.err.println(e);
+        }
+    	finally {
+    		session.close();
+        }
+	}
+	
 }

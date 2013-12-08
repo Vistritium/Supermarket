@@ -13,6 +13,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import backend.core.SessionFactoryManager;
+import backend.core.controller.UserController;
 import backend.core.model.Groups;
 import backend.core.model.Users;
 
@@ -35,6 +36,9 @@ public class HumanResources {
     
     public boolean addUser(Users user)
     {
+    	//UserController uc = new UserController();
+    	//uc.addUser(user);
+    
         Session s = sf.openSession();
         try {
             Transaction tx = s.beginTransaction();

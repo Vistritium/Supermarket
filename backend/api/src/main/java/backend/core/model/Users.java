@@ -120,10 +120,15 @@ public class Users {
         this.financeRegister = financeRegister;
     }
 
+	@Override
+	public String toString() {
+		return "Users [idusers=" + idusers + ", name=" + name + ", surname="
+				+ surname + ", password=" + password + ", salt=" + salt
+				+ ", hired=" + hired + ", last_login=" + last_login
+				+ ", groups=" + groups + ", orders=" + orders
+				+ ", financeRegister=" + financeRegister + "]";
+	}
 
-    @Override
-    public String toString() {
-        return "user{" + "id=" + idusers + ", grupa=" + groups + ", imie=" + name + '}';
-    }
-    
+
+
 }
