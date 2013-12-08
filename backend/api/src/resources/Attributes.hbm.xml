@@ -5,43 +5,43 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="backend.core.model.Attributes" table="Attributes" >
-        <id name="idAttributes" type="java.lang.Integer">
-            <column name="idAttributes" />
-            <generator class="identity" />
-        </id>
-        
-        <property name="name" type="string">
-            <column name="name" length="45" not-null="true" />
-        </property>
-         
-        <set name="products" table="products_has_attributes" 
-        	inverse="false" lazy="true" fetch="select" cascade="all" >
-            <key>
-                <column name="idAttributes" not-null="true" />
-            </key>
-            <many-to-many entity-name="backend.core.model.Products">
-                <column name="idProducts" not-null="true" />
-            </many-to-many>
-        </set>  
-        
-        <set name="category" table="attributes_has_category" 
-        	inverse="false" lazy="true" fetch="select" cascade="all" >
-            <key>
-                <column name="idAttributes" not-null="true" />
-            </key>
-            <many-to-many entity-name="backend.core.model.Category">
-                <column name="idCategory" not-null="true" />
-            </many-to-many>
-        </set>  
-        
-        <set name="values" table="Values" 
-				inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="idAttributes" not-null="true" />
-            </key>
-            <one-to-many class="backend.core.model.AttrValues" />
-        </set>
-        
-    </class>
+	<class name="backend.core.model.Attributes" table="Attributes">
+		<id name="idAttributes" type="java.lang.Integer">
+			<column name="idAttributes" />
+			<generator class="identity" />
+		</id>
+
+		<property name="name" type="string">
+			<column name="name" length="45" not-null="true" />
+		</property>
+
+		<set name="products" table="products_has_attributes" inverse="false"
+			lazy="false" fetch="select" cascade="all">
+			<key>
+				<column name="idAttributes" not-null="true" />
+			</key>
+			<many-to-many entity-name="backend.core.model.Products">
+				<column name="idProducts" not-null="true" />
+			</many-to-many>
+		</set>
+
+		<set name="category" table="attributes_has_category" inverse="false"
+			lazy="false" fetch="select" cascade="all">
+			<key>
+				<column name="idAttributes" not-null="true" />
+			</key>
+			<many-to-many entity-name="backend.core.model.Category">
+				<column name="idCategory" not-null="true" />
+			</many-to-many>
+		</set>
+
+		<set name="values" table="Values" inverse="true" lazy="false"
+			fetch="select">
+			<key>
+				<column name="idAttributes" not-null="true" />
+			</key>
+			<one-to-many class="backend.core.model.AttrValues" />
+		</set>
+
+	</class>
 </hibernate-mapping>

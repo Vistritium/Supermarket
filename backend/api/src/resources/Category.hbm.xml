@@ -17,7 +17,7 @@
         </property>
 
         <set name="products" table="Products" 
-				inverse="true" lazy="true" fetch="select">
+				inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="idCategory" not-null="true" />
             </key>
@@ -25,7 +25,7 @@
         </set>
         
         <set name="attributes" table="attributes_has_category" 
-        	inverse="false" lazy="true" fetch="select" cascade="all" >
+        	inverse="false" lazy="false" fetch="select" cascade="all" >
             <key>
                 <column name="idCategory" not-null="true" />
             </key>
