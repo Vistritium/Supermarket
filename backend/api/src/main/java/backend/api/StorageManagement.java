@@ -81,11 +81,19 @@ public class StorageManagement {
      * @param type - "idCategory" lub "idProduct" lub "idManufacturer"
      * @return 
      */
-    public Products[] getProducts(int id, String type) 
+    public List<Products> getProducts() 
     {
-    	//czekac na modul storage.. co odpowiedza..
-        Products p[] = new Products[1];
-        return p;
+    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+        try {
+        	
+            Query query = s.createQuery("select u from Users u");
+            
+            List<Products> prod =  query.list();
+            return prod;
+
+        } finally {
+            s.close();
+        }
     }
     
     public void editProduct(Products product)
@@ -179,18 +187,52 @@ public class StorageManagement {
             s.close();
         }
     }
-         
-    public Manufacturers getManufacturer(int idManufacturer)
+    
+    public boolean addCategory(Category cat)
+    {
+    	Session s = sf.openSession();
+        try {
+            Transaction tx = s.beginTransaction();
+
+            try {
+                s.save(cat);
+
+                tx.commit();
+                return true;
+            } catch (Exception e) {
+                tx.rollback();
+                return false;
+            }
+        } finally {
+            s.close();
+        }
+    }
+    
+    public void editCategory(Category cat)
+    {
+    	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	try
+        {
+    		Transaction tx = session.beginTransaction();
+    
+            session.update(cat);
+            tx.commit();
+               
+        }
+    	finally {
+    		session.close();
+        }
+    }
+    
+    public List<Manufacturers> getManufacturer()
     {
     	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
         try {
         	
-            Query query = s.createQuery("select m from Manufacturers m where m.idManufacturer=" + idManufacturer);
+            Query query = s.createQuery("select m from Manufacturers m");
             
             List<Manufacturers> manu =  query.list();
-            if (manu.isEmpty() || manu.size()==0)
-            	return null;
-            return (Manufacturers) manu.get(0);
+            return manu;
 
         } finally {
             s.close();
@@ -213,6 +255,42 @@ public class StorageManagement {
             s.close();
         }
     }   
+    
+    public boolean addManufacturer(Manufacturers man)
+    {
+    	Session s = sf.openSession();
+        try {
+            Transaction tx = s.beginTransaction();
+
+            try {
+                s.save(man);
+
+                tx.commit();
+                return true;
+            } catch (Exception e) {
+                tx.rollback();
+                return false;
+            }
+        } finally {
+            s.close();
+        }
+    }
+    
+    public void editManufacturer(Manufacturers man)
+    {
+    	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	try
+        {
+    		Transaction tx = session.beginTransaction();
+    
+            session.update(man);
+            tx.commit();
+               
+        }
+    	finally {
+    		session.close();
+        }
+    }
     
      public boolean removeManufacturer(int idManufacturer)
     {
