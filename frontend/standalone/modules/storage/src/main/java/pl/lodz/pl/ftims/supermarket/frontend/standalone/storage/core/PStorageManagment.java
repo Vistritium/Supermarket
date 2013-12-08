@@ -20,6 +20,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import backend.api.StorageManagement;
+import backend.core.model.Category;
+import backend.core.model.Manufacturers;
 import backend.core.model.Products;
 
 import javax.swing.JLabel;
@@ -40,9 +42,11 @@ public class PStorageManagment extends JPanel {
 	public static final String ID_CATEGORY="idCategory";
 	public static final String ID_MANUFACTURER="idManufacturer";
 	
-	private DefaultTableModel tableModel;
+	private ModelTable tableModel;
 	private StorageManagement apiSM;
-	private Products[] products;
+	private List<Products> products;
+	private List<Category> categories;
+	private List<Manufacturers> suppliers;
 	private JLabel lblSz;
 	private JLabel lblNazwa;
 	private JTextField tSearchName;
@@ -158,7 +162,7 @@ public class PStorageManagment extends JPanel {
 		
 		//Fields
 		apiSM= new StorageManagement();
-		tableModel= new DefaultTableModel();
+		tableModel= new ModelTable();
 		tProducts.setModel(tableModel);
 		
 		lblSz = new JLabel("Wyszukiwanie:");
@@ -259,8 +263,10 @@ public class PStorageManagment extends JPanel {
 		gbc_btnSzukaj.gridy = 5;
 		contentPanel.add(btnSzukaj, gbc_btnSzukaj);
 		
-		//First update of products		
+		//First update of products, suppliers and categories		
 		updateProductsList();
+		updateCategoryList();
+		//updateSuppliersList();
 		
 		if(secure!=1){
 			bDeleteSelectedProduct.setVisible(false);
@@ -272,11 +278,11 @@ public class PStorageManagment extends JPanel {
 	
 	private void addProduct(){
 		if(secure==1) new DAddProduct(contentPanel);
-		else if(tProducts.getSelectedRow()!=-1) new DSell(contentPanel, products[tProducts.getSelectedRow()]);
+		else if(tProducts.getSelectedRow()!=-1) new DSell(contentPanel, products.get(tProducts.getSelectedRow()));
 	}
 	
 	private void editSelectedProduct(){ 
-		if(tProducts.getSelectedRow()!=-1) new DEditProduct(contentPanel, products[tProducts.getSelectedRow()]);
+		if(tProducts.getSelectedRow()!=-1 && tProducts.getRowCount()>0) new DEditProduct(contentPanel, products.get(tProducts.getSelectedRow()));
 	}
 	
 	private void manageCategories(){
@@ -288,10 +294,10 @@ public class PStorageManagment extends JPanel {
 	}
 	
 	private void removeSelectedProduct(){
-		if(tProducts.getSelectedRow()!=-1){
+		if(tProducts.getSelectedRow()!=-1 && tProducts.getRowCount()>0){
 			int answer=JOptionPane.showOptionDialog(
 					this, 
-					"Czy na pewno chcesz usunąć produkt o nazwie "+products[tProducts.getSelectedRow()].getName()+"?", 
+					"Czy na pewno chcesz usunąć produkt o nazwie "+products.get(tProducts.getSelectedRow()).getName()+"?", 
 					"Usuwanie produktu.", 
 					JOptionPane.YES_NO_OPTION, 
 					JOptionPane.QUESTION_MESSAGE,
@@ -304,7 +310,8 @@ public class PStorageManagment extends JPanel {
 	
 	//Update methods
 	public void updateProductsList(){
-		products=apiSM.getProducts(1, ID_PRODUCT);
+		products=apiSM.getProducts();
+		products.add(new Products("Piwko", new Category("Alkohole"), 22, 2.5f, 1));
 		
 		//Delete data from tableModel
 		for(int i=0; i<tableModel.getRowCount()-1; i++){
@@ -319,23 +326,39 @@ public class PStorageManagment extends JPanel {
 		tableModel.addColumn("Cena");
 		
 		
-		for(int i=0; i<products.length; i++){
-			
-			products[i]=new Products();
-			
-			products[i].setName("Piwo"+i);
-			products[i].setCount(22+i);
-			products[i].setPrice(2.8f);
+		for(int i=0; i<products.size(); i++){
 			
 			Object[] exx={
-				products[i].getName(),
+				products.get(i).getName(),
 				"Warka",
-				"Alkohole",
-				products[i].getCount(),
-				products[i].getPrice()
+				products.get(i).getCategory().getName(),
+				products.get(i).getCount(),
+				products.get(i).getPrice()
 			};
 			tableModel.addRow(exx);
 		}
+		
+		tProducts.changeSelection(0, 0, false, false);
 
+	}
+	
+	public void updateSuppliersList(){
+		cSuppliers.removeAllItems();
+		suppliers=apiSM.getManufacturer();
+		
+		cSuppliers.addItem("Wybierz dostawcę...");
+		for(int i=0; i<suppliers.size(); i++){
+			cSuppliers.addItem(suppliers.get(i).getName());
+		}		
+	}
+	
+	public void updateCategoryList(){
+		cCategories.removeAllItems();
+		categories=apiSM.getCategory();
+		
+		cCategories.addItem("Wybierz kategorię...");
+		for(int i=0; i<categories.size(); i++){
+			cCategories.addItem(categories.get(i).getName());
+		}		
 	}
 }
