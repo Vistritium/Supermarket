@@ -17,6 +17,7 @@
 		<module>api</module>
 		<module>core</module>
 		<module>modules</module>
+		<module>start</module>
 	</modules>
 
 	<dependencyManagement>
