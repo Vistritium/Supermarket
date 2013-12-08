@@ -9,6 +9,8 @@ package backend.api;
 
 
 
+import java.util.List;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -17,6 +19,7 @@ import backend.core.controller.UserController;
 import backend.core.model.Groups;
 import backend.core.model.Users;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -28,17 +31,43 @@ public class HumanResources {
 	 private static SessionFactory sf = SessionFactoryManager.INSTANCE.getSessionFactory();
 
     
-    public Users getUser(int idUser)
-    {
-        Users u = new Users();
-        return u;
-    }
+	    public Users getUser(int idUser)
+	    {
+	    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+	        try {
+
+	            Query q = s.createQuery("select u from Users u where "+idUser+"=u.idusers");        
+	            List<Users> result =q.list();
+	            if (result.isEmpty() || result.size()==0)
+	            	return null;
+	            return (Users) result.get(0);
+
+	        } finally {
+	            s.close();
+	        }
+
+	    }
     
+
+    
+    public List<Users> getAllUsers()
+    {
+    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+	        try {
+	        	
+	            Query query = s.createQuery("select u from Users u");
+	            
+	            List<Users> users =  query.list();
+	            return users;
+
+	        } finally {
+	            s.close();
+	        }
+
+    }
+  
     public boolean addUser(Users user)
     {
-    	//UserController uc = new UserController();
-    	//uc.addUser(user);
-    
         Session s = sf.openSession();
         try {
             Transaction tx = s.beginTransaction();
@@ -57,51 +86,127 @@ public class HumanResources {
         }
     }
     
-     public Users[] getUsers(int IdGroup)
+    public List<Users> getUsers(int IdGroup)
+   {
+    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+       try {
+
+           Query q = s.createQuery("select u from Users u, Groups g where "+IdGroup+"=g.idgroups");        
+           List<Users> result =q.list();
+           if (result.isEmpty() || result.size()==0)
+           	return null;
+           return result;
+
+       } finally {
+           s.close();
+       }
+   }
+    public void editUser(Users user)
     {
-        Users u[] = new Users[1];
-        return u;
-    }
-     
-    public Users editParametr(String name, Object value)
-    {
-        Users u = new Users();
-        return u;
+    	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	try
+        {
+    		Transaction tx = session.beginTransaction();
+    
+            session.update(user);
+            tx.commit();
+               
+        }
+    	finally {
+    		session.close();
+        }
+        
     }
     
-    public Users editUser(Users newData)
+    public void removeUser(int idUser)
     {
-        Users u = new Users();
-        return u;
-    }
-    
-    public Users removeUser(int idUser)
-    {
-        Users u = new Users();
-        return u;
+    	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	try
+        {
+    		Transaction tx = session.beginTransaction();
+    		Users user = (Users) session.load(Users.class, idUser);
+            if (null != user)
+            {
+                session.delete(user);
+            }
+            tx.commit();
+        }
+    	finally {
+    		session.close();
+        }
     }
     
     public boolean removeGroup(int idGroup)
     {
-        return false;
+    	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	try
+        {
+    		Transaction tx = session.beginTransaction();
+    		Groups group = (Groups) session.load(Groups.class, idGroup);
+            if (null != group)
+            {
+                session.delete(group);
+                tx.commit();
+                return true;
+            }
+            else {
+            	return false;
+            }            
+        }
+    	finally {
+    		session.close();
+        }
     }
     
-    public Groups editGroup(Groups newData)
+    public void editGroup(Groups newData)
     {
-        Groups g = new Groups();
-        return g;
+    	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	try
+        {
+    		Transaction tx = session.beginTransaction();
+    
+            session.update(newData);
+            tx.commit();
+               
+        }
+    	finally {
+    		session.close();
+        }
     }
     
-    public Groups getGroup()
+    public List<Groups> getGroup()
     {
-        Groups g = new Groups();
-        return g;
+    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+        try {
+
+            Query q = s.createQuery("select g from Groups g");        
+            List<Groups> result =q.list();
+            if (result.isEmpty() || result.size()==0)
+            	return null;
+            return result;
+
+        } finally {
+            s.close();
+        }
     }
     
-    public Users getUser()
+    public boolean addGroup(Groups newData)
     {
-        Users u = new Users();
-        return u;
+        Session s = sf.openSession();
+        try {
+            Transaction tx = s.beginTransaction();
+
+            try {
+                s.save(newData);
+
+                tx.commit();
+                return true;
+            } catch (Exception e) {
+                tx.rollback();
+                return false;
+            }
+        } finally {
+            s.close();
+        }
     }
-    
 }

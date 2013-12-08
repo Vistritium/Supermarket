@@ -73,28 +73,7 @@ public class FinanceManagementTest {
 	public void removeUser()
 	{
 
-		Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
-    	try
-        {
-    		
-    		Transaction tx = session.beginTransaction();
-    		
-    		
-    		Users user = (Users) session.load(Users.class, 2);
-            if (null != user)
-            {
-                session.delete(user);
-            }
-            tx.commit();
-            
-            
-        } catch (Exception e)
-        {
-        	System.err.println(e);
-        }
-    	finally {
-    		session.close();
-        }
+		
 	}
 	
 }

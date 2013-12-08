@@ -201,6 +201,7 @@ public class FinanceManagement {
         }
     }
     
+
     public List<Groups> getGroup()
     {
     	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
@@ -259,5 +260,7 @@ public class FinanceManagement {
             s.close();
         }
     }
+    
+    
     
 }
