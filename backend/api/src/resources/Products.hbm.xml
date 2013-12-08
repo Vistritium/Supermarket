@@ -28,7 +28,7 @@
         </property>
         
         <set name="suppliers" table="products_has_suppliers" 
-        	inverse="false" lazy="true" fetch="select" cascade="all" >
+        	inverse="false" lazy="false" fetch="select" cascade="all" >
             <key>
                 <column name="idProducts" not-null="true" />
             </key>
@@ -38,7 +38,7 @@
         </set>
         
         <set name="attributes" table="products_has_attributes" 
-        	inverse="false" lazy="true" fetch="select" cascade="all" >
+        	inverse="false" lazy="false" fetch="select" cascade="all" >
             <key>
                 <column name="idProducts" not-null="true" />
             </key>
@@ -47,7 +47,7 @@
             </many-to-many>
         </set>
         
-        <set name="orders" table="Orders" inverse="true" lazy="true" fetch="select">
+        <set name="orders" table="Orders" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="idProducts" not-null="true" />
             </key>

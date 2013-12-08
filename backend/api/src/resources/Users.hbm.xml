@@ -35,7 +35,7 @@
         </property>
         
         <set name="Groups" table="groups_has_users" 
-        	inverse="false" lazy="true" fetch="select" cascade="all" >
+        	inverse="false" lazy="false" fetch="select" cascade="all" >
             <key>
                 <column name="idusers" not-null="true" />
             </key>
@@ -44,7 +44,7 @@
             </many-to-many>
         </set>
         <set name="orders" table="Orders" 
-				inverse="true" lazy="true" fetch="select">
+				inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="iduser" not-null="true" />
             </key>
@@ -52,7 +52,7 @@
         </set>
 
         <set name="financeRegister" table="FinanceRegister" 
-				inverse="true" lazy="true" fetch="select">
+				inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="iduser" not-null="true" />
             </key>

@@ -4,22 +4,22 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.factories.FormFactory;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.JComboBox;
+import javax.swing.border.EmptyBorder;
 
-public class DAddProduct extends ModelDialog {
+import backend.core.model.Products;
+
+import javax.swing.JLabel;
+
+import com.jgoodies.forms.factories.FormFactory;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.RowSpec;
+
+public class DEditProduct extends ModelDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField tName;
@@ -31,11 +31,9 @@ public class DAddProduct extends ModelDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public DAddProduct(JPanel panel) {
+	public DEditProduct(JPanel panel, Products product) {
 		super(panel);
-		setTitle("Dodaj nowy produkt");
-		
-		setBounds(100, 100, 313, 256);
+		setBounds(100, 100, 430, 266);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -67,7 +65,7 @@ public class DAddProduct extends ModelDialog {
 		JLabel lblNazwa = new JLabel("Nazwa:");
 		contentPanel.add(lblNazwa, "2, 4, right, default");
 		
-		tName = new JTextField();
+		tName = new JTextField(product.getName());
 		contentPanel.add(tName, "4, 4, fill, default");
 		tName.setColumns(10);
 		{
@@ -91,7 +89,7 @@ public class DAddProduct extends ModelDialog {
 			contentPanel.add(lblIlo, "2, 10, right, default");
 		}
 		{
-			tPrice = new JTextField();
+			tPrice = new JTextField(product.getCount()+"");
 			contentPanel.add(tPrice, "4, 10, left, default");
 			tPrice.setColumns(10);
 		}
@@ -100,7 +98,7 @@ public class DAddProduct extends ModelDialog {
 			contentPanel.add(lblCena, "2, 12, right, default");
 		}
 		{
-			tCount = new JTextField();
+			tCount = new JTextField(product.getPrice()+"");
 			contentPanel.add(tCount, "4, 12, left, default");
 			tCount.setColumns(10);
 		}
@@ -109,31 +107,17 @@ public class DAddProduct extends ModelDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("Dodaj");
-				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						close();
-					}
-				});
+				JButton okButton = new JButton("OK");
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				JButton cancelButton = new JButton("Anuluj");
-				cancelButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						close();
-					}
-				});
+				JButton cancelButton = new JButton("Cancel");
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
 		}
 	}
-	
-	private void addProduct(){
-		
-		
-	}
+
 }

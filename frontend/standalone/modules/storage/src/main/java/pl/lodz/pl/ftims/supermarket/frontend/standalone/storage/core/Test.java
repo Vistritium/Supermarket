@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Dimension;
+import java.awt.Frame;
 
 public class Test extends JFrame {
 
@@ -33,7 +34,7 @@ public class Test extends JFrame {
 	 * Create the frame.
 	 */
 	public Test(PStorageManagment contentPane) {
-		setSize(new Dimension(500, 300));
+		setSize(new Dimension(700, 372));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setContentPane(contentPane);
 	}
