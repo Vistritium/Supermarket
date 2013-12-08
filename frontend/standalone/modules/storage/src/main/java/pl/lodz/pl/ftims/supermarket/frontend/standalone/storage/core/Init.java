@@ -6,7 +6,8 @@ public class Init implements Initalizable{
 
 	@Override
 	public void init() {
-		// TODO Init of storage module
+		PStorageManagment panel= new PStorageManagment();
+		//TODO when view module is ready inject panel to view
 		
 	}
 
