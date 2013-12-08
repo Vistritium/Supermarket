@@ -118,7 +118,7 @@ public class HumanResources {
         
     }
     
-    public void removeUser(int idUser)
+    public boolean removeUser(int idUser)
     {
     	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
     	try
@@ -128,8 +128,13 @@ public class HumanResources {
             if (null != user)
             {
                 session.delete(user);
+                tx.commit();
+                return true;         
             }
-            tx.commit();
+            else{
+            	return false;
+            }
+            
         }
     	finally {
     		session.close();

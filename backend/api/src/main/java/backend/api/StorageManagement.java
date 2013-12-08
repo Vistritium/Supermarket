@@ -165,41 +165,112 @@ public class StorageManagement {
     
     public Category getCategory(String name)
     {
-        Category c = new Category("T");
-        return c;
+    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+        try {
+        	
+            Query query = s.createQuery("select c from Category c where c.name=" + name);
+            
+            List<Category> category =  query.list();
+            if (category.isEmpty() || category.size()==0)
+            	return null;
+            return (Category) category.get(0);
+
+        } finally {
+            s.close();
+        }
     }
          
     public Manufacturers getManufacturer(int idManufacturer)
     {
-        Manufacturers c = new Manufacturers();
-        return c;
+    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+        try {
+        	
+            Query query = s.createQuery("select m from Manufacturers m where m.idManufacturer=" + idManufacturer);
+            
+            List<Manufacturers> manu =  query.list();
+            if (manu.isEmpty() || manu.size()==0)
+            	return null;
+            return (Manufacturers) manu.get(0);
+
+        } finally {
+            s.close();
+        }
     }
     
     public Manufacturers getManufacturer(String name)
     {
-        Manufacturers c = new Manufacturers();
-        return c;
+    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+        try {
+        	
+            Query query = s.createQuery("select m from Manufacturers m where m.name=" + name);
+            
+            List<Manufacturers> manu =  query.list();
+            if (manu.isEmpty() || manu.size()==0)
+            	return null;
+            return (Manufacturers) manu.get(0);
+
+        } finally {
+            s.close();
+        }
     }   
     
      public boolean removeManufacturer(int idManufacturer)
     {
-        return false;
+     	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+     	try
+         {
+     		Transaction tx = session.beginTransaction();
+     		Manufacturers manu = (Manufacturers) session.load(Manufacturers.class, idManufacturer);
+             if (null != manu)
+             {
+                 session.delete( manu);
+                 tx.commit();
+                 return true;
+             }
+             else
+             {
+            	 return false;
+             }
+         }
+     	finally {
+     		session.close();
+         }
     }
      
      
     public boolean addFinanceRegisterRecord(FinanceRegister fr)
     {
-        return false;
+    	Session s = sf.openSession();
+        try {
+            Transaction tx = s.beginTransaction();
+
+            try {
+                s.save(fr);
+
+                tx.commit();
+                return true;
+            } catch (Exception e) {
+                tx.rollback();
+                return false;
+            }
+        } finally {
+            s.close();
+        }
     }
     
-    public FinanceRegister getFinanceRegisterRecord()
+    public List<FinanceRegister> getFinanceRegisterRecords()
     {
-        FinanceRegister fr = new FinanceRegister();
-        return fr;
+    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+        try {
+        	
+            Query query = s.createQuery("select c from Category c");
+            
+            List<FinanceRegister> fr =  query.list();
+            return fr;
+
+        } finally {
+            s.close();
+        }
     }
-    public FinanceRegister[] getFinanceRegisterRecords()
-    {
-        FinanceRegister fr[] = new FinanceRegister[1];
-        return fr;
-    }
+
 }
