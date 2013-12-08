@@ -272,6 +272,7 @@ public class PStorageManagment extends JPanel {
 	
 	private void addProduct(){
 		if(secure==1) new DAddProduct(contentPanel);
+		else if(tProducts.getSelectedRow()!=-1) new DSell(contentPanel, products[tProducts.getSelectedRow()]);
 	}
 	
 	private void editSelectedProduct(){ 
