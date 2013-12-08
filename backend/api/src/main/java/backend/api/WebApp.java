@@ -8,8 +8,11 @@ package backend.api;
 
 
 
+import java.util.List;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
 import backend.core.SessionFactoryManager;
 import backend.core.model.Products;
@@ -20,29 +23,36 @@ import backend.core.model.Products;
  */
 public class WebApp {
 	
-	private static SessionFactory sf = SessionFactoryManager.INSTANCE
-			.getSessionFactory();
-    /**
-     * 
-     * @param id
-     * @param type - "idCategory" lub "idProduct" lub "idManufacturer"
-     * @return 
-     */
-    public Products getProduct(int id, String type) 
+
+
+    public Products getProduct(int idProduct, String type) 
     {
-        Products p = new Products();
-        return p;
+    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+        try {
+
+            Query q = s.createQuery("select p from Products p where "+idProduct+"=u.idProducts");        
+            List<Products> result =q.list();
+            if (result.isEmpty() || result.size()==0)
+            	return null;
+            return (Products) result.get(0);
+
+        } finally {
+            s.close();
+        }
     }
     
-     /**
-     * 
-     * @param id
-     * @param type - "idCategory" lub "idProduct" lub "idManufacturer"
-     * @return 
-     */
-    public Products[] getProducts(int id, String type) 
+    public List<Products> getProducts()
     {
-        Products p[] = new Products[1];
-        return p;
+    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+        try {
+        	
+            Query query = s.createQuery("select p from Products p");
+            
+            List<Products> products =  query.list();
+            return products;
+
+        } finally {
+            s.close();
+        }
     }
 }
