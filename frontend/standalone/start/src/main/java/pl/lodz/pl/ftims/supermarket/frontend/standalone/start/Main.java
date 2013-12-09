@@ -1,7 +1,10 @@
 package pl.lodz.pl.ftims.supermarket.frontend.standalone.start;
 
 
-import pl.lodz.pl.ftims.supermarket.frontend.standalone.storage.core.Init;
+import java.util.ArrayList;
+import java.util.List;
+
+import pl.lodz.pl.ftims.supermarket.frontend.standalone.core.Initalizable;
 import backend.core.SessionFactoryManager;
 
 public class Main {
@@ -9,6 +12,8 @@ public class Main {
 	public static void main(String[] args) {
 		initDatabase();
 		
+		List<Initalizable> modules = new ArrayList<>();
+		modules.add(getInitStorageManagement());
 		
 	
 	}
@@ -22,9 +27,8 @@ public class Main {
 		//init view when done
 	}
 	
-	private static void initStorageManagement(){
-		pl.lodz.pl.ftims.supermarket.frontend.standalone.storage.core.Init init = new Init();
-		init.init();
+	private static Initalizable getInitStorageManagement(){
+		return new pl.lodz.pl.ftims.supermarket.frontend.standalone.storage.core.Init();
 	}
 	
 }
