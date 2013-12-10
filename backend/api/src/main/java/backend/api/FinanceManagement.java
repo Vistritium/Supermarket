@@ -39,9 +39,9 @@ public class FinanceManagement {
             cfg.setProperty("hibernate.connection.driver_class",
                     "com.mysql.jdbc.Driver");
             cfg.setProperty("hibernate.connection.url",
-                    "jdbc:mysql://localhost/io");
-            cfg.setProperty("hibernate.connection.username", "root");
-            cfg.setProperty("hibernate.connection.password", "");
+                    "jdbc:mysql://db4free.net:3306/iomarket");
+            cfg.setProperty("hibernate.connection.username", "iomarket");
+            cfg.setProperty("hibernate.connection.password", "iomarket123");
             cfg.setProperty("hibernate.hbm2ddl.auto", "update");
 
             cfg.setProperty("show_sql", "true");

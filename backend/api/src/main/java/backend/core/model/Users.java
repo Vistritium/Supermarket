@@ -103,6 +103,10 @@ public class Users {
     public void setGroups(Set<Groups> groups) {
         this.groups = groups;
     }
+    
+    public void addGroups(Set<Groups> groups){
+    	this.groups.addAll(groups);
+    }
 
     public Set<Orders> getOrders() {
         return orders;

@@ -176,7 +176,7 @@ public class StorageManagement {
     	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
         try {
         	
-            Query query = s.createQuery("select c from Category c where c.name=" + name);
+            Query query = s.createQuery("from Category c where c.name='" + name + "'");
             
             List<Category> category =  query.list();
             if (category.isEmpty() || category.size()==0)

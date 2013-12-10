@@ -81,8 +81,13 @@ public class HumanResources {
                 tx.rollback();
                 return false;
             }
-        } finally {
+        } catch (Exception e){
+        	e.printStackTrace();
+        	return false;
+        }
+        finally {
             s.close();
+          
         }
     }
     
@@ -103,7 +108,7 @@ public class HumanResources {
    }
     public void editUser(Users user)
     {
-    	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	Session session = sf.openSession();
     	try
         {
     		Transaction tx = session.beginTransaction();
@@ -111,8 +116,10 @@ public class HumanResources {
             session.update(user);
             tx.commit();
                
+        } catch (Exception e){
+        	e.printStackTrace();
         }
-    	finally {
+    	finally  {
     		session.close();
         }
         

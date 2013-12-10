@@ -31,10 +31,10 @@ public class View {
 	
     public boolean checkAuthorization(String name, String password)
     {
-    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	Session s = sf.openSession();
         try {
 
-            Query q = s.createQuery("select u from Users u where u.name=" +name + " and u.password=" +password);        
+            Query q = s.createQuery("select u from Users u where u.name='" +name + "' and u.password='" +password + "'");        
             List<Users> result =q.list();
             if (result.isEmpty() || result.size()==0)
             	return false;

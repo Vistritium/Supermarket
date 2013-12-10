@@ -1,17 +1,22 @@
 
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import backend.api.FinanceManagement;
+import backend.api.HumanResources;
+import backend.api.StorageManagement;
 import backend.core.SessionFactoryManager;
+import backend.core.model.Category;
 import backend.core.model.Groups;
 import backend.core.model.Users;
 
@@ -19,6 +24,49 @@ public class FinanceManagementTest {
 
 	 private static SessionFactory sf = SessionFactoryManager.INSTANCE.getSessionFactory();
     
+
+	 @Test
+		public void hr() {
+		
+			HumanResources hr = new HumanResources();
+			Groups g1 = hr.getGroup().get(0);
+			Groups g2 = new Groups("admiddn", "trddololo", 2500);
+			//hr.addGroup(g2);
+			/*
+			Set<Groups> groups = new HashSet<Groups>(1);
+			groups.add(g2);
+			System.out.println(g1.getName());
+			Users u = new Users();
+			u.setName("drupa");
+			u.setSurname("dupa1");
+			u.setPassword("wgea1rgrgrsgereg");
+			u.setGroups(groups);
+			hr.addUser(u);
+			/*
+			 * 
+			 */
+			Users u = hr.getUser(5);
+			
+			Set<Groups> groups = new HashSet<Groups>(0);
+			groups.add(g1);
+			System.out.println(u.getName());
+			u.addGroups(groups);
+			u.setName("test5555");
+			hr.editUser(u);
+			
+			 
+		}
+	 
+	 @Ignore
+	 @Test
+		public void category() {
+		
+			Category c = new Category("Odzież");
+			StorageManagement sm = new StorageManagement();
+			Category c1 = sm.getCategory("Odzież");
+			System.out.println(c1.getName());
+		}
+	 
 	@Ignore
 	@Test
 	public void test() {
