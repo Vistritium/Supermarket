@@ -37,7 +37,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	
 	public void initializeWindow(){
 		this.setTitle(Constants.program_title);
-		this.setAlwaysOnTop(true);
+		//this.setAlwaysOnTop(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
