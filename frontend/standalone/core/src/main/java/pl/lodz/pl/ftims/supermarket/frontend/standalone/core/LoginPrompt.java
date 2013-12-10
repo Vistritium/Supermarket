@@ -72,5 +72,8 @@ public class LoginPrompt extends JFrame {
 		gbc_anuluj.gridx = 1;
 		gbc_anuluj.gridy = 3;
 		getContentPane().add(anuluj, gbc_anuluj);
+		
+		getContentPane().revalidate();
+		getContentPane().repaint();
 	}
 }

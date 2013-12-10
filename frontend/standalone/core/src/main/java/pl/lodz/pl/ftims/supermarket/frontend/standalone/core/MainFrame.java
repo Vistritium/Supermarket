@@ -2,6 +2,7 @@ package pl.lodz.pl.ftims.supermarket.frontend.standalone.core;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JFrame;
 
@@ -9,8 +10,10 @@ import javax.swing.JFrame;
 public class MainFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
+	List<Initalizable> modules;
 	LoginPrompt login;
-	public MainFrame(){
+	public MainFrame(List<Initalizable> modules){
+		this.modules = modules;
 		login = new LoginPrompt();
 
 		this.login.loguj.addActionListener(this);
@@ -44,7 +47,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 
 	public void createMainJPanel(){
-		this.setContentPane(new MainPanel());
+		this.setContentPane(new MainPanel(modules));
 	}
 
 	@Override

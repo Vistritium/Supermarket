@@ -1,6 +1,8 @@
 package pl.lodz.pl.ftims.supermarket.frontend.standalone.core;
 
 import java.awt.BorderLayout;
+import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
@@ -9,7 +11,7 @@ public class MainPanel extends JPanel {
 
 	TabPanel taby;
 
-	public MainPanel(){
+	public MainPanel(List<Initalizable> modules){
 		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createTitledBorder("Główne okno"));
 		//this.setBackground(Color.BLUE);
@@ -17,6 +19,9 @@ public class MainPanel extends JPanel {
 		this.add(taby);
 		//System.out.println("Dodalem taby");		
 		this.taby.setVisible(true);
+		for(Initalizable module : modules){
+			module.init(taby);
+		}
 		//System.out.println("Stworzylem mainPanel");
 	}
 }
