@@ -1,9 +1,9 @@
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+package pl.lodz.pl.ftims.supermarket.frontend.standalone.core;
 
 
-public class main {
+public class Main {
 	static MainFrame window;
+
 	public static void main(String[] args) {
 		window = new MainFrame();
 	}

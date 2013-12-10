@@ -1,4 +1,5 @@
-import java.awt.FlowLayout;
+package pl.lodz.pl.ftims.supermarket.frontend.standalone.core;
+
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
@@ -9,6 +10,8 @@ import javax.swing.JTextField;
 
 
 public class LoginPrompt extends JFrame {
+	private static final long serialVersionUID = 1L;
+
 	public JPasswordField pass;
 	public JLabel label1,label2;
 	public JTextField login;
@@ -16,7 +19,7 @@ public class LoginPrompt extends JFrame {
 	
 	public LoginPrompt(){
 		this.setLayout(new GridLayout(3,2));
-		this.setTitle("Zaloguj siê do supermarketu "+Constants.program_title);
+		this.setTitle("Zaloguj siÄ™ do supermarketu "+Constants.program_title);
 		this.setSize(600, 200);
 		this.setVisible(true);
 		this.loguj=new JButton("Zaloguj");
@@ -24,7 +27,7 @@ public class LoginPrompt extends JFrame {
 		this.pass = new JPasswordField();
 		this.login = new JTextField();
 		this.label1 = new JLabel("Login : ");
-		this.label2 = new JLabel("Has³o : ");
+		this.label2 = new JLabel("HasÅ‚o : ");
 		this.label1.setVisible(true);
 		this.label1.setBounds(10, 50, 100, 50);
 		this.add(label1);
