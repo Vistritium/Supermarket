@@ -20,12 +20,6 @@ public class TabPanel extends JPanel implements JPanelInjection{
 		this.setLayout(new GridLayout(1,1));
         tabPane = new JTabbedPane();
         this.add(tabPane);
-        
-        
-        //Przykladowo dodalem tutaj na szybko jakies panele
-      //  this.tabPane.addTab("Tytul", new JLabel("Testowa labelka w TabPanel"));
-      //  this.tabPane.addTab("Tytulinny", new JLabel("Testowa labelka w TabPanelu drugim"));
-      // this.addModul(new Panelzjakaszawartoscia());
 	}
 
 	public void addModul(Modul modul){
