@@ -2,18 +2,25 @@ package pl.lodz.pl.ftims.supermarket.frontend.standalone.storage.core;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Panel;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.factories.FormFactory;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class DManageCategories extends ModelDialog {
 
@@ -22,12 +29,16 @@ public class DManageCategories extends ModelDialog {
 	private JButton bRemoveCategory;
 	private JComboBox cCategories;
 	private JButton bEditCategory;
+	private Validator validator;
 
 	/**
 	 * Create the dialog.
 	 */
-	public DManageCategories(JPanel panel) {
+	public DManageCategories(PStorageManagment panel) {
 		super(panel);
+		
+		validator= new Validator();
+		
 		setTitle("Zarządzaj kategoriami");
 		setBounds(100, 100, 373, 299);
 		getContentPane().setLayout(new BorderLayout());
@@ -71,6 +82,11 @@ public class DManageCategories extends ModelDialog {
 			}
 			{
 				JButton btnDodaj = new JButton("Dodaj");
+				btnDodaj.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						addCategory();
+					}
+				});
 				panel_1.add(btnDodaj, "4, 6, right, default");
 			}
 		}
@@ -121,4 +137,12 @@ public class DManageCategories extends ModelDialog {
 		}
 	}
 
+	private void addCategory(){
+		if(validator.addCategory(tCategory.getText().toString())){
+			panel.updateCategoryList();
+			JOptionPane.showMessageDialog(this, "Dodano kategorię.");
+		}
+		else JOptionPane.showMessageDialog(this, "Błąd dodawania kategorii");
+	}
+	
 }

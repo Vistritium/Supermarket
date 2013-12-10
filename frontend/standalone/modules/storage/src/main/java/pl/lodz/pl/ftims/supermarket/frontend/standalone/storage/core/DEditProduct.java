@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -19,6 +20,9 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 public class DEditProduct extends ModelDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -27,12 +31,18 @@ public class DEditProduct extends ModelDialog {
 	private JTextField tCount;
 	private JComboBox cSupplier;
 	private JComboBox cCategory;
+	private Validator validator;
+	private Products product;
 
 	/**
 	 * Create the dialog.
 	 */
-	public DEditProduct(JPanel panel, Products product) {
+	public DEditProduct(PStorageManagment panel, Products product) {
 		super(panel);
+		
+		validator= new Validator();
+		this.product=product;
+		
 		setBounds(100, 100, 430, 266);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -58,8 +68,8 @@ public class DEditProduct extends ModelDialog {
 				FormFactory.RELATED_GAP_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,}));
 		{
-			JLabel label = new JLabel("Wprowadź dane nowego produktu.");
-			contentPanel.add(label, "2, 2, 5, 1");
+			JLabel lblWprowadDane = new JLabel("Wprowadź dane.");
+			contentPanel.add(lblWprowadDane, "2, 2, 5, 1");
 		}
 		
 		JLabel lblNazwa = new JLabel("Nazwa:");
@@ -107,16 +117,31 @@ public class DEditProduct extends ModelDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
+				JButton okButton = new JButton("Edytuj");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						editProduct();
+					}
+				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				JButton cancelButton = new JButton("Cancel");
+				JButton cancelButton = new JButton("Anuluj");
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
+		}
+	}
+	
+	private void editProduct(){
+		if(validator.editProduct(product.getIdProducts(), tName.getText().toString(), 1, 1, tCount.getText().toString())){
+			JOptionPane.showMessageDialog(this, "Edycja produktu powiodła się");
+			panel.updateProductsList();
+		}
+		else{
+			JOptionPane.showMessageDialog(this, "Edycja produktu nie powiodła się");			
 		}
 	}
 

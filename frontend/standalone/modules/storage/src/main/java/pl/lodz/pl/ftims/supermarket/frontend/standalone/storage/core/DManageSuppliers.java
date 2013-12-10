@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -15,6 +16,7 @@ import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -25,12 +27,16 @@ public class DManageSuppliers extends ModelDialog {
 	private JButton bRemoveSupplier;
 	private JButton bEditSupplier;
 	private JComboBox cSuppliers;
+	private Validator validator;
 
 	/**
 	 * Create the dialog.
 	 */
-	public DManageSuppliers(JPanel panel) {
+	public DManageSuppliers(PStorageManagment panel) {
 		super(panel);
+		
+		validator= new Validator();
+		
 		setTitle("Zarządzaj dostawcami");
 		setBounds(100, 100, 351, 301);
 		getContentPane().setLayout(new BorderLayout());
@@ -74,6 +80,11 @@ public class DManageSuppliers extends ModelDialog {
 			}
 			{
 				JButton btnDodaj = new JButton("Dodaj");
+				btnDodaj.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						addSupplier();
+					}
+				});
 				panel_1.add(btnDodaj, "4, 6, right, default");
 			}
 		}
@@ -134,6 +145,13 @@ public class DManageSuppliers extends ModelDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+	}
+	
+	private void addSupplier(){
+		if(validator.addSupplier(tSupplier.getText().toString())){
+			JOptionPane.showMessageDialog(this, "Dodano dostawcę");
+		}
+		else JOptionPane.showMessageDialog(this, "Błąd dodawania dostawcy");
 	}
 
 }

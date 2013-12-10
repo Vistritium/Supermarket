@@ -8,6 +8,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import backend.api.StorageManagement;
 import backend.core.model.Products;
 
 import com.jgoodies.forms.layout.FormLayout;
@@ -28,7 +29,7 @@ public class DSell extends ModelDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public DSell(JPanel panel, Products product) {
+	public DSell(PStorageManagment panel, Products product) {
 		super(panel);
 		this.product=product;
 		setTitle("Sprzedaj produkt.");

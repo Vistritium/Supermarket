@@ -17,12 +17,12 @@ import java.awt.event.WindowEvent;
 public class ModelDialog extends JDialog {
 
 	//private final JPanel contentPanel = new JPanel();
-	private JPanel panel;
+	protected PStorageManagment panel;
 
 	/**
 	 * Create the dialog.
 	 */
-	public ModelDialog(JPanel panel) {
+	public ModelDialog(PStorageManagment panel) {
 		setVisible(true);
 		addWindowListener(new WindowAdapter() {
 			@Override

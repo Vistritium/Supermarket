@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -35,12 +36,16 @@ public class DAddProduct extends ModelDialog {
 	private JTextField tCount;
 	private JComboBox cSupplier;
 	private JComboBox cCategory;
+	private Validator validator;
 
 	/**
 	 * Create the dialog.
 	 */
-	public DAddProduct(JPanel panel) {
+	public DAddProduct(PStorageManagment panel) {
 		super(panel);
+		
+		validator= new Validator();
+		
 		setTitle("Dodaj nowy produkt");
 		
 		setBounds(100, 100, 313, 256);
@@ -141,6 +146,13 @@ public class DAddProduct extends ModelDialog {
 	}
 	
 	private void addProduct(){
-
+		if(validator.addProduct(tName.getText().toString(), 
+				0, 
+				0, 
+				tPrice.getText().toString(), 
+				tCount.getText().toString())){
+			JOptionPane.showMessageDialog(this, "Dodano produkt");
+		}
+		else JOptionPane.showMessageDialog(this, "Błąd dodawania produktu");
 	}
 }

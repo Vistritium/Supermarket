@@ -60,6 +60,8 @@ public class PStorageManagment extends JPanel {
 	private JComboBox cCategories;
 	private JButton btnSzukaj;
 	
+	private Validator validator;
+	
 	//User right example
 	private int secure=1;
 	
@@ -68,6 +70,8 @@ public class PStorageManagment extends JPanel {
 	 */
 	public PStorageManagment() {
 		setLayout(new BorderLayout(0, 0));
+		
+		validator= new Validator();
 		
 		contentPanel = new JPanel();
 		add(contentPanel, BorderLayout.CENTER);
@@ -265,7 +269,7 @@ public class PStorageManagment extends JPanel {
 		
 		//First update of products, suppliers and categories		
 		updateProductsList();
-		updateCategoryList();
+		//updateCategoryList();
 		//updateSuppliersList();
 		
 		if(secure!=1){
@@ -277,20 +281,20 @@ public class PStorageManagment extends JPanel {
 	}
 	
 	private void addProduct(){
-		if(secure==1) new DAddProduct(contentPanel);
-		else if(tProducts.getSelectedRow()!=-1) new DSell(contentPanel, products.get(tProducts.getSelectedRow()));
+		if(secure==1) new DAddProduct(this);
+		else if(tProducts.getSelectedRow()!=-1) new DSell(this, products.get(tProducts.getSelectedRow()));
 	}
 	
 	private void editSelectedProduct(){ 
-		if(tProducts.getSelectedRow()!=-1 && tProducts.getRowCount()>0) new DEditProduct(contentPanel, products.get(tProducts.getSelectedRow()));
+		if(tProducts.getSelectedRow()!=-1 && tProducts.getRowCount()>0) new DEditProduct(this, products.get(tProducts.getSelectedRow()));
 	}
 	
 	private void manageCategories(){
-		new DManageCategories(contentPanel);
+		new DManageCategories(this);
 	}
 	
 	private void manageSuppliers(){
-		new DManageSuppliers(contentPanel);
+		new DManageSuppliers(this);
 	}
 	
 	private void removeSelectedProduct(){
@@ -305,13 +309,15 @@ public class PStorageManagment extends JPanel {
 					null,
 					null
 					);
+			
+			if(answer==JOptionPane.OK_OPTION) validator.removeProduct(products.get(tProducts.getSelectedRow()).getIdProducts());
 		}
 	}
 	
 	//Update methods
 	public void updateProductsList(){
 		products=apiSM.getProducts();
-		products.add(new Products("Piwko", new Category("Alkohole"), 22, 2.5f, 1));
+		products.add(new Products("Masło extra", new Category("Nabiał"), 22, 2.5f, 1));
 		
 		//Delete data from tableModel
 		for(int i=0; i<tableModel.getRowCount()-1; i++){
@@ -330,7 +336,7 @@ public class PStorageManagment extends JPanel {
 			
 			Object[] exx={
 				products.get(i).getName(),
-				"Warka",
+				"Milkovita",
 				products.get(i).getCategory().getName(),
 				products.get(i).getCount(),
 				products.get(i).getPrice()
