@@ -52,10 +52,12 @@ public class MenuBar implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		Object z = arg0.getSource();
+
 		if(z.equals(itemZakoncz)){
 			//System.out.println("Nacisnieto zakoncz");
 			System.exit(1);			
 		}
+
 		if(z.equals(itemTest)){
 			System.out.println("Nacisnieto test");
 			System.out.println(menuBar.getMenuCount());

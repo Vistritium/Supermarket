@@ -1,10 +1,7 @@
 package pl.lodz.pl.ftims.supermarket.frontend.standalone.core;
 
-import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
