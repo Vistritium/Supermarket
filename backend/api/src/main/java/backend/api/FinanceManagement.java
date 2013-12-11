@@ -115,7 +115,7 @@ public class FinanceManagement {
     {
      	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
         try {
-        	Query q = s.createQuery("from Users u, Groups g where "+IdGroup+"=g.idgroups");      
+        	Query q = s.createQuery("from Users u, Groups g where '"+IdGroup+"'=g.idgroups");      
             List<Users> result =q.list();
             if (result.isEmpty() || result.size()==0)
             	return null;

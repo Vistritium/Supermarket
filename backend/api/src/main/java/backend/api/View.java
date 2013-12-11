@@ -29,7 +29,7 @@ public class View {
 	private static SessionFactory sf = SessionFactoryManager.INSTANCE
 			.getSessionFactory();
 	
-    public boolean checkAuthorization(String name, String password)
+    public boolean checkAuthorization(String name, String password) // ok
     {
     	Session s = sf.openSession();
         try {
@@ -40,13 +40,18 @@ public class View {
             	return false;
             return true;
 
-        } finally {
+        }
+        catch (Exception e){
+        	e.printStackTrace();
+        	return false;
+        }
+        finally {
             s.close();
         }
     }
     
-      public List<Users> getUsers(int IdGroup)
-    {	//jeszcze nie do konca jestem pewien... dam wam na razie zwracajaca wszystkich userow.
+      public List<Users> getUsers(int IdGroup) // na razie nie wiem jak?
+    {	
        	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
         try {
 
@@ -61,19 +66,23 @@ public class View {
         }
     }
       
-      public List<Users> getAllUsers()
+      public List<Users> getAllUsers() // ok
       {
-      	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
-  	        try {
-  	        	
-  	            Query query = s.createQuery("select u from Users u");
-  	            
-  	            List<Users> users =  query.list();
-  	            return users;
+    	  Session s = sf.openSession();
+	        try {
+	        	
+	            Query query = s.createQuery("select u from Users u");
+	            
+	            List<Users> users =  query.list();
+	            return users;
 
-  	        } finally {
-  	            s.close();
-  	        }
-
+	        } 
+	        catch (Exception e){
+	        	e.printStackTrace();
+	        	return null;
+	        }
+	        	finally {
+	            s.close();
+	        }
       }
 }

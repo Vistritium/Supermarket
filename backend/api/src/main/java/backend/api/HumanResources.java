@@ -31,7 +31,7 @@ public class HumanResources {
 	 private static SessionFactory sf = SessionFactoryManager.INSTANCE.getSessionFactory();
 
     
-	    public Users getUser(int idUser)
+	    public Users getUser(int idUser) // ok
 	    {
 	    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
 	        try {
@@ -42,7 +42,12 @@ public class HumanResources {
 	            	return null;
 	            return (Users) result.get(0);
 
-	        } finally {
+	        } 
+	        catch (Exception e){
+	        	e.printStackTrace();
+	        	return null;
+	        }
+	        finally {
 	            s.close();
 	        }
 
@@ -50,9 +55,9 @@ public class HumanResources {
     
 
     
-    public List<Users> getAllUsers()
+    public List<Users> getAllUsers() // ok
     {
-    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	Session s = sf.openSession();
 	        try {
 	        	
 	            Query query = s.createQuery("select u from Users u");
@@ -60,9 +65,15 @@ public class HumanResources {
 	            List<Users> users =  query.list();
 	            return users;
 
-	        } finally {
+	        } 
+	        catch (Exception e){
+	        	e.printStackTrace();
+	        	return null;
+	        }
+	        	finally {
 	            s.close();
 	        }
+			
 
     }
   
@@ -91,22 +102,26 @@ public class HumanResources {
         }
     }
     
-    public List<Users> getUsers(int IdGroup)
+    public List<Users> getUsers(int IdGroup) // nie dziala wyswietla wszystkich userow, niezaleznie od grupy?? (dziwne przeciez zapytanie nawet mu nie pozwala)
    {
-    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	Session s = sf.openSession(); // nie wiem jak sie odwolac do groups_has_user, takto problem bylby rozwiazany
        try {
 
-           Query q = s.createQuery("select u from Users u, Groups g where "+IdGroup+"=g.idgroups");        
+           Query q = s.createQuery("select u from Users u, Groups g where '"+IdGroup+"'=g.idgroups");        
            List<Users> result =q.list();
            if (result.isEmpty() || result.size()==0)
            	return null;
            return result;
 
-       } finally {
+       } catch (Exception e){
+       	e.printStackTrace();
+       	return null;
+       }
+       finally {
            s.close();
        }
    }
-    public void editUser(Users user)
+    public void editUser(Users user) // ok
     {
     	Session session = sf.openSession();
     	try
@@ -125,9 +140,9 @@ public class HumanResources {
         
     }
     
-    public boolean removeUser(int idUser)
+    public boolean removeUser(int idUser) // ok
     {
-    	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	Session session = sf.openSession();
     	try
         {
     		Transaction tx = session.beginTransaction();
@@ -143,14 +158,19 @@ public class HumanResources {
             }
             
         }
+    	catch (Exception e){
+        	e.printStackTrace();
+        	return false;
+        }
     	finally {
     		session.close();
         }
+		
     }
     
-    public boolean removeGroup(int idGroup)
+    public boolean removeGroup(int idGroup) // ok, rozpatrzyc przypadek kiedy usuwa sie grupe do ktorej ktos nalezy.
     {
-    	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	Session session = sf.openSession();
     	try
         {
     		Transaction tx = session.beginTransaction();
@@ -165,14 +185,18 @@ public class HumanResources {
             	return false;
             }            
         }
+    	catch (Exception e){
+        	e.printStackTrace();
+        	return false;
+    	}
     	finally {
     		session.close();
         }
     }
     
-    public void editGroup(Groups newData)
+    public void editGroup(Groups newData) // ok
     {
-    	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	Session session = sf.openSession();
     	try
         {
     		Transaction tx = session.beginTransaction();
@@ -181,12 +205,15 @@ public class HumanResources {
             tx.commit();
                
         }
+    	catch (Exception e){
+        	e.printStackTrace();
+    	}
     	finally {
     		session.close();
         }
     }
     
-    public List<Groups> getGroup()
+    public List<Groups> getGroup() // dziala ale problem zaczyna sie wtedy kiedy musi wyswietlic tostring userow w grupie trzeba napisac innego to string
     {
     	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
         try {
@@ -197,12 +224,17 @@ public class HumanResources {
             	return null;
             return result;
 
-        } finally {
+        } 
+        catch (Exception e){
+        	e.printStackTrace();
+        	return null;
+    	}
+        finally {
             s.close();
         }
     }
     
-    public boolean addGroup(Groups newData)
+    public boolean addGroup(Groups newData) // ok
     {
         Session s = sf.openSession();
         try {
@@ -217,7 +249,11 @@ public class HumanResources {
                 tx.rollback();
                 return false;
             }
-        } finally {
+        } 
+        catch (Exception e){
+        	e.printStackTrace();
+        	return false;
+    	}finally {
             s.close();
         }
     }

@@ -57,6 +57,12 @@ public class Category {
     public void setAttributes(Set<Attributes> attributes) {
         this.attributes = attributes;
     }
+	@Override
+	public String toString() {
+		return "Category [idCategory=" + idCategory + ", name=" + name
+				+ ", products=" + products + "]";
+	}
+
 
     
 }

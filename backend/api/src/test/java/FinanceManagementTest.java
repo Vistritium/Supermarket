@@ -1,9 +1,6 @@
 
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -15,6 +12,7 @@ import org.junit.Test;
 import backend.api.FinanceManagement;
 import backend.api.HumanResources;
 import backend.api.StorageManagement;
+import backend.api.WebApp;
 import backend.core.SessionFactoryManager;
 import backend.core.model.Category;
 import backend.core.model.Groups;
@@ -24,12 +22,23 @@ public class FinanceManagementTest {
 
 	 private static SessionFactory sf = SessionFactoryManager.INSTANCE.getSessionFactory();
     
-
+	 
+	 @Test
+	 public void veb() {
+		 WebApp vA = new WebApp();
+		 List<Category> cat2 = vA.getCategory();
+			for(Category group : cat2){
+         	System.out.println(group);
+         }
+		 
+	 }
+	 
+	 @Ignore
 	 @Test
 		public void hr() {
 		
 			HumanResources hr = new HumanResources();
-			Groups g1 = hr.getGroup().get(0);
+			Groups g1 = hr.getGroup().get(1);
 			Groups g2 = new Groups("admiddn", "trddololo", 2500);
 			//hr.addGroup(g2);
 			/*
@@ -44,7 +53,7 @@ public class FinanceManagementTest {
 			hr.addUser(u);
 			/*
 			 * 
-			 */
+			 
 			Users u = hr.getUser(5);
 			
 			Set<Groups> groups = new HashSet<Groups>(0);
@@ -53,9 +62,15 @@ public class FinanceManagementTest {
 			u.addGroups(groups);
 			u.setName("test5555");
 			hr.editUser(u);
+			*/
 			
-			 
+			List<Groups> groups2 = hr.getGroup();
+			for(Groups group : groups2){
+            	System.out.println(group);
+            }
+			
 		}
+
 	 
 	 @Ignore
 	 @Test
