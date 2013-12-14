@@ -20,12 +20,13 @@
         </property>
         
         <property name="account" type="java.lang.Float">
-            <column name="product" length="45" not-null="true" />
+            <column name="account" length="45" not-null="true" />
         </property>
         
         <property name="description" type="string">
             <column name="description" length="45" not-null="true" />
         </property>
+
         
         <many-to-one name="user" class="backend.core.model.Users" fetch="select">
             <column name="iduser" not-null="true" />

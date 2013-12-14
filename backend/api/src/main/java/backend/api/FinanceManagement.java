@@ -230,10 +230,15 @@ public class FinanceManagement {
                 tx.commit();
                 return true;
             } catch (Exception e) {
+            	e.printStackTrace();
                 tx.rollback();
                 return false;
             }
-        } finally {
+        }catch(Exception e){
+        	e.printStackTrace();
+        	return false;
+        }
+        finally {
             s.close();
         }
     }
