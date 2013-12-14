@@ -24,15 +24,18 @@ import backend.core.model.Products;
  */
 public class WebApp {
 	
+	private static SessionFactory sf = SessionFactoryManager.INSTANCE.getSessionFactory();
     
-    public List<Products> getProducts() // dziala
+    public List<Products> getProducts() // ok
     {
-    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	Session s = sf.openSession();
         try {
         	
             Query query = s.createQuery("select p from Products p");
             
             List<Products> products =  query.list();
+            if (products.isEmpty() || products.size()==0)
+            	return null;
             return products;
 
         } catch (Exception e){
@@ -44,14 +47,17 @@ public class WebApp {
         }
     }
     
-    public List<Category> getCategory() // nie dziala jak na razie
+    public List<Category> getCategory() // ok
     {
-    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+
+    	Session s = sf.openSession();
         try {
         	
             Query query = s.createQuery("select c from Category c");
             
             List<Category> category =  query.list();
+            if (category.isEmpty() || category.size()==0)
+            	return null;
             return category;
 
         } catch (Exception e){

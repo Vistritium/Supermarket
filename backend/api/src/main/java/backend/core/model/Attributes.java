@@ -67,6 +67,14 @@ public class Attributes {
         this.values = values;
     }
 
+
+	@Override
+	public String toString() {
+		return "Attributes [idAttributes=" + idAttributes + ", name=" + name
+				+ ", products=" + products + ", values=" + values
+				+ ", category=" + category + "]";
+	}
+
   
     
 }

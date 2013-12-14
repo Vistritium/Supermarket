@@ -1,21 +1,17 @@
 
 
+import java.util.Date;
 import java.util.List;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import backend.api.FinanceManagement;
-import backend.api.HumanResources;
-import backend.api.StorageManagement;
 import backend.api.WebApp;
 import backend.core.SessionFactoryManager;
 import backend.core.model.Category;
-import backend.core.model.Groups;
+import backend.core.model.FinanceRegister;
 import backend.core.model.Users;
 
 public class FinanceManagementTest {
@@ -23,6 +19,20 @@ public class FinanceManagementTest {
 	 private static SessionFactory sf = SessionFactoryManager.INSTANCE.getSessionFactory();
     
 	 
+	 @Test
+	 public void Fm()
+	 {
+		 FinanceManagement fm = new FinanceManagement();
+		 Users u = fm.getUser(5);
+		 Date d = new Date(2013,5,5);
+		 FinanceRegister fr = new FinanceRegister(500, u, d, 500, "blabla");
+		 System.out.println(fm.addFinanceRegisterRecord(fr));
+		 //System.out.println(fm.getFinanceRegisterRecords());
+		 
+	 }
+	 
+	 	 
+	 /*	 @Ignore
 	 @Test
 	 public void veb() {
 		 WebApp vA = new WebApp();
@@ -33,7 +43,7 @@ public class FinanceManagementTest {
 		 
 	 }
 	 
-	 @Ignore
+	 	 @Ignore
 	 @Test
 		public void hr() {
 		
@@ -62,7 +72,7 @@ public class FinanceManagementTest {
 			u.addGroups(groups);
 			u.setName("test5555");
 			hr.editUser(u);
-			*/
+			
 			
 			List<Groups> groups2 = hr.getGroup();
 			for(Groups group : groups2){
@@ -169,5 +179,5 @@ public class FinanceManagementTest {
     } finally {
         s.close();
     }
-	}
+	}*/
 }

@@ -82,6 +82,13 @@ public class FinanceRegister {
     public void setDescription(String description) {
         this.description = description;
     }
+
+	@Override
+	public String toString() {
+		return "FinanceRegister [idFR=" + idFR + ", price=" + price + ", user="
+				+ user + ", data=" + data + ", account=" + account
+				+ ", description=" + description + "]";
+	}
     
     
 }

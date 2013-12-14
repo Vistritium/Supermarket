@@ -33,12 +33,14 @@ public class Statistics {
 
     public List<Monitoring> getRecords()
     {
-    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	Session s = sf.openSession();
         try {
         	
             Query query = s.createQuery("select m from Monitoring m");
             
             List<Monitoring> monitor =  query.list();
+            if (monitor.isEmpty() || monitor.size()==0)
+            	return null;
             return monitor;
 
         } finally {
@@ -48,12 +50,14 @@ public class Statistics {
     
     public List<MonitoringWorkers> getRecordsMonitoringWorkers()
     {
-    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	Session s = sf.openSession();
         try {
         	
             Query query = s.createQuery("select m from MonitoringWorkers m");
             
             List<MonitoringWorkers> monitor =  query.list();
+            if (monitor.isEmpty() || monitor.size()==0)
+            	return null;
             return monitor;
 
         } finally {
@@ -63,7 +67,7 @@ public class Statistics {
     
     public void setRecords(Monitoring m)
     {
-    	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	Session session = sf.openSession();
     	try
         {
     		Transaction tx = session.beginTransaction();
@@ -71,15 +75,17 @@ public class Statistics {
             session.update(m);
             tx.commit();
                
+        }catch (Exception e){
+        	e.printStackTrace();
         }
-    	finally {
+    	finally  {
     		session.close();
         }
     }
     
     public void setRecordsMonitoringWorkers(MonitoringWorkers m)
     {
-    	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	Session session = sf.openSession();
     	try
         {
     		Transaction tx = session.beginTransaction();
@@ -88,12 +94,15 @@ public class Statistics {
             tx.commit();
                
         }
-    	finally {
-    		session.close();
-        }
+    	catch (Exception e){
+    	e.printStackTrace();
+    }
+	finally  {
+		session.close();
+    }
     }
     
-    public boolean addFinanceRegisterRecord(FinanceRegister fr)
+    public boolean addFinanceRegisterRecord(FinanceRegister fr) // nie dziala org.hibernate.exception.GenericJDBCException: could not insert: [backend.core.model.FinanceRegister]
     {
         Session s = sf.openSession();
         try {
@@ -105,28 +114,39 @@ public class Statistics {
                 tx.commit();
                 return true;
             } catch (Exception e) {
+            	e.printStackTrace();
                 tx.rollback();
                 return false;
             }
-        } finally {
+        }
+        catch (Exception e){
+        	e.printStackTrace();
+        	return false;
+        	}
+        finally {
             s.close();
         }
     }
     
-    public List<FinanceRegister> getFinanceRegisterRecord()
+    public List<FinanceRegister> getFinanceRegisterRecords() // ok
     {
-    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	Session s = sf.openSession();
         try {
-        	
-            Query query = s.createQuery("select m from FinanceRegister m");
-            
-            List<FinanceRegister> monitor =  query.list();
-            return monitor;
 
-        } finally {
+            Query q = s.createQuery("select f from FinanceRegister f");        
+            List<FinanceRegister> result =q.list();
+            if (result.isEmpty() || result.size()==0)
+            	return null;
+            return result;
+
+        } 
+        catch (Exception e){
+        	e.printStackTrace();
+        	return null;
+        	}
+        finally {
             s.close();
         }
     }
-
     
 }
