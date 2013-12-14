@@ -23,12 +23,14 @@ public class FinanceManagementTest {
 	 public void Fm()
 	 {
 		 FinanceManagement fm = new FinanceManagement();
-		 Users u = fm.getUser(5);
-		 Date d = new Date(2013,5,5);
-		 FinanceRegister fr = new FinanceRegister(500, u, d, 500, "blabla");
-		 System.out.println(fm.addFinanceRegisterRecord(fr));
-		 //System.out.println(fm.getFinanceRegisterRecords());
-		 
+		 //Users u = fm.getUser(5);
+		// Date d = new Date(2013,5,5);
+		 //FinanceRegister fr = new FinanceRegister(5002, u, d, 5000, "blabla");
+		 //System.out.println(fm.addFinanceRegisterRecord(fr));
+		 List<FinanceRegister> cat2 = fm.getFinanceRegisterRecords();
+			for(FinanceRegister group : cat2){
+      	System.out.println(group);
+      }
 	 }
 	 
 	 	 

@@ -85,8 +85,7 @@ public class FinanceRegister {
 
 	@Override
 	public String toString() {
-		return "FinanceRegister [idFR=" + idFR + ", price=" + price + ", user="
-				+ user + ", data=" + data + ", account=" + account
+		return "FinanceRegister [idFR=" + idFR + ", price=" + price +  ", data=" + data + ", account=" + account
 				+ ", description=" + description + "]";
 	}
     

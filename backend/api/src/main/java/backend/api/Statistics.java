@@ -102,7 +102,7 @@ public class Statistics {
     }
     }
     
-    public boolean addFinanceRegisterRecord(FinanceRegister fr) // nie dziala org.hibernate.exception.GenericJDBCException: could not insert: [backend.core.model.FinanceRegister]
+    public boolean addFinanceRegisterRecord(FinanceRegister fr) // ok
     {
         Session s = sf.openSession();
         try {

@@ -209,7 +209,7 @@ public class FinanceManagement {
      }
     
 
-     public List<Groups> getGroup() // dziala ale problem zaczyna sie wtedy kiedy musi wyswietlic tostring userow w grupie trzeba napisac innego to string
+     public List<Groups> getGroup() //ok
      {
      	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
          try {
@@ -231,7 +231,7 @@ public class FinanceManagement {
      }
 
     
-    public boolean addFinanceRegisterRecord(FinanceRegister fr) // nie dziala org.hibernate.exception.GenericJDBCException: could not insert: [backend.core.model.FinanceRegister]
+    public boolean addFinanceRegisterRecord(FinanceRegister fr) //ok
     {
     	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
         try {
@@ -260,9 +260,9 @@ public class FinanceManagement {
     }
     
     
-    public List<FinanceRegister> getFinanceRegisterRecords() // ok
+    public List<FinanceRegister> getFinanceRegisterRecords() //  ok
     {
-    	Session s = sf.openSession();
+    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
         try {
 
             Query q = s.createQuery("select f from FinanceRegister f");        
