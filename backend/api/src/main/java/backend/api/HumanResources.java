@@ -12,19 +12,17 @@ package backend.api;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.Transaction;
 
 import backend.core.SessionFactoryManager;
-import backend.core.controller.UserController;
 import backend.core.model.Groups;
 import backend.core.model.Users;
-
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 /**
  *
@@ -66,6 +64,8 @@ public class HumanResources {
 	            Query query = s.createQuery("select u from Users u");
 	            
 	            List<Users> users =  query.list();
+	            if (users.isEmpty() || users.size()==0)
+	            	return null;
 	            return users;
 
 	        } 

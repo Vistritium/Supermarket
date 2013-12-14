@@ -61,7 +61,12 @@ public class View {
             	return null;
             return result;
 
-        } finally {
+        } 
+        catch (Exception e){
+        	e.printStackTrace();
+        	return null;
+        }
+        finally {
             s.close();
         }
     }
