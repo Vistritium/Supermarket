@@ -1,6 +1,10 @@
 
 
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -14,22 +18,58 @@ import backend.api.HumanResources;
 import backend.api.StorageManagement;
 import backend.api.WebApp;
 import backend.core.SessionFactoryManager;
+import backend.core.model.Attributes;
 import backend.core.model.Category;
+import backend.core.model.FinanceRegister;
 import backend.core.model.Groups;
+import backend.core.model.Products;
 import backend.core.model.Users;
 
 public class FinanceManagementTest {
 
 	 private static SessionFactory sf = SessionFactoryManager.INSTANCE.getSessionFactory();
-    
 	 
+	 @Test
+	 public void fm ()
+	 {
+		 
+			 FinanceManagement fm = new FinanceManagement();
+			 Users u = fm.getUser(5);
+			 System.out.println(u.getName());
+			 FinanceRegister fr = new FinanceRegister(500, u, new Date(), 500, "blabla");
+			 fm.addFinanceRegisterRecord(fr);
+		 
+	 }
+	 @Ignore
+	 @Test
+		public void sm() {
+		
+			StorageManagement sm = new StorageManagement();
+			List<Category> list=sm.getCategory(); 
+			Iterator<Category> itr=list.iterator();  
+		    while(itr.hasNext()){  
+		        System.out.println(itr.next().getName());  
+		    }
+		}
+	 
+	 @Ignore
 	 @Test
 	 public void veb() {
 		 WebApp vA = new WebApp();
 		 List<Category> cat2 = vA.getCategory();
-			for(Category group : cat2){
-         	System.out.println(group);
-         }
+/*
+		 Category c = new Category("Odzież1");
+		 Attributes a = new Attributes("spodnie");
+		 Set<Attributes> as = new HashSet<Attributes>(0);
+		 as.add(a);
+		 c.setAttributes(as);
+		 StorageManagement sm = new StorageManagement();
+		 sm.addCategory(c);
+		 */
+		 System.out.println(cat2.size());
+			//for(Iterator<Category> i = cat2.iterator(); i.hasNext();){
+         //	System.out.println(i.next().getName());
+        // }
 		 
 	 }
 	 

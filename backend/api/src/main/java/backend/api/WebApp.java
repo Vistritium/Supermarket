@@ -49,7 +49,7 @@ public class WebApp {
     	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
         try {
         	
-            Query query = s.createQuery("select c from Category c");
+            Query query = s.createQuery("from Category c");
             
             List<Category> category =  query.list();
             return category;

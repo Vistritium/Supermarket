@@ -220,7 +220,7 @@ public class FinanceManagement {
     
     public boolean addFinanceRegisterRecord(FinanceRegister fr)
     {
-        Session s = sf.openSession();
+    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
         try {
             Transaction tx = s.beginTransaction();
 

@@ -161,9 +161,9 @@ public class StorageManagement {
     	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
         try {
         	
-            Query query = s.createQuery("select c from Category c");
+            Query query = s.createQuery("from Category");
             
-            List<Category> category =  query.list();
+			List<Category> category =  query.list();
             return category;
 
         } finally {
