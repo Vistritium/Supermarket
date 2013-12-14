@@ -247,11 +247,13 @@ public class FinanceManagement {
                 tx.rollback();
                 return false;
             }
+
         }
         catch (Exception e){
         	e.printStackTrace();
         	return false;
         	}
+
         finally {
             s.close();
         }
