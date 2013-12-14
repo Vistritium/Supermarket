@@ -28,7 +28,25 @@ import backend.core.model.Users;
 public class FinanceManagementTest {
 
 	 private static SessionFactory sf = SessionFactoryManager.INSTANCE.getSessionFactory();
-	 
+
+	
+	 @Test
+	 public void HR ()
+	 {
+		 
+			 HumanResources hr = new HumanResources();
+
+			 List<Users> list=hr.getUsers(1); 
+			 System.out.println(list.size());
+			 
+				Iterator<Users> itr=list.iterator();  
+			    while(itr.hasNext()){  
+			        System.out.println(itr.next());  
+			    }
+			    
+			    
+	 }
+	 @Ignore
 	 @Test
 	 public void fm ()
 	 {
@@ -78,22 +96,22 @@ public class FinanceManagementTest {
 		public void hr() {
 		
 			HumanResources hr = new HumanResources();
-			Groups g1 = hr.getGroup().get(1);
-			Groups g2 = new Groups("admiddn", "trddololo", 2500);
-			//hr.addGroup(g2);
-			/*
+			//Groups g2 = hr.getGroup().get(0);
+			Groups g2 = new Groups("Kasjer", "ta dam", 2500);
+			hr.addGroup(g2);
+			
 			Set<Groups> groups = new HashSet<Groups>(1);
 			groups.add(g2);
-			System.out.println(g1.getName());
+			//System.out.println(g1.getName());
 			Users u = new Users();
-			u.setName("drupa");
-			u.setSurname("dupa1");
-			u.setPassword("wgea1rgrgrsgereg");
+			u.setName("Marek");
+			u.setSurname("Marecki");
+			u.setPassword("rgeffrgergerhehe");
 			u.setGroups(groups);
 			hr.addUser(u);
-			/*
-			 * 
+			
 			 
+			 /*
 			Users u = hr.getUser(5);
 			
 			Set<Groups> groups = new HashSet<Groups>(0);

@@ -9,10 +9,13 @@ package backend.api;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 
 import backend.core.SessionFactoryManager;
 import backend.core.controller.UserController;
@@ -104,15 +107,26 @@ public class HumanResources {
     
     public List<Users> getUsers(int IdGroup) // nie dziala wyswietla wszystkich userow, niezaleznie od grupy?? (dziwne przeciez zapytanie nawet mu nie pozwala)
    {
-    	Session s = sf.openSession(); // nie wiem jak sie odwolac do groups_has_user, takto problem bylby rozwiazany
+    	//Session s = sf.openSession(); // nie wiem jak sie odwolac do groups_has_user, takto problem bylby rozwiazany
+    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
        try {
-
-           Query q = s.createQuery("select u from Users u, Groups g where '"+IdGroup+"'=g.idgroups");        
+    	   String hql = "select new backend.core.model.Users(u.idusers, u.name, u.surname, u.password, u.salt, u.hired, u.last_login) "
+    	   		+ "from Users u join u.Groups g where g.idgroups in (:idGroup)";
+    	   Query q = s.createQuery(hql);
+    	   q.setParameter("idGroup", IdGroup);
+    	   
+    	   List<Users> result =q.list();
+    	   
+           if (result.isEmpty() || result.size()==0)
+           	return null;
+           return  result;
+/*
+           Query q = s.createQuery("select u from Users u, Groups g where u.i=g.idgroups");        
            List<Users> result =q.list();
            if (result.isEmpty() || result.size()==0)
            	return null;
            return result;
-
+*/
        } catch (Exception e){
        	e.printStackTrace();
        	return null;
