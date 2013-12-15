@@ -18,6 +18,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import backend.core.SessionFactoryManager;
+import backend.core.model.Attributes;
 import backend.core.model.Category;
 import backend.core.model.FinanceRegister;
 import backend.core.model.Manufacturers;
@@ -32,7 +33,7 @@ import backend.core.model.Products;
  	private static SessionFactory sf = SessionFactoryManager.INSTANCE
  			.getSessionFactory();
  
-     public boolean addProduct(Products product)
+     public boolean addProduct(Products product) //ok
      {
      	Session s = sf.openSession();
          try {
@@ -53,12 +54,12 @@ import backend.core.model.Products;
      }
      
 
-     public Products getProduct(int idProduct, String type) 
+     public Products getProduct(int idProduct, String type) // po id // nie ma po typie, jezeli chcie to dodam
      {
      	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
          try {
  
-             Query q = s.createQuery("select p from Products p where "+idProduct+"=u.idProducts");        
+             Query q = s.createQuery("select p from Products p where '"+idProduct+"'=p.idProducts");        
              List<Products> result =q.list();
              if (result.isEmpty() || result.size()==0)
              	return null;
@@ -69,7 +70,7 @@ import backend.core.model.Products;
          }
      }
 
-     public List<Products> getProducts() 
+     public List<Products> getProducts() //ok
      {
      	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
          try {
@@ -84,7 +85,7 @@ import backend.core.model.Products;
          }
      }
      
-     public void editProduct(Products product)
+     public void editProduct(Products product) //ok
      {
      	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
      	try
@@ -100,7 +101,7 @@ import backend.core.model.Products;
          }
      }
      
-     public boolean removeProduct(int idProduct)
+     public boolean removeProduct(int idProduct) //ok
      {
      	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
      	try
@@ -122,7 +123,7 @@ import backend.core.model.Products;
          }
      }
      
-     public boolean removeCategory(int idCategory)
+     public boolean removeCategory(int idCategory) //ok
      {
      	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
      	try
@@ -144,7 +145,7 @@ import backend.core.model.Products;
          }
      }
      
-     public List<Category> getCategory()
+     public List<Category> getCategory() //ok
      {
      	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
          try {
@@ -159,7 +160,24 @@ import backend.core.model.Products;
          }
      }
      
-     public Category getCategory(String name)
+     public Category getCategory(int idCategory) //ok
+     {
+     	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+         try {
+         	
+             Query query = s.createQuery("from Category c where c.idCategory='" + idCategory + "'");
+             
+             List<Category> category =  query.list();
+             if (category.isEmpty() || category.size()==0)
+             	return null;
+             return (Category) category.get(0);
+ 
+         } finally {
+             s.close();
+         }
+     }
+     
+     public Category getCategory(String name) //ok
      {
      	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
          try {
@@ -175,8 +193,7 @@ import backend.core.model.Products;
              s.close();
          }
      }
-     
-     public boolean addCategory(Category cat)
+     public boolean addCategory(Category cat) //ok
      {
      	Session s = sf.openSession();
          try {
@@ -196,7 +213,7 @@ import backend.core.model.Products;
          }
      }
      
-     public void editCategory(Category cat)
+     public void editCategory(Category cat) //ok
      {
      	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
      	try
@@ -212,7 +229,7 @@ import backend.core.model.Products;
          }
      }
      
-     public List<Manufacturers> getManufacturer()
+     public List<Manufacturers> getManufacturer() //ok
      {
      	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
          try {
@@ -227,12 +244,12 @@ import backend.core.model.Products;
          }
      }
      
-     public Manufacturers getManufacturer(String name)
+     public Manufacturers getManufacturer(String name) //ok
      {
      	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
          try {
          	
-             Query query = s.createQuery("select m from Manufacturers m where m.name=" + name);
+             Query query = s.createQuery("select m from Manufacturers m where m.name= '" + name +"'");
              
              List<Manufacturers> manu =  query.list();
              if (manu.isEmpty() || manu.size()==0)
@@ -244,7 +261,24 @@ import backend.core.model.Products;
          }
      }   
      
-     public boolean addManufacturer(Manufacturers man)
+     public Manufacturers getManufacturer(int idManufacturer) //ok
+     {
+     	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+         try {
+         	
+             Query query = s.createQuery("select m from Manufacturers m where m.idManufacturer= '" + idManufacturer + "'");
+             
+             List<Manufacturers> manu =  query.list();
+             if (manu.isEmpty() || manu.size()==0)
+             	return null;
+             return (Manufacturers) manu.get(0);
+ 
+         } finally {
+             s.close();
+         }
+     }  
+     
+     public boolean addManufacturer(Manufacturers man) //ok
      {
      	Session s = sf.openSession();
          try {
@@ -264,7 +298,7 @@ import backend.core.model.Products;
          }
      }
      
-     public void editManufacturer(Manufacturers man)
+     public void editManufacturer(Manufacturers man)//ok
      {
      	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
      	try
@@ -280,7 +314,7 @@ import backend.core.model.Products;
          }
      }
      
-      public boolean removeManufacturer(int idManufacturer)
+      public boolean removeManufacturer(int idManufacturer) //ok
      {
       	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
       	try
@@ -298,13 +332,154 @@ import backend.core.model.Products;
              	 return false;
               }
           }
+      	catch (Exception e){
+        	e.printStackTrace();
+        	return false;
+        }
+      	
       	finally {
       		session.close();
           }
      }
       
       
-     public boolean addFinanceRegisterRecord(FinanceRegister fr)
+      public boolean removeAttributes(int idAttributes) //ok
+      {
+      	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+      	try
+          {
+      		Transaction tx = session.beginTransaction();
+      		Category category = (Category) session.load(Category.class, idAttributes);
+              if (null != category)
+              {
+                  session.delete(category);
+                  tx.commit();
+                  return true;
+              }
+              else {
+              	return false;
+              }            
+          }
+      	catch (Exception e){
+        	e.printStackTrace();
+        	return false;
+        }
+      	
+      	finally {
+      		session.close();
+          }
+      }
+      
+      public List<Category> getAttributes() //ok
+      {
+      	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+          try {
+          	
+              Query query = s.createQuery("select a from Attributes a");
+              
+              List<Category> category =  query.list();
+              return category;
+  
+          }
+          catch (Exception e){
+	        	e.printStackTrace();
+	        	return null;
+	        }
+          finally {
+              s.close();
+          }
+      }
+      
+      public Category getAttributes(int idAttributes) //ok
+      {
+      	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+          try {
+          	
+              Query query = s.createQuery("select a from Attributes a where a.idCategory='" + idAttributes + "'");
+              
+              List<Category> category =  query.list();
+              if (category.isEmpty() || category.size()==0)
+              	return null;
+              return (Category) category.get(0);
+  
+          }
+          catch (Exception e){
+	        	e.printStackTrace();
+	        	return null;
+	        }
+          finally {
+              s.close();
+          }
+      }
+      
+      public Category getAttributes(String name) //ok
+      {
+      	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+          try {
+          	
+              Query query = s.createQuery("select a from Attributes a where a.name='" + name + "'");
+              
+              List<Category> category =  query.list();
+              if (category.isEmpty() || category.size()==0)
+              	return null;
+              return (Category) category.get(0);
+  
+          } 
+          catch (Exception e){
+	        	e.printStackTrace();
+	        	return null;
+	        }
+          finally {
+              s.close();
+          }
+      }
+      public boolean addAttributes(Attributes at) //ok
+      {
+      	Session s = sf.openSession();
+          try {
+              Transaction tx = s.beginTransaction();
+  
+              try {
+                  s.save(at);
+  
+                  tx.commit();
+                  return true;
+              } catch (Exception e) {
+                  tx.rollback();
+                  return false;
+              }
+          }
+          catch (Exception e){
+	        	e.printStackTrace();
+	        	return false;
+	        } finally {
+              s.close();
+          }
+      }
+      
+      public void editAttributes(Attributes at) //ok
+      {
+      	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+      	try
+          {
+      		Transaction tx = session.beginTransaction();
+      
+              session.update(at);
+              tx.commit();
+                 
+          }
+      	catch (Exception e){
+	        	e.printStackTrace();
+	        }
+      	finally {
+      		session.close();
+          }
+      }
+      
+      
+      
+      
+     public boolean addFinanceRegisterRecord(FinanceRegister fr) /// not work..
      {
      	Session s = sf.openSession();
          try {
@@ -316,10 +491,15 @@ import backend.core.model.Products;
                  tx.commit();
                  return true;
              } catch (Exception e) {
+            	 e.printStackTrace();
                  tx.rollback();
                  return false;
              }
-         } finally {
+         }catch (Exception e){
+	        	e.printStackTrace();
+	        	return false;
+	        }
+         finally {
              s.close();
          }
      }
@@ -329,12 +509,16 @@ import backend.core.model.Products;
      	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
          try {
          	
-             Query query = s.createQuery("select c from Category c");
+             Query query = s.createQuery("select fr from FinanceRegister fr");
              
              List<FinanceRegister> fr =  query.list();
              return fr;
  
-         } finally {
+         }catch (Exception e){
+	        	e.printStackTrace();
+	        	return null;
+	        }
+         finally {
              s.close();
          }
      }

@@ -80,7 +80,7 @@ public class HumanResources {
 
     }
   
-    public boolean addUser(Users user)
+    public boolean addUser(Users user) //ok
     {
         Session s = sf.openSession();
         try {
@@ -105,9 +105,8 @@ public class HumanResources {
         }
     }
     
-    public List<Users> getUsers(int IdGroup) // nie dziala wyswietla wszystkich userow, niezaleznie od grupy?? (dziwne przeciez zapytanie nawet mu nie pozwala)
+    public List<Users> getUsers(int IdGroup) //ok
    {
-    	//Session s = sf.openSession(); // nie wiem jak sie odwolac do groups_has_user, takto problem bylby rozwiazany
     	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
        try {
     	   String hql = "select new backend.core.model.Users(u.idusers, u.name, u.surname, u.password, u.salt, u.hired, u.last_login) "
@@ -120,13 +119,7 @@ public class HumanResources {
            if (result.isEmpty() || result.size()==0)
            	return null;
            return  result;
-/*
-           Query q = s.createQuery("select u from Users u, Groups g where u.i=g.idgroups");        
-           List<Users> result =q.list();
-           if (result.isEmpty() || result.size()==0)
-           	return null;
-           return result;
-*/
+
        } catch (Exception e){
        	e.printStackTrace();
        	return null;
@@ -182,7 +175,7 @@ public class HumanResources {
 		
     }
     
-    public boolean removeGroup(int idGroup) // ok, rozpatrzyc przypadek kiedy usuwa sie grupe do ktorej ktos nalezy.
+    public boolean removeGroup(int idGroup) // ok
     {
     	Session session = sf.openSession();
     	try
@@ -227,7 +220,7 @@ public class HumanResources {
         }
     }
     
-    public List<Groups> getGroup() // dziala ale problem zaczyna sie wtedy kiedy musi wyswietlic tostring userow w grupie trzeba napisac innego to string
+    public List<Groups> getGroup() //ok
     {
     	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
         try {

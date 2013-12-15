@@ -74,7 +74,7 @@ public class FinanceManagement {
 
     }
     
-    public boolean addUser(Users user)
+    public boolean addUser(Users user) // ok
     {
         Session s = sf.openSession();
         try {
@@ -99,18 +99,26 @@ public class FinanceManagement {
         }
     }
     
-    //zrobic-------------- HOW??!!
-     public List<Users> getUsers(int IdGroup)
+    public List<Users> getUsers(int IdGroup) //ok
     {
-    	 Session s = sf.openSession();
+     	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
         try {
-        	Query q = s.createQuery("from Users u, Groups g where '"+IdGroup+"'=g.idgroups");      
-            List<Users> result =q.list();
+     	   String hql = "select new backend.core.model.Users(u.idusers, u.name, u.surname, u.password, u.salt, u.hired, u.last_login) "
+     	   		+ "from Users u join u.Groups g where g.idgroups in (:idGroup)";
+     	   Query q = s.createQuery(hql);
+     	   q.setParameter("idGroup", IdGroup);
+     	   
+     	   List<Users> result =q.list();
+     	   
             if (result.isEmpty() || result.size()==0)
             	return null;
-            return result;
+            return  result;
 
-        } finally {
+        } catch (Exception e){
+        	e.printStackTrace();
+        	return null;
+        }
+        finally {
             s.close();
         }
     }
@@ -163,7 +171,7 @@ public class FinanceManagement {
  		
      }
     
-     public boolean removeGroup(int idGroup) // ok, rozpatrzyc przypadek kiedy usuwa sie grupe do ktorej ktos nalezy.
+     public boolean removeGroup(int idGroup) // ok
      {
      	Session session = sf.openSession();
      	try

@@ -110,5 +110,12 @@ public class Products {
         this.orders = orders;
     }
 
+	@Override
+	public String toString() {
+		return "Products [idProducts=" + idProducts + ", name=" + name
+				+ ", count=" + count + ", price="
+				+ price + "]";
+	}
+
     
 }

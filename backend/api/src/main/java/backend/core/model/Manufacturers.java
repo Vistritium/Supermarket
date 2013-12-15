@@ -37,6 +37,12 @@ public class Manufacturers {
     public void setName(String name) {
         this.name = name;
     }
+
+	@Override
+	public String toString() {
+		return "Manufacturers [idManufacturer=" + idManufacturer + ", name="
+				+ name + "]";
+	}
     
     
 }
