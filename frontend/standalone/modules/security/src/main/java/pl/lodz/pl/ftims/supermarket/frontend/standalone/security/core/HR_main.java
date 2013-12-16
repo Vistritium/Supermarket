@@ -11,7 +11,7 @@ import java.awt.BorderLayout;
 
 
 public class HR_main extends HR_template{
-	private JPanel templatePanel;
+	public JPanel templatePanel;
 	
 	public HR_main() {
 		templatePanel = new JPanel();
