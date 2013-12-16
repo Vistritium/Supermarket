@@ -1,13 +1,5 @@
 package backend.api;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
-
 import java.util.List;
 
 import org.hibernate.Query;
@@ -15,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import backend.core.SessionFactoryManager;
+import backend.core.model.Category;
 import backend.core.model.Products;
 
 /**
@@ -23,36 +16,49 @@ import backend.core.model.Products;
  */
 public class WebApp {
 	
-
-
-    public Products getProduct(int idProduct, String type) 
-    {
-    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
-        try {
-
-            Query q = s.createQuery("select p from Products p where "+idProduct+"=u.idProducts");        
-            List<Products> result =q.list();
-            if (result.isEmpty() || result.size()==0)
-            	return null;
-            return (Products) result.get(0);
-
-        } finally {
-            s.close();
-        }
-    }
+	private static SessionFactory sf = SessionFactoryManager.INSTANCE.getSessionFactory();
     
-    public List<Products> getProducts()
+    public List<Products> getProducts() // ok
     {
-    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	Session s = sf.openSession();
         try {
         	
             Query query = s.createQuery("select p from Products p");
             
             List<Products> products =  query.list();
+            if (products.isEmpty() || products.size()==0)
+            	return null;
             return products;
 
-        } finally {
+        } catch (Exception e){
+           	e.printStackTrace();
+           	return null;
+           }
+        finally {
+            s.close();
+        }
+    }
+    
+    public List<Category> getCategory() // ok
+    {
+
+    	Session s = sf.openSession();
+        try {
+        	
+            Query query = s.createQuery("select c from Category c");
+            
+            List<Category> category =  query.list();
+            if (category.isEmpty() || category.size()==0)
+            	return null;
+            return category;
+
+        } catch (Exception e){
+           	e.printStackTrace();
+           	return null;
+           }
+        finally {
             s.close();
         }
     }
 }
+

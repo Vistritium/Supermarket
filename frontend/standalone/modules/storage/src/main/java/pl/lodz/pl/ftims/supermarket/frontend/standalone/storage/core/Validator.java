@@ -4,6 +4,7 @@ import java.util.List;
 
 import backend.api.StorageManagement;
 import backend.core.model.Category;
+import backend.core.model.Manufacturers;
 import backend.core.model.Products;
 
 public class Validator {
@@ -19,45 +20,46 @@ public class Validator {
 
         
         public boolean addProduct(String name,int idCategory, int idSupplier,String cena, String count){
-        	
-    		int errorCount=0;
-    		char[] convertedName = name.toCharArray();
-    		for(int i=0; i<convertedName.length; i++ ){
-    			   if(!(convertedName[i] >= 'a' && convertedName[i] <= 'z' || convertedName[i] >= 'A' && convertedName[i] <= 'Z' ||convertedName[i] ==' ' || convertedName[i] =='-')) errorCount++;
-    		}	      
-    	
-    int a;		
+                
+                    int errorCount=0;
+                    char[] convertedName = name.toCharArray();
+                    for(int i=0; i<convertedName.length; i++ ){
+                               if(!(convertedName[i] >= 'a' && convertedName[i] <= 'z' || convertedName[i] >= 'A' && convertedName[i] <= 'Z' ||convertedName[i] ==' ' || convertedName[i] =='-')) errorCount++;
+                    }              
+            
+    int a;                
     try{
-    	a = Integer.parseInt(cena);
+            a = Integer.parseInt(cena);
     }  catch (NumberFormatException e){
-    	return false;
+            return false;
     }
-    
+    if(a<0) return false;
     int b;
     
     try{
-    	b = Integer.parseInt(count);
+            b = Integer.parseInt(count);
     }  catch (NumberFormatException e){
-        	return false;
+                return false;
         }
-    		
-    		if(errorCount==0) {
-    			List<Category> cat= apiSM.getCategory();
-    			
-    			int index=-1;
-    			
-    			for(int i=0; i<cat.size(); i++){
-    				if(cat.get(i).getIdCategory()==idCategory){
-    					index=i;
-    					break;
-    				}
-    			}
-    			
-    			if(apiSM.addProduct(new Products(name, cat.get(index), a, b, idSupplier))) return true;
-    			else return false;
-    		}
-    		else
-    		return false;
+    if(b<0) return false;  
+    
+                    if(errorCount==0) {
+                            List<Category> cat= apiSM.getCategory();
+                            
+                            int index=-1;
+                            
+                            for(int i=0; i<cat.size(); i++){
+                                    if(cat.get(i).getIdCategory()==idCategory){
+                                            index=i;
+                                            break;
+                                    }
+                            }
+                            
+                            if(apiSM.addProduct(new Products(name, cat.get(index), a, b, idSupplier))) return true;
+                            else return false;
+                    }
+                    else
+                    return false;
 
         }
         
@@ -65,15 +67,54 @@ public class Validator {
         
         
         public boolean editProduct(int idProduct, String name,int idCategory, int idSupplier,String count){
-        	return true;
+            int errorCount=0;
+            char[] convertedName = name.toCharArray();
+            for(int i=0; i<convertedName.length; i++ ){
+                       if(!(convertedName[i] >= 'a' && convertedName[i] <= 'z' || convertedName[i] >= 'A' && convertedName[i] <= 'Z' ||convertedName[i] ==' ' || convertedName[i] =='-')) errorCount++;
+            }              
+    
+            int a;                
+            try{
+				a = Integer.parseInt(price);
+            }  catch (NumberFormatException e){
+            	return false;
+            }
+            if(a<0) return false;
+            int b;
+
+            try{
+            	b = Integer.parseInt(count);
+            }	catch (NumberFormatException e){
+            	return false;
+            }
+            if(b<0) return false;  
+
+            if(errorCount==0) {
+                    List<Category> cat= apiSM.getCategory();
+                    
+                    int index=-1;
+                    
+                    for(int i=0; i<cat.size(); i++){
+                            if(cat.get(i).getIdCategory()==idCategory){
+                                    index=i;
+                                    break;
+                            }
+                    }
+                    
+                    apiSM.editProduct(new Products(name, cat.get(index), a, b, idSupplier));
+                    return true;
+            }
+            else
+            return false;
+
         }
         
         
         
         
         public boolean removeProduct(int idProduct){
-        	if(apiSM.removeProduct(idProduct)) return true;
-        	else return false;
+                if(apiSM.removeProduct(idProduct)) return true;
+                else return false;
         }
         
         
@@ -81,65 +122,101 @@ public class Validator {
         
         public boolean addCategory(String name){
 
-        		int errorCount=0;
-        		char[] convertedName = name.toCharArray();
-        		for(int i=0; i<convertedName.length; i++ ){
-        			   if(!(convertedName[i] >= 'a' && convertedName[i] <= 'z' || convertedName[i] >= 'A' && convertedName[i] <= 'Z' ||convertedName[i] ==' ' ||convertedName[i] =='-')) errorCount++;
-        		}	      
-        		
-        		if(errorCount==0) {
-        			if(apiSM.addCategory(new Category(name))) return true;
-        			else return false;
-        		}	
+                        int errorCount=0;
+                        char[] convertedName = name.toCharArray();
+                        for(int i=0; i<convertedName.length; i++ ){
+                                   if(!(convertedName[i] >= 'a' && convertedName[i] <= 'z' || convertedName[i] >= 'A' && convertedName[i] <= 'Z' ||convertedName[i] ==' ' ||convertedName[i] =='-')) errorCount++;
+                        }              
+                        
+                        if(errorCount==0) {
+                                if(apiSM.addCategory(new Category(name))) return true;
+                                else return false;
+                        }        
 
 
-        	return false;
+                return false;
         }
         
         
         
         
         public boolean removeCategory(int idCategory){
-        	if(apiSM.removeCategory(idCategory)) return true;
-        	else return false;
+                if(apiSM.removeCategory(idCategory)) return true;
+                else return false;
         }
         
         
         
         
-        public boolean editCategory(int idCategory, String name){
-        	return true;
+        public boolean editCategory(int idCategory, String name){ //nie mialem pomyslu co zrobić z tym id, ale powinno działać (raczej);/
+        	  int errorCount=0;
+              char[] convertedName = name.toCharArray();
+              for(int i=0; i<convertedName.length; i++ ){
+                         if(!(convertedName[i] >= 'a' && convertedName[i] <= 'z' || convertedName[i] >= 'A' && convertedName[i] <= 'Z' ||convertedName[i] ==' ' ||convertedName[i] =='-')) errorCount++;
+              }              
+              
+              if(errorCount==0) {
+            	  	Category cat = new Category(name);
+            	  	cat.setIdCategory(idCategory);   //id wciśnięte tutaj
+                      apiSM.editCategory(cat); 
+                      return true;
+              }       
+        	return false;
         }
         
         
         
         
         public boolean addSupplier(String name){
-        	return true;
+        	
+            int errorCount=0;
+            char[] convertedName = name.toCharArray();
+            for(int i=0; i<convertedName.length; i++ ){
+                       if(!(convertedName[i] >= 'a' && convertedName[i] <= 'z' || convertedName[i] >= 'A' && convertedName[i] <= 'Z' ||convertedName[i] ==' ' ||convertedName[i] =='-')) errorCount++;
+            }              
+            
+            if(errorCount==0) {
+                    if(apiSM.addManufacturer(new Manufacturers(name))) return true;
+                    else return false;
+            } 
+            
+            
+                return false;
         }
         
         
         
         
         public boolean removeSupplier(int idSupplier){
-        	if(apiSM.removeManufacturer(idSupplier)) return true;
-        	else return false;
+                if(apiSM.removeManufacturer(idSupplier)) return true;
+                else return false;
 
         }
         
         
         
         
-        public boolean editSupplier(int idSupplier, String name){
-        	return true;
+        public boolean editSupplier(int idSupplier, String name){ //na zasadzie editCategory
+      	  int errorCount=0;
+          char[] convertedName = name.toCharArray();
+          for(int i=0; i<convertedName.length; i++ ){
+                     if(!(convertedName[i] >= 'a' && convertedName[i] <= 'z' || convertedName[i] >= 'A' && convertedName[i] <= 'Z' ||convertedName[i] ==' ' ||convertedName[i] =='-')) errorCount++;
+          }              
+          
+          if(errorCount==0) {
+        	  Manufacturers sup = new Manufacturers(name);
+        	  	sup.setIdManufacturer(idSupplier);  //id wcisniete tutaj
+                  apiSM.editManufacturer(sup);
+                  return true;
+          }       
+          return false;
         }
        
         
         
         
-        
         public boolean sell(int idPriduct, String count){
-        	return true;
+                return true;
         }
         
       

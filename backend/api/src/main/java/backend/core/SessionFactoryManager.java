@@ -41,6 +41,7 @@ public enum SessionFactoryManager {
         cfg.addResource("Monitoring.hbm.xml");
         cfg.addResource("MonitoringWorkers.hbm.xml");
         cfg.addResource("FinanceRegister.hbm.xml");
+        cfg.addResource("Manufacturers.hbm.xml");
         
         sessionFactory = cfg.buildSessionFactory();
 	}

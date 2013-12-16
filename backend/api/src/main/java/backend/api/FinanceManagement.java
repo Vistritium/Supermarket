@@ -14,7 +14,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 
 import backend.core.SessionFactoryManager;
 import backend.core.model.FinanceRegister;
@@ -27,55 +26,35 @@ import backend.core.model.Users;
  */
 public class FinanceManagement {
     
-    private static SessionFactory sf = null;
-
-    public static SessionFactory getInstance() {
-
-        if (sf == null) {
-
-            Configuration cfg = new Configuration();
-            cfg.setProperty("hibernate.dialect",
-                    "org.hibernate.dialect.MySQLDialect");
-            cfg.setProperty("hibernate.connection.driver_class",
-                    "com.mysql.jdbc.Driver");
-            cfg.setProperty("hibernate.connection.url",
-                    "jdbc:mysql://localhost/io");
-            cfg.setProperty("hibernate.connection.username", "root");
-            cfg.setProperty("hibernate.connection.password", "");
-            cfg.setProperty("hibernate.hbm2ddl.auto", "update");
-
-            cfg.setProperty("show_sql", "true");
-            
-            cfg.addResource("Groups.hbm.xml");
-            cfg.addResource("Users.hbm.xml");
-            cfg.addResource("FinanceRegister.hbm.xml");
-
-            sf = cfg.buildSessionFactory();
-        }
-
-        return sf;
-    }
-
-    
-    public List<Users> getAllUser()
+	private static SessionFactory sf = SessionFactoryManager.INSTANCE.getSessionFactory();
+	
+	public List<Users> getAllUsers() // ok
     {
-    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	Session s = sf.openSession();
 	        try {
 	        	
 	            Query query = s.createQuery("select u from Users u");
 	            
 	            List<Users> users =  query.list();
+	            if (users.isEmpty() || users.size()==0)
+	            	return null;
 	            return users;
 
-	        } finally {
+	        } 
+	        catch (Exception e){
+	        	e.printStackTrace();
+	        	return null;
+	        }
+	        	finally {
 	            s.close();
 	        }
+			
 
     }
    
-    public Users getUser(int idUser)
+    public Users getUser(int idUser) // ok
     {
-    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	Session s = sf.openSession();
         try {
 
             Query q = s.createQuery("select u from Users u where "+idUser+"=u.idusers");        
@@ -84,13 +63,18 @@ public class FinanceManagement {
             	return null;
             return (Users) result.get(0);
 
-        } finally {
+        } 
+        catch (Exception e){
+        	e.printStackTrace();
+        	return null;
+        }
+        finally {
             s.close();
         }
 
     }
     
-    public boolean addUser(Users user)
+    public boolean addUser(Users user) // ok
     {
         Session s = sf.openSession();
         try {
@@ -105,122 +89,159 @@ public class FinanceManagement {
                 tx.rollback();
                 return false;
             }
-        } finally {
+        } catch (Exception e){
+        	e.printStackTrace();
+        	return false;
+        }
+        finally {
             s.close();
+          
         }
     }
     
-    //zrobic-------------- HOW??!!
-     public List<Users> getUsers(int IdGroup)
+    public List<Users> getUsers(int IdGroup) //ok
     {
      	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
         try {
-        	Query q = s.createQuery("from Users u, Groups g where "+IdGroup+"=g.idgroups");      
-            List<Users> result =q.list();
+     	   String hql = "select new backend.core.model.Users(u.idusers, u.name, u.surname, u.password, u.salt, u.hired, u.last_login) "
+     	   		+ "from Users u join u.Groups g where g.idgroups in (:idGroup)";
+     	   Query q = s.createQuery(hql);
+     	   q.setParameter("idGroup", IdGroup);
+     	   
+     	   List<Users> result =q.list();
+     	   
             if (result.isEmpty() || result.size()==0)
             	return null;
-            return result;
+            return  result;
 
-        } finally {
+        } catch (Exception e){
+        	e.printStackTrace();
+        	return null;
+        }
+        finally {
             s.close();
         }
     }
      
 
-    public void editUser(Users user)
-    {
-    	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
-    	try
-        {
-    		Transaction tx = session.beginTransaction();
+     public void editUser(Users user) // ok
+     {
+     	Session session = sf.openSession();
+     	try
+         {
+     		Transaction tx = session.beginTransaction();
+     
+             session.update(user);
+             tx.commit();
+                
+         } catch (Exception e){
+         	e.printStackTrace();
+         }
+     	finally  {
+     		session.close();
+         }
+         
+     }
     
-            session.update(user);
-            tx.commit();
-               
-        }
-    	finally {
-    		session.close();
-        }
-        
-    }
+     public boolean removeUser(int idUser) // ok
+     {
+     	Session session = sf.openSession();
+     	try
+         {
+     		Transaction tx = session.beginTransaction();
+     		Users user = (Users) session.load(Users.class, idUser);
+             if (null != user)
+             {
+                 session.delete(user);
+                 tx.commit();
+                 return true;         
+             }
+             else{
+             	return false;
+             }
+             
+         }
+     	catch (Exception e){
+         	e.printStackTrace();
+         	return false;
+         }
+     	finally {
+     		session.close();
+         }
+ 		
+     }
     
-    public void removeUser(int idUser)
-    {
-    	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
-    	try
-        {
-    		Transaction tx = session.beginTransaction();
-    		Users user = (Users) session.load(Users.class, idUser);
-            if (null != user)
-            {
-                session.delete(user);
-            }
-            tx.commit();
-        }
-    	finally {
-    		session.close();
-        }
-    }
+     public boolean removeGroup(int idGroup) // ok
+     {
+     	Session session = sf.openSession();
+     	try
+         {
+     		Transaction tx = session.beginTransaction();
+     		Groups group = (Groups) session.load(Groups.class, idGroup);
+             if (null != group)
+             {
+                 session.delete(group);
+                 tx.commit();
+                 return true;
+             }
+             else {
+             	return false;
+             }            
+         }
+     	catch (Exception e){
+         	e.printStackTrace();
+         	return false;
+     	}
+     	finally {
+     		session.close();
+         }
+     }
     
-    public boolean removeGroup(int idGroup)
-    {
-    	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
-    	try
-        {
-    		Transaction tx = session.beginTransaction();
-    		Groups group = (Groups) session.load(Groups.class, idGroup);
-            if (null != group)
-            {
-                session.delete(group);
-                tx.commit();
-                return true;
-            }
-            else {
-            	return false;
-            }            
-        }
-    	finally {
-    		session.close();
-        }
-    }
-    
-    public void editGroup(Groups newData)
-    {
-    	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
-    	try
-        {
-    		Transaction tx = session.beginTransaction();
-    
-            session.update(newData);
-            tx.commit();
-               
-        }
-    	finally {
-    		session.close();
-        }
-    }
+     public void editGroup(Groups newData) // ok
+     {
+     	Session session = sf.openSession();
+     	try
+         {
+     		Transaction tx = session.beginTransaction();
+     
+             session.update(newData);
+             tx.commit();
+                
+         }
+     	catch (Exception e){
+         	e.printStackTrace();
+     	}
+     	finally {
+     		session.close();
+         }
+     }
     
 
-    public List<Groups> getGroup()
+     public List<Groups> getGroup() //ok
+     {
+     	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+         try {
+
+             Query q = s.createQuery("select g from Groups g");        
+             List<Groups> result =q.list();
+             if (result.isEmpty() || result.size()==0)
+             	return null;
+             return result;
+
+         } 
+         catch (Exception e){
+         	e.printStackTrace();
+         	return null;
+     	}
+         finally {
+             s.close();
+         }
+     }
+
+    
+    public boolean addFinanceRegisterRecord(FinanceRegister fr) //ok
     {
     	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
-        try {
-
-            Query q = s.createQuery("select g from Groups g");        
-            List<Groups> result =q.list();
-            if (result.isEmpty() || result.size()==0)
-            	return null;
-            return result;
-
-        } finally {
-            s.close();
-        }
-    }
-
-    
-    public boolean addFinanceRegisterRecord(FinanceRegister fr)
-    {
-        Session s = sf.openSession();
         try {
             Transaction tx = s.beginTransaction();
 
@@ -230,32 +251,40 @@ public class FinanceManagement {
                 tx.commit();
                 return true;
             } catch (Exception e) {
+            	e.printStackTrace();
                 tx.rollback();
                 return false;
             }
-        } finally {
+
+        }
+        catch (Exception e){
+        	e.printStackTrace();
+        	return false;
+        	}
+
+        finally {
             s.close();
         }
     }
     
-    public FinanceRegister getFinanceRegisterRecord()
-    {
-        FinanceRegister fr = new FinanceRegister();
-        //sprecyzuj czego kurwa chcesz? :P
-        return fr;
-    }
-    public List<FinanceRegister> getFinanceRegisterRecords()
+    
+    public List<FinanceRegister> getFinanceRegisterRecords() //  ok
     {
     	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
         try {
 
-            Query q = s.createQuery("select * from FinanceRegister");        
+            Query q = s.createQuery("select f from FinanceRegister f");        
             List<FinanceRegister> result =q.list();
             if (result.isEmpty() || result.size()==0)
             	return null;
             return result;
 
-        } finally {
+        } 
+        catch (Exception e){
+        	e.printStackTrace();
+        	return null;
+        	}
+        finally {
             s.close();
         }
     }

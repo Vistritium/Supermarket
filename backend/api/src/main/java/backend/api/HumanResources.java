@@ -9,19 +9,20 @@ package backend.api;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
-
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-
-import backend.core.SessionFactoryManager;
-import backend.core.controller.UserController;
-import backend.core.model.Groups;
-import backend.core.model.Users;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.Transaction;
+
+import backend.core.SessionFactoryManager;
+import backend.core.model.Groups;
+import backend.core.model.Users;
 
 /**
  *
@@ -31,7 +32,7 @@ public class HumanResources {
 	 private static SessionFactory sf = SessionFactoryManager.INSTANCE.getSessionFactory();
 
     
-	    public Users getUser(int idUser)
+	    public Users getUser(int idUser) // ok
 	    {
 	    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
 	        try {
@@ -42,7 +43,12 @@ public class HumanResources {
 	            	return null;
 	            return (Users) result.get(0);
 
-	        } finally {
+	        } 
+	        catch (Exception e){
+	        	e.printStackTrace();
+	        	return null;
+	        }
+	        finally {
 	            s.close();
 	        }
 
@@ -50,23 +56,31 @@ public class HumanResources {
     
 
     
-    public List<Users> getAllUsers()
+    public List<Users> getAllUsers() // ok
     {
-    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	Session s = sf.openSession();
 	        try {
 	        	
 	            Query query = s.createQuery("select u from Users u");
 	            
 	            List<Users> users =  query.list();
+	            if (users.isEmpty() || users.size()==0)
+	            	return null;
 	            return users;
 
-	        } finally {
+	        } 
+	        catch (Exception e){
+	        	e.printStackTrace();
+	        	return null;
+	        }
+	        	finally {
 	            s.close();
 	        }
+			
 
     }
   
-    public boolean addUser(Users user)
+    public boolean addUser(Users user) //ok
     {
         Session s = sf.openSession();
         try {
@@ -81,29 +95,42 @@ public class HumanResources {
                 tx.rollback();
                 return false;
             }
-        } finally {
+        } catch (Exception e){
+        	e.printStackTrace();
+        	return false;
+        }
+        finally {
             s.close();
+          
         }
     }
     
-    public List<Users> getUsers(int IdGroup)
+    public List<Users> getUsers(int IdGroup) //ok
    {
     	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
        try {
-
-           Query q = s.createQuery("select u from Users u, Groups g where "+IdGroup+"=g.idgroups");        
-           List<Users> result =q.list();
+    	   String hql = "select new backend.core.model.Users(u.idusers, u.name, u.surname, u.password, u.salt, u.hired, u.last_login) "
+    	   		+ "from Users u join u.Groups g where g.idgroups in (:idGroup)";
+    	   Query q = s.createQuery(hql);
+    	   q.setParameter("idGroup", IdGroup);
+    	   
+    	   List<Users> result =q.list();
+    	   
            if (result.isEmpty() || result.size()==0)
            	return null;
-           return result;
+           return  result;
 
-       } finally {
+       } catch (Exception e){
+       	e.printStackTrace();
+       	return null;
+       }
+       finally {
            s.close();
        }
    }
-    public void editUser(Users user)
+    public void editUser(Users user) // ok
     {
-    	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	Session session = sf.openSession();
     	try
         {
     		Transaction tx = session.beginTransaction();
@@ -111,16 +138,18 @@ public class HumanResources {
             session.update(user);
             tx.commit();
                
+        } catch (Exception e){
+        	e.printStackTrace();
         }
-    	finally {
+    	finally  {
     		session.close();
         }
         
     }
     
-    public boolean removeUser(int idUser)
+    public boolean removeUser(int idUser) // ok
     {
-    	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	Session session = sf.openSession();
     	try
         {
     		Transaction tx = session.beginTransaction();
@@ -136,14 +165,19 @@ public class HumanResources {
             }
             
         }
+    	catch (Exception e){
+        	e.printStackTrace();
+        	return false;
+        }
     	finally {
     		session.close();
         }
+		
     }
     
-    public boolean removeGroup(int idGroup)
+    public boolean removeGroup(int idGroup) // ok
     {
-    	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	Session session = sf.openSession();
     	try
         {
     		Transaction tx = session.beginTransaction();
@@ -158,14 +192,18 @@ public class HumanResources {
             	return false;
             }            
         }
+    	catch (Exception e){
+        	e.printStackTrace();
+        	return false;
+    	}
     	finally {
     		session.close();
         }
     }
     
-    public void editGroup(Groups newData)
+    public void editGroup(Groups newData) // ok
     {
-    	Session session = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	Session session = sf.openSession();
     	try
         {
     		Transaction tx = session.beginTransaction();
@@ -174,12 +212,15 @@ public class HumanResources {
             tx.commit();
                
         }
+    	catch (Exception e){
+        	e.printStackTrace();
+    	}
     	finally {
     		session.close();
         }
     }
     
-    public List<Groups> getGroup()
+    public List<Groups> getGroup() //ok
     {
     	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
         try {
@@ -190,12 +231,17 @@ public class HumanResources {
             	return null;
             return result;
 
-        } finally {
+        } 
+        catch (Exception e){
+        	e.printStackTrace();
+        	return null;
+    	}
+        finally {
             s.close();
         }
     }
     
-    public boolean addGroup(Groups newData)
+    public boolean addGroup(Groups newData) // ok
     {
         Session s = sf.openSession();
         try {
@@ -210,7 +256,11 @@ public class HumanResources {
                 tx.rollback();
                 return false;
             }
-        } finally {
+        } 
+        catch (Exception e){
+        	e.printStackTrace();
+        	return false;
+    	}finally {
             s.close();
         }
     }

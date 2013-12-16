@@ -36,6 +36,17 @@ public class Users {
         this.hired = hired;
         this.last_login = last_login;
     }
+    
+    public Users(int idusers,String name, String surname, String password, String salt, Date hired, Date last_login) {
+    	this.idusers = idusers;
+    	this.name = name;
+        this.surname = surname;
+        this.password = password;
+        this.salt = salt;
+        this.hired = hired;
+        this.last_login = last_login;
+    }
+    
 
     public Users() {
     }
@@ -102,6 +113,10 @@ public class Users {
 
     public void setGroups(Set<Groups> groups) {
         this.groups = groups;
+    }
+    
+    public void addGroups(Set<Groups> groups){
+    	this.groups.addAll(groups);
     }
 
     public Set<Orders> getOrders() {

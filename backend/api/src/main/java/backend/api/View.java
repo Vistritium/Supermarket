@@ -29,51 +29,68 @@ public class View {
 	private static SessionFactory sf = SessionFactoryManager.INSTANCE
 			.getSessionFactory();
 	
-    public boolean checkAuthorization(String name, String password)
+    public boolean checkAuthorization(String name, String password) // ok
     {
-    	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    	Session s = sf.openSession();
         try {
 
-            Query q = s.createQuery("select u from Users u where u.name=" +name + " and u.password=" +password);        
+            Query q = s.createQuery("select u from Users u where u.name='" +name + "' and u.password='" +password + "'");        
             List<Users> result =q.list();
             if (result.isEmpty() || result.size()==0)
             	return false;
             return true;
 
-        } finally {
+        }
+        catch (Exception e){
+        	e.printStackTrace();
+        	return false;
+        }
+        finally {
             s.close();
         }
     }
     
-      public List<Users> getUsers(int IdGroup)
-    {	//jeszcze nie do konca jestem pewien... dam wam na razie zwracajaca wszystkich userow.
-       	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
+    public List<Users> getUsers(int IdGroup) //ok
+    {
+     	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
         try {
-
-            Query q = s.createQuery("select u from Users u, Groups g where "+IdGroup+"=g.idgroups");        
-            List<Users> result =q.list();
+     	   String hql = "select new backend.core.model.Users(u.idusers, u.name, u.surname, u.password, u.salt, u.hired, u.last_login) "
+     	   		+ "from Users u join u.Groups g where g.idgroups in (:idGroup)";
+     	   Query q = s.createQuery(hql);
+     	   q.setParameter("idGroup", IdGroup);
+     	   
+     	   List<Users> result =q.list();
+     	   
             if (result.isEmpty() || result.size()==0)
             	return null;
-            return result;
+            return  result;
 
-        } finally {
+        } catch (Exception e){
+        	e.printStackTrace();
+        	return null;
+        }
+        finally {
             s.close();
         }
     }
       
-      public List<Users> getAllUsers()
+      public List<Users> getAllUsers() // ok
       {
-      	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
-  	        try {
-  	        	
-  	            Query query = s.createQuery("select u from Users u");
-  	            
-  	            List<Users> users =  query.list();
-  	            return users;
+    	  Session s = sf.openSession();
+	        try {
+	        	
+	            Query query = s.createQuery("select u from Users u");
+	            
+	            List<Users> users =  query.list();
+	            return users;
 
-  	        } finally {
-  	            s.close();
-  	        }
-
+	        } 
+	        catch (Exception e){
+	        	e.printStackTrace();
+	        	return null;
+	        }
+	        	finally {
+	            s.close();
+	        }
       }
 }

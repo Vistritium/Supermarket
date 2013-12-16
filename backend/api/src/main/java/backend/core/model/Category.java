@@ -23,7 +23,8 @@ public class Category {
     public Category(String name) {
         this.name = name;
     }
-
+    public Category() {
+    }
     
     public int getIdCategory() {
         return idCategory;
@@ -56,6 +57,12 @@ public class Category {
     public void setAttributes(Set<Attributes> attributes) {
         this.attributes = attributes;
     }
+	@Override
+	public String toString() {
+		return "Category [idCategory=" + idCategory + ", name=" + name
+				+ "]";
+	}
+
 
     
 }

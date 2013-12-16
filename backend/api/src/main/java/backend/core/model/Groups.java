@@ -15,7 +15,7 @@ import java.util.Set;
  */
 public class Groups {
     private int idgroups;
-    private String name;
+	private String name;
     private String description;
     private float salary;
     private Set<Users> Users = new HashSet<Users>(0);
@@ -69,6 +69,13 @@ public class Groups {
     public void setUsers(Set<Users> Users) {
         this.Users = Users;
     }
+
+	@Override
+	public String toString() {
+		return "Groups [idgroups=" + idgroups + ", name=" + name
+				+ ", description=" + description + ", salary=" + salary + "]";
+	}
+
 
 
 }

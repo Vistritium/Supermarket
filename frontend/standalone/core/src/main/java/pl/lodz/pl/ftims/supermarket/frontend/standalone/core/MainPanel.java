@@ -11,17 +11,21 @@ public class MainPanel extends JPanel {
 
 	TabPanel taby;
 
-	public MainPanel(List<Initalizable> modules){
+	public MainPanel(List<Initalizable> modules) {
 		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createTitledBorder("Główne okno"));
-		//this.setBackground(Color.BLUE);
+		// this.setBackground(Color.BLUE);
 		this.taby = new TabPanel();
 		this.add(taby);
-		//System.out.println("Dodalem taby");		
+		// System.out.println("Dodalem taby");
 		this.taby.setVisible(true);
-		for(Initalizable module : modules){
-			module.init(taby);
+		for (final Initalizable module : modules) {
+			new Thread() {
+				public void run() {
+					module.init(taby);
+				}
+			}.start();
 		}
-		//System.out.println("Stworzylem mainPanel");
+		// System.out.println("Stworzylem mainPanel");
 	}
 }
