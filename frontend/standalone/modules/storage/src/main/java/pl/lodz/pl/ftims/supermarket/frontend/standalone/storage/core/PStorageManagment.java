@@ -268,9 +268,25 @@ public class PStorageManagment extends JPanel {
 		contentPanel.add(btnSzukaj, gbc_btnSzukaj);
 		
 		//First update of products, suppliers and categories		
-		updateProductsList();
-		updateCategoryList();
-		updateSuppliersList();
+		try{
+			updateProductsList();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		try{
+			updateCategoryList();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		try{
+			updateSuppliersList();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+
 		
 		if(secure!=1){
 			bDeleteSelectedProduct.setVisible(false);
