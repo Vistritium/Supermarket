@@ -35,6 +35,7 @@ public class Main {
 		List<Initalizable> modules = new ArrayList<>();
 		modules.add(getInitStorageManagement());
 		modules.add(getInitStatistics());
+		modules.add(getInitSecurity());
 		return modules;
 	}
 
@@ -45,5 +46,9 @@ public class Main {
 	
 	private static Initalizable getInitStatistics(){
 		return new pl.lodz.pl.ftims.supermarket.frontend.standalone.statistics.core.Init();
+	}
+	
+	private static Initalizable getInitSecurity(){
+		return new pl.lodz.pl.ftims.supermarket.frontend.standalone.security.core.Init();
 	}
 }

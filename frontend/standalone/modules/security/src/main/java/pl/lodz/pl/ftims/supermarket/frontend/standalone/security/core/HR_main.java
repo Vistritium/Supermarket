@@ -18,11 +18,14 @@ public class HR_main extends HR_template{
 	HR_employeesList	panEList;
 	HR_group			panGroup;
 	HR_groupList		panGList;
-
+	
+	public JPanel getMainPanel() {return templatePanel;}
 	
 	public HR_main() {
-		templatePanel = new JPanel();
-		//jpan = new JPanel();
+		//templatePanel = new JPanel();
+		jpan = new JPanel();
+		init();
+		templatePanel = getPanel();
 		//panEmployee = new HR_employee();
 		//panEList	= new HR_employeesList();
 		//panGroup	= new 
@@ -48,7 +51,7 @@ public class HR_main extends HR_template{
 	@Override
 	void init() {
 		
-		
+		jpan.setName("AB LEWY");
 		
 	}
 
