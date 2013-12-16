@@ -23,6 +23,6 @@ public class ProcessData {
 		}
 		
 		void processFinanceRegister() {
-			//financeRegister = statistics.getFinanceRegisterRecord();
+			financeRegister = statistics.getFinanceRegisterRecords();
 		}
 }

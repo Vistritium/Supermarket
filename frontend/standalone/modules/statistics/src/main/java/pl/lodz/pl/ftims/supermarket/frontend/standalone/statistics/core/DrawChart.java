@@ -54,6 +54,25 @@ public class DrawChart {
 			return chartPanel;
 		}
 	
-	
-	
+	public ChartPanel  drawFinanceChart2() {
+		
+		DefaultPieDataset dane = new DefaultPieDataset();
+		dane.setValue("produkt A", 20); 
+		dane.setValue("produkt B", 25);
+		dane.setValue("produkt C", 10);
+		dane.setValue("produkt D", 45);
+		
+		final JFreeChart chart = ChartFactory.createPieChart
+				("Wykres kołowy ", 
+				dane, 
+				true, 
+				true, 
+				false 
+			);
+		 
+			
+			final ChartPanel chartPanel = new ChartPanel(chart);
+			
+			return chartPanel;
+		}
 }
