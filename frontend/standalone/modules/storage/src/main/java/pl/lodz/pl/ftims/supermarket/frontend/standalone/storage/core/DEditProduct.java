@@ -129,6 +129,11 @@ public class DEditProduct extends ModelDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Anuluj");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						close();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}

@@ -18,6 +18,8 @@ import com.jgoodies.forms.factories.FormFactory;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class DSell extends ModelDialog {
 
@@ -122,6 +124,11 @@ public class DSell extends ModelDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Anuluj");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						close();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}

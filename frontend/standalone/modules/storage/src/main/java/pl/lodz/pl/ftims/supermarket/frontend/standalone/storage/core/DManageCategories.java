@@ -123,10 +123,20 @@ public class DManageCategories extends ModelDialog {
 			}
 			{
 				bRemoveCategory = new JButton("Usuń");
+				bRemoveCategory.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						removeCategory();
+					}
+				});
 				panel_1.add(bRemoveCategory, "4, 6, right, default");
 			}
 			{
 				bEditCategory = new JButton("Edytuj");
+				bEditCategory.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						editCategory();
+					}
+				});
 				panel_1.add(bEditCategory, "6, 6, right, default");
 			}
 			
@@ -137,6 +147,11 @@ public class DManageCategories extends ModelDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton cancelButton = new JButton("Zamknij");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						close();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
@@ -152,6 +167,31 @@ public class DManageCategories extends ModelDialog {
 			updateFrame();
 		}
 		else JOptionPane.showMessageDialog(this, "Błąd dodawania kategorii");
+	}
+	
+	private void editCategory(){
+		String in=JOptionPane.showInputDialog("Wprowadź nową nazwę.");
+		if(in!=null){
+			if(validator.editCategory(categories.get(cCategories.getSelectedIndex()-1).getIdCategory(), in)){
+				panel.updateCategoryList();
+				JOptionPane.showMessageDialog(this, "Edytowano kategorię.");
+				updateFrame();
+			}
+			else{
+				JOptionPane.showMessageDialog(this, "Błąd edytowania kategorii");
+			}
+		}
+	}
+	
+	private void removeCategory(){
+		if(validator.removeCategory(categories.get(cCategories.getSelectedIndex()-1).getIdCategory())){
+			panel.updateCategoryList();
+			JOptionPane.showMessageDialog(this, "Usunięto kategorię.");
+			updateFrame();
+		}
+		else{
+			JOptionPane.showMessageDialog(this, "Błąd usuwania kategorii");
+		}
 	}
 	
 	private void updateFrame(){

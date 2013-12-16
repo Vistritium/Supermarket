@@ -121,12 +121,18 @@ public class DManageSuppliers extends ModelDialog {
 			}
 			{
 				bRemoveSupplier = new JButton("Usuń");
+				bRemoveSupplier.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						removeSupplier();
+					}
+				});
 				panel_1.add(bRemoveSupplier, "4, 6, right, default");
 			}
 			{
 				bEditSupplier = new JButton("Edytuj");
 				bEditSupplier.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						editSupplier();
 					}
 				});
 				panel_1.add(bEditSupplier, "6, 6, right, default");
@@ -147,6 +153,11 @@ public class DManageSuppliers extends ModelDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton cancelButton = new JButton("Zamknij");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						close();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
@@ -158,10 +169,33 @@ public class DManageSuppliers extends ModelDialog {
 	
 	private void addSupplier(){
 		if(validator.addSupplier(tSupplier.getText().toString())){
+			panel.updateSuppliersList();
 			JOptionPane.showMessageDialog(this, "Dodano dostawcę");
 			updateFrame();
 		}
 		else JOptionPane.showMessageDialog(this, "Błąd dodawania dostawcy");
+	}
+	
+	private void editSupplier(){
+		String in= JOptionPane.showInputDialog("Wprowadź nową nazwę dla dostawcy.");
+		if(in!=null){
+			if(validator.editSupplier(suppliers.get(cSuppliers.getSelectedIndex()-1).getIdManufacturer(), in)){
+				panel.updateSuppliersList();
+				JOptionPane.showMessageDialog(this, "Edytowano dostawcę");
+				updateFrame();
+			}
+			else JOptionPane.showMessageDialog(this, "Błąd edytowania dostawcy");
+		}
+	}
+
+	
+	private void removeSupplier(){
+		if(validator.removeSupplier(suppliers.get(cSuppliers.getSelectedIndex()-1).getIdManufacturer())){
+			panel.updateSuppliersList();
+			JOptionPane.showMessageDialog(this, "Usunięto dostawcę");
+			updateFrame();
+		}
+		else JOptionPane.showMessageDialog(this, "Błąd usuwania dostawcy");
 	}
 	
 	private void updateFrame(){
