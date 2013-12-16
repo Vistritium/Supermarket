@@ -269,8 +269,8 @@ public class PStorageManagment extends JPanel {
 		
 		//First update of products, suppliers and categories		
 		updateProductsList();
-		//updateCategoryList();
-		//updateSuppliersList();
+		updateCategoryList();
+		updateSuppliersList();
 		
 		if(secure!=1){
 			bDeleteSelectedProduct.setVisible(false);

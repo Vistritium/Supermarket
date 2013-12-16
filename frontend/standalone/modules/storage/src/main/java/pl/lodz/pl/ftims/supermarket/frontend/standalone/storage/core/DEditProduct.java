@@ -136,7 +136,7 @@ public class DEditProduct extends ModelDialog {
 	}
 	
 	private void editProduct(){
-		if(validator.editProduct(product.getIdProducts(), tName.getText().toString(), 1, 1, tCount.getText().toString())){
+		if(validator.editProduct(product.getIdProducts(), tName.getText().toString(), 1, 1, tPrice.getText().toString(), tCount.getText().toString())){
 			JOptionPane.showMessageDialog(this, "Edycja produktu powiodła się");
 			panel.updateProductsList();
 		}

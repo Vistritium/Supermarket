@@ -66,7 +66,7 @@ public class Validator {
         
         
         
-        public boolean editProduct(int idProduct, String name,int idCategory, int idSupplier,String count){
+        public boolean editProduct(int idProduct, String name,int idCategory, int idSupplier,String cena, String count){
             int errorCount=0;
             char[] convertedName = name.toCharArray();
             for(int i=0; i<convertedName.length; i++ ){
@@ -75,8 +75,7 @@ public class Validator {
     
             int a;                
             try{
-            	String price = "29";//TODO stub, remove
-				a = Integer.parseInt(price);
+            	a = Integer.parseInt(cena);
             }  catch (NumberFormatException e){
             	return false;
             }
@@ -159,7 +158,7 @@ public class Validator {
               if(errorCount==0) {
             	  	Category cat = new Category(name);
             	  	cat.setIdCategory(idCategory);   //id wciśnięte tutaj
-                      apiSM.editCategory(cat); 
+                      apiSM.editCategory(cat);
                       return true;
               }       
         	return false;
@@ -177,8 +176,8 @@ public class Validator {
             }              
             
             if(errorCount==0) {
-                    if(apiSM.addManufacturer(new Manufacturers(name))) return true;
-                    else return false;
+                    apiSM.addManufacturer(new Manufacturers(name));
+                    return true;
             } 
             
             
