@@ -11,12 +11,14 @@ import javax.swing.border.EmptyBorder;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
 import backend.api.StorageManagement;
 import backend.core.model.Category;
+import backend.core.model.Manufacturers;
 import backend.core.model.Products;
 
 import com.jgoodies.forms.layout.FormLayout;
@@ -37,6 +39,8 @@ public class DAddProduct extends ModelDialog {
 	private JComboBox cSupplier;
 	private JComboBox cCategory;
 	private Validator validator;
+	private List<Category> categories;
+	private List<Manufacturers> suppliers;
 
 	/**
 	 * Create the dialog.
@@ -143,15 +147,34 @@ public class DAddProduct extends ModelDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+		
+		cSupplier.removeAllItems();
+		
+		suppliers = new StorageManagement().getManufacturer();
+		
+		cSupplier.addItem("Wybierz dostawcę...");
+		for(int i=0; i<suppliers.size(); i++){
+			cSupplier.addItem(suppliers.get(i).getName());
+		}	
+		
+		cCategory.removeAllItems();
+		categories = new StorageManagement().getCategory();
+		
+		cCategory.addItem("Wybierz kategorię...");
+		for(int i=0; i<categories.size(); i++){
+			cCategory.addItem(categories.get(i).getName());
+		}	
+		
 	}
 	
 	private void addProduct(){
 		if(validator.addProduct(tName.getText().toString(), 
-				0, 
-				0, 
+				categories.get(cCategory.getSelectedIndex()-1).getIdCategory(), 
+				suppliers.get(cSupplier.getSelectedIndex()-1).getIdManufacturer(), 
 				tPrice.getText().toString(), 
 				tCount.getText().toString())){
 			JOptionPane.showMessageDialog(this, "Dodano produkt");
+			panel.updateProductsList();
 		}
 		else JOptionPane.showMessageDialog(this, "Błąd dodawania produktu");
 	}

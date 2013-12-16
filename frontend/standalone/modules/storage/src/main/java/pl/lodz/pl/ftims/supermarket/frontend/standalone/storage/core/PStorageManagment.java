@@ -317,7 +317,6 @@ public class PStorageManagment extends JPanel {
 	//Update methods
 	public void updateProductsList(){
 		products=apiSM.getProducts();
-		products.add(new Products("Masło extra", new Category("Nabiał"), 22, 2.5f, 1));
 		
 		//Delete data from tableModel
 		for(int i=0; i<tableModel.getRowCount()-1; i++){
@@ -336,7 +335,7 @@ public class PStorageManagment extends JPanel {
 			
 			Object[] exx={
 				products.get(i).getName(),
-				"Milkovita",
+				products.get(i).getSuppliers(),
 				products.get(i).getCategory().getName(),
 				products.get(i).getCount(),
 				products.get(i).getPrice()

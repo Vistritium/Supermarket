@@ -10,6 +10,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import backend.api.StorageManagement;
+import backend.core.model.Category;
+
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
@@ -21,6 +24,7 @@ import javax.swing.JComboBox;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 public class DManageCategories extends ModelDialog {
 
@@ -30,7 +34,8 @@ public class DManageCategories extends ModelDialog {
 	private JComboBox cCategories;
 	private JButton bEditCategory;
 	private Validator validator;
-
+	private List<Category> categories;
+	
 	/**
 	 * Create the dialog.
 	 */
@@ -89,6 +94,7 @@ public class DManageCategories extends ModelDialog {
 				});
 				panel_1.add(btnDodaj, "4, 6, right, default");
 			}
+			
 		}
 		{
 			JPanel panel_1 = new JPanel();
@@ -135,14 +141,27 @@ public class DManageCategories extends ModelDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+		
+		updateFrame();
 	}
 
 	private void addCategory(){
 		if(validator.addCategory(tCategory.getText().toString())){
 			panel.updateCategoryList();
 			JOptionPane.showMessageDialog(this, "Dodano kategorię.");
+			updateFrame();
 		}
 		else JOptionPane.showMessageDialog(this, "Błąd dodawania kategorii");
+	}
+	
+	private void updateFrame(){
+		cCategories.removeAllItems();
+		categories=new StorageManagement().getCategory();
+		
+		cCategories.addItem("Wybierz kategorię...");
+		for(int i=0; i<categories.size(); i++){
+			cCategories.addItem(categories.get(i).getName());
+		}		
 	}
 	
 }

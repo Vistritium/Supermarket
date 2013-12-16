@@ -12,6 +12,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import backend.api.StorageManagement;
+import backend.core.model.Manufacturers;
+import backend.core.model.Suppliers;
+
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
@@ -19,6 +23,7 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 public class DManageSuppliers extends ModelDialog {
 
@@ -28,6 +33,7 @@ public class DManageSuppliers extends ModelDialog {
 	private JButton bEditSupplier;
 	private JComboBox cSuppliers;
 	private Validator validator;
+	private List<Manufacturers>suppliers;
 
 	/**
 	 * Create the dialog.
@@ -36,7 +42,7 @@ public class DManageSuppliers extends ModelDialog {
 		super(panel);
 		
 		validator= new Validator();
-		
+
 		setTitle("Zarządzaj dostawcami");
 		setBounds(100, 100, 351, 301);
 		getContentPane().setLayout(new BorderLayout());
@@ -145,13 +151,27 @@ public class DManageSuppliers extends ModelDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+		
+		updateFrame();
+		
 	}
 	
 	private void addSupplier(){
 		if(validator.addSupplier(tSupplier.getText().toString())){
 			JOptionPane.showMessageDialog(this, "Dodano dostawcę");
+			updateFrame();
 		}
 		else JOptionPane.showMessageDialog(this, "Błąd dodawania dostawcy");
+	}
+	
+	private void updateFrame(){
+		cSuppliers.removeAllItems();
+		suppliers=new StorageManagement().getManufacturer();
+		
+		cSuppliers.addItem("Wybierz dostawcę...");
+		for(int i=0; i<suppliers.size(); i++){
+			cSuppliers.addItem(suppliers.get(i).getName());
+		}		
 	}
 
 }
