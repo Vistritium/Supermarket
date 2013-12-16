@@ -1,10 +1,13 @@
 package pl.lodz.pl.ftims.supermarket.frontend.standalone.core;
 
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JFrame;
+
+import backend.api.View;
 
 
 public class MainFrame extends JFrame implements ActionListener {
@@ -30,9 +33,18 @@ public class MainFrame extends JFrame implements ActionListener {
 	
 	public boolean zaloguj(){
 		System.out.println("Login : " + login.login.getText());
-		System.out.println("Hasło : " + login.pass.getPassword());
-
-		return true;				//todo: Dorobic cialo logowania
+		System.out.println("Hasło : " + login.pass.getText());
+		
+		View view;
+		view = new View();
+		if(view.checkAuthorization(login.login.getText(), login.pass.getText()))
+			System.out.println("UDalo sie zalogowac");
+		
+		//Probny user Maciejka
+		//probny pass bdjqp
+			
+		
+	return true;				
 	} 
 	
 	public void initializeWindow(){
