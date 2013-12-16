@@ -30,6 +30,11 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- API -->
+		<dependency>
+			<groupId>pl.lodz.pl.ftims.supermarket.backend</groupId>
+			<artifactId>api</artifactId>
+		</dependency>
 
 		<!-- PrimeFaces -->
 		<dependency>
