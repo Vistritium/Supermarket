@@ -47,11 +47,5 @@ public class HR_groupList extends HR_templateList {
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	JPanel getPanel() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 }

@@ -11,10 +11,22 @@ import java.awt.BorderLayout;
 
 
 public class HR_main extends HR_template{
+
 	public JPanel templatePanel;
+	
+	HR_employee 		panEmployee;
+	HR_employeesList	panEList;
+	HR_group			panGroup;
+	HR_groupList		panGList;
+
 	
 	public HR_main() {
 		templatePanel = new JPanel();
+		//jpan = new JPanel();
+		//panEmployee = new HR_employee();
+		//panEList	= new HR_employeesList();
+		//panGroup	= new 
+				
 	}
 	
 	public int switchPanel(eComponent panel) {
@@ -29,13 +41,14 @@ public class HR_main extends HR_template{
 
 	@Override
 	void draw() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	void init() {
-		// TODO Auto-generated method stub
+		
+		
 		
 	}
 
@@ -50,10 +63,5 @@ public class HR_main extends HR_template{
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	JPanel getPanel() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 }

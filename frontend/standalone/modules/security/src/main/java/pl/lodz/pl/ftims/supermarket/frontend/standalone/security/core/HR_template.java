@@ -11,5 +11,5 @@ public abstract class HR_template extends JPanel {
 	abstract void reset();
 	abstract void shutdown();
 	
-	abstract JPanel getPanel();
+	JPanel getPanel() { return jpan; }
 }

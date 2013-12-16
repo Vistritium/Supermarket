@@ -48,10 +48,5 @@ public class HR_group extends HR_templateList{
 		
 	}
 
-	@Override
-	JPanel getPanel() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

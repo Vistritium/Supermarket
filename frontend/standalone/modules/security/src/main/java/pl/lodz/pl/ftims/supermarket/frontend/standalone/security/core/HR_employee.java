@@ -49,10 +49,4 @@ public class HR_employee extends HR_templateSingle{
 		
 	}
 
-	@Override
-	JPanel getPanel() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
