@@ -18,19 +18,27 @@ import java.awt.event.MouseEvent;
 public class HR_main extends HR_template{
 
 	public JPanel templatePanel;
+	public JPanel mainPanel;
 	
 	HR_employee 		panEmployee;
 	HR_employeesList	panEList;
 	HR_group			panGroup;
 	HR_groupList		panGList;
 	
-	public JPanel getMainPanel() {return templatePanel;}
+	public JPanel getMainPanel() {return mainPanel;}
 	
 	public HR_main() {
 		//templatePanel = new JPanel();
 		jpan = new JPanel();
+		mainPanel = new JPanel();
+		
 		init();
 		templatePanel = getPanel();
+		mainPanel.setLayout(null);
+		mainPanel.add(templatePanel);
+		mainPanel.revalidate();
+		mainPanel.repaint();
+		
 		//panEmployee = new HR_employee();
 		//panEList	= new HR_employeesList();
 		//panGroup	= new 
