@@ -42,6 +42,7 @@
 		<dependency>
 			<groupId>pl.lodz.pl.ftims.supermarket.frontend.standalone</groupId>
 			<artifactId>api</artifactId>
+			<version>1.0.0-alpha-1-snapshot</version>
 		</dependency>
 	</dependencies>
 </project>

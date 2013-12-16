@@ -54,7 +54,7 @@
             <one-to-many class="backend.core.model.Orders" />
         </set>
         
-        <many-to-one name="category" class="backend.core.model.Category" fetch="select">
+        <many-to-one name="category" class="backend.core.model.Category" lazy="false" fetch="select">
             <column name="idCategory" not-null="true" />
         </many-to-one>
         

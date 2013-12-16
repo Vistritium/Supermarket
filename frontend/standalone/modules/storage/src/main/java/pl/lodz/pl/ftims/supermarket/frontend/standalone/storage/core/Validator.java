@@ -75,6 +75,7 @@ public class Validator {
     
             int a;                
             try{
+            	String price = "29";//TODO stub, remove
 				a = Integer.parseInt(price);
             }  catch (NumberFormatException e){
             	return false;
