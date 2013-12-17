@@ -42,10 +42,8 @@ public class AboutPrompt extends JFrame implements ActionListener {
 			public void run() {
 				while(true){				
 					setBacka(losujKolor());
-					//System.out.println(losujKolor().toString());
-					//resetuj();
 					try {
-						this.sleep(50);
+						this.sleep(50); //Czas sleepa w ms
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -58,18 +56,9 @@ public class AboutPrompt extends JFrame implements ActionListener {
 		
 	}
 	
-	public void resetuj(){
-		this.setEnabled(false);
-		this.setEnabled(true);
-		this.repaint();
-		this.pack();
-		this.repaint();
-	}
-	
-
-	
 	public void setBacka(Color kolo){
 		this.panel.setBackground(kolo);
+		this.zamknij.setBackground(losujKolor());
 	}
 	
 	public Color losujKolor(){
