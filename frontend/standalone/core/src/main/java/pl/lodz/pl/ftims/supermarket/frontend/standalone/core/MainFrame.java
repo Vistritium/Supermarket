@@ -37,14 +37,14 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		View view;
 		view = new View();
-		if(view.checkAuthorization(login.login.getText(), login.pass.getText()))
-			System.out.println("UDalo sie zalogowac");
-		
+		if(view.checkAuthorization(login.login.getText(), login.pass.getText())){
+			System.out.println("Udało się zalogowac");
+			return true;
+		}
+		System.out.println("Nie udało się zalogować");
 		//Probny user Maciejka
 		//probny pass bdjqp
-			
-		
-	return true;				
+	return false;				
 	} 
 	
 	public void initializeWindow(){
