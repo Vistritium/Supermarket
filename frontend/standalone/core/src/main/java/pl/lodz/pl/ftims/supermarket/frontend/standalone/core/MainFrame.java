@@ -51,8 +51,6 @@ public class MainFrame extends JFrame implements ActionListener {
 			return true;
 		}
 		System.out.println("Nie udało się zalogować");
-		//Probny user Maciejka
-		//probny pass bdjqp
 		return false;				
 	} 
 	
