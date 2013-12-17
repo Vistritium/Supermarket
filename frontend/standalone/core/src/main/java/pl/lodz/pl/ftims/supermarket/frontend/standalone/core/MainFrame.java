@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import backend.api.View;
 
@@ -37,14 +38,14 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		View view;
 		view = new View();
-		if(view.checkAuthorization(login.login.getText(), login.pass.getText()))
-			System.out.println("UDalo sie zalogowac");
-		
+		if(view.checkAuthorization(login.login.getText(), login.pass.getText())){
+			System.out.println("Udało się zalogowac");
+			return true;
+		}
+		System.out.println("Nie udało się zalogować");
 		//Probny user Maciejka
 		//probny pass bdjqp
-			
-		
-	return true;				
+	return false;				
 	} 
 	
 	public void initializeWindow(){
@@ -71,6 +72,10 @@ public class MainFrame extends JFrame implements ActionListener {
 			login.setVisible(false);
 			if(zaloguj()){
 				startAfterLogin();
+			}
+			else{
+				JOptionPane.showMessageDialog(null, Constants.login_fail);
+				System.exit(1);
 			}
 		}
 

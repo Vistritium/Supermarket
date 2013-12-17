@@ -389,7 +389,8 @@ public class PStorageManagment extends JPanel {
 		
 		cCategories.addItem("Wybierz kategorię...");
 		for(int i=0; i<categories.size(); i++){
-			cCategories.addItem(categories.get(i).getName());
+			String name = categories.get(i).getName();
+			cCategories.addItem(name);
 		}		
 	}
 }
