@@ -9,7 +9,7 @@ import javax.swing.JList;
 import javax.swing.JButton;
 
 public class HR_employeesList extends HR_templateList{
-	public HR_employeesList() {
+	public HR_employeesList(final HR_main ref) {
 		setLayout(null);
 		
 		JList list = new JList();
@@ -27,7 +27,7 @@ public class HR_employeesList extends HR_templateList{
 		btnCancel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				update(eComponent.idle);
+				ref.switchPanel(eComponent.idle);//update(eComponent.idle);
 			}
 		});
 		btnCancel.setBounds(317, 243, 89, 23);
