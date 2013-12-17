@@ -57,7 +57,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	} 
 	
 	public void initializeWindow(){
-		this.setTitle(Constants.program_title);
+		this.setTitle(Stale.getInstance().getProgram_title());
 		//this.setAlwaysOnTop(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -68,6 +68,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.setJMenuBar(menu.createMenuBar());
 		menu.itemZakoncz.addActionListener(this);
 		menu.itemPrzeloguj.addActionListener(this);
+		menu.itemoProgramie.addActionListener(this);
 	}
 
 	public void createMainJPanel(){
@@ -88,7 +89,7 @@ public class MainFrame extends JFrame implements ActionListener {
 				startAfterLogin();
 			}
 			else{
-				JOptionPane.showMessageDialog(null, Constants.login_fail);
+				JOptionPane.showMessageDialog(null, Stale.getInstance().getLogin_fail());
 				login.setVisible(true);
 				//System.exit(1);
 			}
@@ -105,6 +106,9 @@ public class MainFrame extends JFrame implements ActionListener {
 			this.login.pass.setText("");
 			this.login.setVisible(true);
 			this.setVisible(false);
+		}
+		if(z.equals(menu.itemoProgramie)){
+			AboutPrompt prompt = new AboutPrompt();
 		}
 	}
 }

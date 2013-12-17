@@ -5,6 +5,9 @@ public class Stale {
 	   String login;
 	   String pass;
 	   Integer accessLevel;
+	   String program_title = new String("Supermarket Zbysio!");
+	   String login_fail = new String("Nie udało się z jakiegoś powodu zalogować!");
+	   String tekst_about = new String("Jakiś klawy tekscik about");
 	   
 	   protected Stale() {
 		   
@@ -37,6 +40,16 @@ public class Stale {
 	public void setAccessLevel(Integer accessLevel) {
 		this.accessLevel = accessLevel;
 	}
+	public String getProgram_title() {
+		return program_title;
+	}
+	public String getLogin_fail() {
+		return login_fail;
+	}
+	public String getTekst_about() {
+		return tekst_about;
+	}
+	
 	   
 	
 	   

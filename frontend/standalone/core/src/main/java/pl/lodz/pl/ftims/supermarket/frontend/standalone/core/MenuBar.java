@@ -15,6 +15,7 @@ public class MenuBar {
     JMenu menuProgram, menuPomoc;
     JMenuItem itemZakoncz;
     JMenuItem itemPrzeloguj;
+    JMenuItem itemoProgramie;
     JRadioButtonMenuItem rbMenuItem;
     JCheckBoxMenuItem cbMenuItem;
     
@@ -41,6 +42,9 @@ public class MenuBar {
 	    menuPomoc = new JMenu("Pomoc");
 	    menuPomoc.setMnemonic(KeyEvent.VK_H);
 	    menuBar.add(menuPomoc);
+	    
+	    itemoProgramie = new JMenuItem("O Programie!");
+	    menuPomoc.add(itemoProgramie);
 
 	    return menuBar;
     }
