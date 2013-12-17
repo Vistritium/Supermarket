@@ -2,10 +2,14 @@ package pl.lodz.pl.ftims.supermarket.frontend.standalone.security.core;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+
+import backend.api.HumanResources;
+import backend.core.model.Users;
 
 public class HR_employee extends HR_templateSingle{
 	private JTextField txtName;
@@ -13,6 +17,9 @@ public class HR_employee extends HR_templateSingle{
 	private JTextField txtDate;
 	public HR_employee(final HR_main ref) {
 		setLayout(null);
+		
+		
+		
 		
 		txtName = new JTextField();
 		txtName.setText("name");
@@ -49,6 +56,15 @@ public class HR_employee extends HR_templateSingle{
 		JButton btnApply = new JButton("apply");
 		btnApply.setBounds(61, 211, 177, 23);
 		add(btnApply);
+		
+		HumanResources humanResources = new HumanResources();
+		List<Users> allUsers = humanResources.getAllUsers();
+		Users temp = allUsers.get(0);
+		
+		txtName.setText(temp.getName());
+		txtSurname.setText(temp.getSurname());
+		
+		
 	}
 	
 	//CEmployee user;
