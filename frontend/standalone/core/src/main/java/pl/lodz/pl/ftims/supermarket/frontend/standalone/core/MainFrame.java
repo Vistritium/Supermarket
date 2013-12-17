@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import backend.api.View;
 
@@ -71,6 +72,10 @@ public class MainFrame extends JFrame implements ActionListener {
 			login.setVisible(false);
 			if(zaloguj()){
 				startAfterLogin();
+			}
+			else{
+				JOptionPane.showMessageDialog(null, Constants.login_fail);
+				System.exit(1);
 			}
 		}
 
