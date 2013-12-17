@@ -85,7 +85,8 @@ public class MainFrame extends JFrame implements ActionListener {
 			}
 			else{
 				JOptionPane.showMessageDialog(null, Constants.login_fail);
-				System.exit(1);
+				login.setVisible(true);
+				//System.exit(1);
 			}
 		}
 
