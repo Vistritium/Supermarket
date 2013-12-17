@@ -16,6 +16,8 @@ public class MainFrame extends JFrame implements ActionListener {
 
 	List<Initalizable> modules;
 	LoginPrompt login;
+	String login_string;
+	String pass_string;
 	public MainFrame(List<Initalizable> modules){
 		this.modules = modules;
 		login = new LoginPrompt();
@@ -38,6 +40,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		View view;
 		view = new View();
+		login_string = login.login.getText();
 		if(view.checkAuthorization(login.login.getText(), login.pass.getText())){
 			System.out.println("Udało się zalogowac");
 			return true;
@@ -71,6 +74,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			System.out.println("Nacisnieto zaloguj buduje okno programu glowne");
 			login.setVisible(false);
 			if(zaloguj()){
+				Stale.getInstance().setLogin(login_string);
 				startAfterLogin();
 			}
 			else{
