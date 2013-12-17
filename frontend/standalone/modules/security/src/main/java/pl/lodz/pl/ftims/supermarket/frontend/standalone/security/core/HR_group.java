@@ -19,12 +19,6 @@ public class HR_group extends HR_templateList{
 	}
 
 	@Override
-	void update() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	void draw() {
 		// TODO Auto-generated method stub
 		
@@ -44,6 +38,12 @@ public class HR_group extends HR_templateList{
 
 	@Override
 	void shutdown() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void update(eComponent ecom) {
 		// TODO Auto-generated method stub
 		
 	}

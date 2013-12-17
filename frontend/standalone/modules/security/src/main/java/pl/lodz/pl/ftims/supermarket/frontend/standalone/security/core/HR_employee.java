@@ -20,12 +20,6 @@ public class HR_employee extends HR_templateSingle{
 	}
 
 	@Override
-	void update() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	void draw() {
 		// TODO Auto-generated method stub
 		
@@ -45,6 +39,12 @@ public class HR_employee extends HR_templateSingle{
 
 	@Override
 	void shutdown() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void update(eComponent ecom) {
 		// TODO Auto-generated method stub
 		
 	}
