@@ -3,6 +3,7 @@ package pl.lodz.pl.ftims.supermarket.frontend.standalone.security.core;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JButton;
+import javax.xml.bind.Marshaller.Listener;
 import javax.xml.ws.handler.HandlerResolver;
 
 import backend.api.HumanResources;
@@ -28,16 +29,18 @@ public class HR_main extends HR_template{
 	public JPanel getMainPanel() {return mainPanel;}
 	
 	public HR_main() {
-		//templatePanel = new JPanel();
-		jpan = new JPanel();
+		templatePanel = new JPanel();
+		//jpan = new JPanel();
 		mainPanel = new JPanel();
 		
 		init();
-		templatePanel = getPanel();
-		mainPanel.setLayout(null);
+		mainPanel.setLayout(new BorderLayout());
+		//mainPanel.add(jpan);
+		//templatePanel = getPanel();
+		//mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(templatePanel);
-		mainPanel.revalidate();
-		mainPanel.repaint();
+		
+		draw();
 		
 		//panEmployee = new HR_employee();
 		//panEList	= new HR_employeesList();
@@ -47,58 +50,78 @@ public class HR_main extends HR_template{
 	
 	public int switchPanel(eComponent panel) {
 		
+		mainPanel.removeAll();
+		
 		switch (panel) {
 		case employee:
 			panEmployee = new HR_employee();
-			templatePanel = panEmployee.getPanel();
+			//templatePanel = panEmployee.getPanel();
 			break;
 		case listEmployee :
 			panEList = new HR_employeesList();
-			templatePanel = panEList.getPanel();
+			//templatePanel = panEList.getPanel();
+			//mainPanel.remove(templatePanel);
+			//mainPanel.add(templatePanel);
+			
+			//mainPanel.removeAll();
+			
+			//mainPanel.add(new JPanel());
+			//mainPanel.getComponent(0) = panEList.getPanel();
+			mainPanel.add(new HR_employeesList());
+			//add(new HR_employeesList());
+			//mainPanel.revalidate();
+			//mainPanel.repaint();
 			break;
 		case group :
 			panGroup = new HR_group();
-			templatePanel = panGroup.getPanel();
+			//templatePanel = panGroup.getPanel();
 			break;
 		case listGroup:
 			panGList = new HR_groupList();
-			templatePanel = panGList.getPanel();
+			//templatePanel = panGList.getPanel();
+			
+			mainPanel.add(new HR_groupList());
+			
 			break;
 		case idle :
 		default:
-			templatePanel = getPanel();
+			//templatePanel = getPanel();
+			//mainPanel.add(templatePanel);
+			//init();
+			mainPanel.add(templatePanel);
+			//mainPanel.add(getPanel());
 		};
+		
+		draw();
 		
 		return 0;
 	}
 
 	@Override
-	void update() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	void draw() {
 		
+		mainPanel.revalidate();
+		mainPanel.repaint();
+		//revalidate();
+		//repaint();
 		
 	}
 
 	@Override
 	void init() {
 		
-		jpan.setName("Human Resouces");
+		templatePanel.setName("Human Resouces");
 		
-		jpan.setLayout(null);
+		templatePanel.setLayout(null);
 		
 		JButton btnSelf = new JButton("Self");
 		btnSelf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				switchPanel(eComponent.listEmployee);
+				switchPanel(eComponent.idle);
 			}
 		});
 		btnSelf.setBounds(145, 78, 89, 45);
-		jpan.add(btnSelf);
+		templatePanel.add(btnSelf);
 		
 		JButton btnEmployeeList = new JButton("Employee list");
 		btnEmployeeList.addMouseListener(new MouseAdapter() {
@@ -108,15 +131,21 @@ public class HR_main extends HR_template{
 			}
 		});
 		btnEmployeeList.setBounds(124, 158, 130, 23);
-		jpan.add(btnEmployeeList);
+		templatePanel.add(btnEmployeeList);
 		
 		JButton btnGroupList = new JButton("Group list");
+		btnGroupList.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				switchPanel(eComponent.listGroup);
+			}
+		});
 		btnGroupList.setBounds(145, 192, 89, 23);
-		jpan.add(btnGroupList);
+		templatePanel.add(btnGroupList);
 		
 		JLabel lblNewLabel = new JLabel("Name Forename");
 		lblNewLabel.setBounds(10, 11, 187, 14);
-		jpan.add(lblNewLabel);
+		templatePanel.add(lblNewLabel);
 		
 	}
 
@@ -129,6 +158,18 @@ public class HR_main extends HR_template{
 	@Override
 	void shutdown() {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	ActionListener cancelListener = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			switchPanel(eComponent.idle);
+		}
+	};
+
+	@Override
+	void update(eComponent ecom) {
+		switchPanel(ecom);
 		
 	}
 	
