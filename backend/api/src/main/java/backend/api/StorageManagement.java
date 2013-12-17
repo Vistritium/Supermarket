@@ -150,7 +150,7 @@ import backend.core.model.Products;
      	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
          try {
          	
-             Query query = s.createQuery("select c from Category c");
+             Query query = s.createQuery("select new backend.core.model.Category(c.idCategory, c.name) from Category c");
              
              List<Category> category =  query.list();
              return category;
@@ -370,15 +370,15 @@ import backend.core.model.Products;
           }
       }
       
-      public List<Category> getAttributes() //ok
+      public List<Attributes> getAttributes() //ok
       {
       	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
           try {
           	
               Query query = s.createQuery("select a from Attributes a");
               
-              List<Category> category =  query.list();
-              return category;
+              List<Attributes> attributes =  query.list();
+              return attributes;
   
           }
           catch (Exception e){
@@ -479,7 +479,7 @@ import backend.core.model.Products;
       
       
       
-     public boolean addFinanceRegisterRecord(FinanceRegister fr) /// not work..
+     public boolean addFinanceRegisterRecord(FinanceRegister fr) /// ok
      {
      	Session s = sf.openSession();
          try {
@@ -504,7 +504,7 @@ import backend.core.model.Products;
          }
      }
      
-     public List<FinanceRegister> getFinanceRegisterRecords()
+     public List<FinanceRegister> getFinanceRegisterRecords() // ok
      {
      	Session s = SessionFactoryManager.INSTANCE.getSessionFactory().openSession();
          try {

@@ -20,9 +20,14 @@ public class Category {
     private Set<Products> products = new HashSet<Products>(0);
     private Set<Attributes> attributes = new HashSet<Attributes>(0);
 
+    public Category(int idCategory, String name) {
+    	this.idCategory = idCategory;
+        this.name = name;
+    }
     public Category(String name) {
         this.name = name;
     }
+    
     public Category() {
     }
     
