@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JScrollPane;
@@ -332,7 +333,8 @@ public class PStorageManagment extends JPanel {
 	
 	//Update methods
 	public void updateProductsList(){
-		products=apiSM.getProducts();
+		products=new ArrayList<Products>();
+		products.add(apiSM.getProduct(1, "odzież"));
 		
 		//Delete data from tableModel
 		for(int i=0; i<tableModel.getRowCount()-1; i++){
@@ -351,7 +353,7 @@ public class PStorageManagment extends JPanel {
 			
 			Object[] exx={
 				products.get(i).getName(),
-				products.get(i).getSuppliers(),
+				products.get(i).getManufacturer(),
 				products.get(i).getCategory().getName(),
 				products.get(i).getCount(),
 				products.get(i).getPrice()
@@ -375,7 +377,15 @@ public class PStorageManagment extends JPanel {
 	
 	public void updateCategoryList(){
 		cCategories.removeAllItems();
-		categories=apiSM.getCategory();
+		categories=new ArrayList<>();
+		categories.add(apiSM.getCategory(1));
+		categories.add(apiSM.getCategory(2));
+		categories.add(apiSM.getCategory(3));
+		categories.add(apiSM.getCategory(4));
+		categories.add(apiSM.getCategory(5));
+		categories.add(apiSM.getCategory(6));
+		categories.add(apiSM.getCategory(7));
+		categories.add(apiSM.getCategory(8));
 		
 		cCategories.addItem("Wybierz kategorię...");
 		for(int i=0; i<categories.size(); i++){

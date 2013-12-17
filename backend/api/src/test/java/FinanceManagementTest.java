@@ -1,6 +1,7 @@
 
 
 import java.util.Date;
+import java.util.Locale.Category;
 
 import org.hibernate.SessionFactory;
 import org.junit.Test;
@@ -10,6 +11,7 @@ import backend.api.StorageManagement;
 import backend.core.SessionFactoryManager;
 import backend.core.model.FinanceRegister;
 import backend.core.model.Manufacturers;
+import backend.core.model.Products;
 import backend.core.model.Users;
 
 public class FinanceManagementTest {
@@ -29,8 +31,8 @@ public class FinanceManagementTest {
 		// sm.removeManufacturer(2);
 		// Category c = new Category("Wędliny");
 		// sm.addCategory(c);
-		// Category c2=sm.getCategory(8);
-		 //Products p = new Products("spodnie", c2, 50, 3, m2.getIdManufacturer());
+		//Category c2=sm.getCategory(8);
+		//Products p = new Products("spodnie", c2, 50, 3, m2.getIdManufacturer());
 		// sm.addProduct(p);
 		 //Products p2 =sm.getProduct(1, "odzież");
 		 //System.out.println(p2);
