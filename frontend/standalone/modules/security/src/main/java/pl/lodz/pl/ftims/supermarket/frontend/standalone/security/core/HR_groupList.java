@@ -1,11 +1,14 @@
 package pl.lodz.pl.ftims.supermarket.frontend.standalone.security.core;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 
 public class HR_groupList extends HR_templateList {
-	public HR_groupList() {
+	public HR_groupList(final HR_main ref) {
 		setLayout(null);
 		
 		JList list = new JList();
@@ -17,6 +20,12 @@ public class HR_groupList extends HR_templateList {
 		add(btnEdit);
 		
 		JButton btnCancel = new JButton("Cancel");
+		btnCancel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				ref.switchPanel(eComponent.idle);//update(eComponent.idle);
+			}
+		});
 		btnCancel.setBounds(317, 243, 89, 23);
 		add(btnCancel);
 	}

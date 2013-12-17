@@ -54,11 +54,12 @@ public class HR_main extends HR_template{
 		
 		switch (panel) {
 		case employee:
-			panEmployee = new HR_employee();
+			//panEmployee = new HR_employee();
 			//templatePanel = panEmployee.getPanel();
+			mainPanel.add(new HR_employee(this));
 			break;
 		case listEmployee :
-			panEList = new HR_employeesList();
+			//panEList = new HR_employeesList(this);
 			//templatePanel = panEList.getPanel();
 			//mainPanel.remove(templatePanel);
 			//mainPanel.add(templatePanel);
@@ -67,20 +68,21 @@ public class HR_main extends HR_template{
 			
 			//mainPanel.add(new JPanel());
 			//mainPanel.getComponent(0) = panEList.getPanel();
-			mainPanel.add(new HR_employeesList());
+			mainPanel.add(new HR_employeesList(this));
 			//add(new HR_employeesList());
 			//mainPanel.revalidate();
 			//mainPanel.repaint();
 			break;
 		case group :
-			panGroup = new HR_group();
+			//panGroup = new HR_group();
+			mainPanel.add(new HR_group(this));
 			//templatePanel = panGroup.getPanel();
 			break;
 		case listGroup:
-			panGList = new HR_groupList();
+			//panGList = new HR_groupList();
 			//templatePanel = panGList.getPanel();
 			
-			mainPanel.add(new HR_groupList());
+			mainPanel.add(new HR_groupList(this));
 			
 			break;
 		case idle :
@@ -117,7 +119,7 @@ public class HR_main extends HR_template{
 		JButton btnSelf = new JButton("Self");
 		btnSelf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				switchPanel(eComponent.idle);
+				switchPanel(eComponent.employee);
 			}
 		});
 		btnSelf.setBounds(145, 78, 89, 45);
