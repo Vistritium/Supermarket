@@ -31,13 +31,10 @@ public class AboutPrompt extends JFrame implements ActionListener {
 		zamknij = new JButton("Zamknij");
 		zamknij.addActionListener(this);
 		this.setTitle("O programie");
-		panel.setBorder(BorderFactory.createTitledBorder("O programie"));
-		
 		this.panel.add(tekst1);
 		this.panel.add(tekst2);
 		this.panel.add(zamknij);
 		this.add(panel);
-		this.setBackground(Color.CYAN);
 		this.setSize(500, 600);
 		this.setAlwaysOnTop(true);
 		this.setVisible(true);
