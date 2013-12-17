@@ -13,7 +13,8 @@ public class Init implements Initalizable{
 
 	public void init(JPanelInjection jPanelInjection) {
 		HR_main panel= new HR_main();
-		//panel.setName("HR");
+		panel.getMainPanel().setName("HR");
+		
 		jPanelInjection.addJPanel(panel.getMainPanel());
 		//JPanel jPanel;
 
