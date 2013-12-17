@@ -1,18 +1,14 @@
 
 
-import java.util.Date;
-import java.util.Locale.Category;
+import java.util.Iterator;
+import java.util.List;
 
 import org.hibernate.SessionFactory;
 import org.junit.Test;
 
-import backend.api.HumanResources;
 import backend.api.StorageManagement;
 import backend.core.SessionFactoryManager;
-import backend.core.model.FinanceRegister;
-import backend.core.model.Manufacturers;
-import backend.core.model.Products;
-import backend.core.model.Users;
+import backend.core.model.Category;
 
 public class FinanceManagementTest {
 
@@ -21,8 +17,7 @@ public class FinanceManagementTest {
 	 @Test
 	 public void SM()
 	 {
-		// StorageManagement sm = new StorageManagement();
-		// HumanResources hr = new HumanResources();
+
 		 //Manufacturers m = new Manufacturers("Sokołów");
 		 //sm.addManufacturer(m);
 		 //Manufacturers m2 = sm.getManufacturer(3);
@@ -36,7 +31,7 @@ public class FinanceManagementTest {
 		// sm.addProduct(p);
 		 //Products p2 =sm.getProduct(1, "odzież");
 		 //System.out.println(p2);
-		 //Users u = hr.getUser(0);
+
 		 //Date d = new Date(2013,05,01);
 		 //FinanceRegister fr = new FinanceRegister(500, u, d , 500, "Zakup czegos");
 		 //System.out.println(sm.addFinanceRegisterRecord(fr));
