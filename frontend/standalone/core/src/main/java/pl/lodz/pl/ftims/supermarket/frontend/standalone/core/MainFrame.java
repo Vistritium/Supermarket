@@ -19,6 +19,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	String login_string;
 	String pass_string;
 	View view;
+	MenuBar menu;
 	public MainFrame(List<Initalizable> modules){
 		this.modules = modules;
 		login = new LoginPrompt();
@@ -63,7 +64,10 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 
 	public void createMenuBar(){
-		this.setJMenuBar(new MenuBar().createMenuBar());
+		menu = new MenuBar();
+		this.setJMenuBar(menu.createMenuBar());
+		menu.itemZakoncz.addActionListener(this);
+		menu.itemPrzeloguj.addActionListener(this);
 	}
 
 	public void createMainJPanel(){
@@ -93,6 +97,14 @@ public class MainFrame extends JFrame implements ActionListener {
 		if(z.equals(login.anuluj)){
 			System.out.println("Nacisnieto anuluj");
 			System.exit(0);
-		}	
+		}
+		if(z.equals(menu.itemZakoncz)){
+			System.exit(0);
+		}
+		if(z.equals(menu.itemPrzeloguj)){
+			this.login.pass.setText("");
+			this.login.setVisible(true);
+			this.setVisible(false);
+		}
 	}
 }
