@@ -18,9 +18,12 @@ public class MainFrame extends JFrame implements ActionListener {
 	LoginPrompt login;
 	String login_string;
 	String pass_string;
+	View view;
 	public MainFrame(List<Initalizable> modules){
 		this.modules = modules;
 		login = new LoginPrompt();
+		//view = new View();
+		//JOptionPane.showMessageDialog(null,view.getAllUsers());
 
 		this.login.loguj.addActionListener(this);
 		this.login.anuluj.addActionListener(this);
@@ -30,7 +33,6 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.initializeWindow();
 		this.createMenuBar();
 		this.createMainJPanel();
-		
 		this.setVisible(true);
 	}
 	
@@ -38,9 +40,11 @@ public class MainFrame extends JFrame implements ActionListener {
 		System.out.println("Login : " + login.login.getText());
 		System.out.println("Hasło : " + login.pass.getText());
 		
-		View view;
+
 		view = new View();
 		login_string = login.login.getText();
+		pass_string = login.pass.getText();
+		
 		if(view.checkAuthorization(login.login.getText(), login.pass.getText())){
 			System.out.println("Udało się zalogowac");
 			return true;
@@ -48,7 +52,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		System.out.println("Nie udało się zalogować");
 		//Probny user Maciejka
 		//probny pass bdjqp
-	return false;				
+		return false;				
 	} 
 	
 	public void initializeWindow(){
@@ -75,6 +79,8 @@ public class MainFrame extends JFrame implements ActionListener {
 			login.setVisible(false);
 			if(zaloguj()){
 				Stale.getInstance().setLogin(login_string);
+				Stale.getInstance().setPass(pass_string);
+				//System.out.println(Stale.getInstance().getLogin()+"   " + Stale.getInstance().getPass());
 				startAfterLogin();
 			}
 			else{
