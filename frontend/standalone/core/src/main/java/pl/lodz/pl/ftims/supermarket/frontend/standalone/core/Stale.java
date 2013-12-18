@@ -8,6 +8,14 @@ public class Stale {
 	   String program_title = new String("Supermarket Zbysio!");
 	   String login_fail = new String("Nie udało się z jakiegoś powodu zalogować!");
 	   String tekst_about = new String("Jakiś klawy tekscik about");
+	   String architekci = new String ("Krzysztof Kacprzak, Maciej Nowicki");
+	   String viewer = new String("Mateusz Badowski, Szymon Bałdyga");
+	   String finance = new String("Jan Węgrowski, Szymon Bartyka");
+	   String storage = new String("Daniel Kowalczyk, Damian Zdunek");
+	   String human = new String("Witold Rząsa, Bartłomiej Lewiński");
+	   String database = new String("Michał Warycha, Mateusz Grajnert");
+	   String statistics = new String("Witold Rząsa, Bartłomiej Lewiński");
+	   String webapp = new String("Sylwia Doryń, Michał Owczarczyk");
 	   
 	   protected Stale() {
 		   
@@ -49,10 +57,29 @@ public class Stale {
 	public String getTekst_about() {
 		return tekst_about;
 	}
-	
-	   
-	
-	   
-	   
-	   
+	public String getArchitekci() {
+		return architekci;
 	}
+	public String getViewer() {
+		return viewer;
+	}
+	public String getFinance() {
+		return finance;
+	}
+	public String getStorage() {
+		return storage;
+	}
+	public String getHuman() {
+		return human;
+	}
+	public String getDatabase() {
+		return database;
+	}
+	public String getStatistics() {
+		return statistics;
+	}
+	public String getWebapp() {
+		return webapp;
+	} 
+	   
+}

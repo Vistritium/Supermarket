@@ -1,5 +1,6 @@
 package pl.lodz.pl.ftims.supermarket.frontend.standalone.core;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -23,7 +24,7 @@ public class AboutPrompt extends JFrame implements ActionListener {
 	JPanel panel;
 	public AboutPrompt(){
 		panel = new JPanel();
-		//this.panel.setLayout(new BoxLayout(null, BoxLayout.Y_AXIS));
+		//this.panel.setLayout(new BorderLayout());
 		tekst1 = new JLabel("O programie ");
 		tekst2 = new JLabel(Stale.getInstance().getProgram_title());
 		tekst1.setFont(new Font("Verdana",Font.BOLD,24));
@@ -33,9 +34,21 @@ public class AboutPrompt extends JFrame implements ActionListener {
 		this.setTitle("O programie");
 		this.panel.add(tekst1);
 		this.panel.add(tekst2);
+		
+		this.panel.add(new JLabel("Boss : " + Stale.getInstance().getArchitekci()));
+		
+		this.panel.add(new JLabel("Database : " + Stale.getInstance().getDatabase()));
+		this.panel.add(new JLabel("Viewer : " + Stale.getInstance().getViewer()));
+		this.panel.add(new JLabel("Finance : " + Stale.getInstance().getFinance()));
+		this.panel.add(new JLabel("Storage : " + Stale.getInstance().getStorage()));
+		this.panel.add(new JLabel("Statistic : " + Stale.getInstance().getStatistics()));
+		this.panel.add(new JLabel("Human Resources : " + Stale.getInstance().getHuman()));
+		this.panel.add(new JLabel("Database : " + Stale.getInstance().getDatabase()));
+		this.panel.add(new JLabel("WebApp : " + Stale.getInstance().getWebapp()));
+		this.panel.add(new JLabel("         "));
 		this.panel.add(zamknij);
 		this.add(panel);
-		this.setSize(500, 600);
+		this.setSize(400, 500);
 		this.setAlwaysOnTop(true);
 		this.setVisible(true);
 		fred = new Thread() {
