@@ -59,7 +59,7 @@ public class HR_employee extends HR_templateSingle{
 		
 		HumanResources humanResources = new HumanResources();
 		List<Users> allUsers = humanResources.getAllUsers();
-		Users temp = allUsers.get(0);
+		Users temp = allUsers.get(1);
 		
 		txtName.setText(temp.getName());
 		txtSurname.setText(temp.getSurname());

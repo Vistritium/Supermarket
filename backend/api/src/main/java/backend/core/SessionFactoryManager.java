@@ -23,7 +23,7 @@ public enum SessionFactoryManager {
         cfg.setProperty("hibernate.connection.driver_class",
                 "com.mysql.jdbc.Driver");
         cfg.setProperty("hibernate.connection.url",
-                "jdbc:mysql://sql4.freemysqlhosting.net/sql425070");
+                "jdbc:mysql://sql4.freemysqlhosting.net:3306/sql425070");
         cfg.setProperty("hibernate.connection.username", "sql425070");
         cfg.setProperty("hibernate.connection.password", "aX8*eP1*");
         cfg.setProperty("hibernate.hbm2ddl.auto", "update");
