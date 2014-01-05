@@ -16,6 +16,12 @@ public class LoginPrompt extends JFrame {
 	public JTextField login;
 	public JPasswordField pass;
 	
+	private void injectDefaultValues(){
+	//default login
+		login.setText("Maciejka");
+		pass.setText("bdjqp");
+	}
+	
 	public LoginPrompt() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Zaloguj się do supermarketu " + Stale.getInstance().getProgram_title());
@@ -75,7 +81,11 @@ public class LoginPrompt extends JFrame {
 		
 		this.getRootPane().setDefaultButton(loguj);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		
+		injectDefaultValues();
+		
 		getContentPane().revalidate();
 		getContentPane().repaint();
 	}
+
 }
