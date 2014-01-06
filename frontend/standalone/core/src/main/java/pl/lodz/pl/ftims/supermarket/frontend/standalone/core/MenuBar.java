@@ -10,11 +10,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 
-public class MenuBar implements ActionListener {
+public class MenuBar {
 	JMenuBar menuBar;
     JMenu menuProgram, menuPomoc;
     JMenuItem itemZakoncz;
-    JMenuItem itemTest;
+    JMenuItem itemPrzeloguj;
+    JMenuItem itemoProgramie;
     JRadioButtonMenuItem rbMenuItem;
     JCheckBoxMenuItem cbMenuItem;
     
@@ -27,20 +28,23 @@ public class MenuBar implements ActionListener {
 	    menuProgram.setMnemonic(KeyEvent.VK_P);
 	    menuBar.add(menuProgram);
 	    
+	  //Dodanie testowe przycisku do testowe
+	    itemPrzeloguj = new JMenuItem("Przeloguj");
+	    menuProgram.add(itemPrzeloguj);
+	    
 	    //Zawartosc menu Program
 	    itemZakoncz = new JMenuItem("Zakończ",KeyEvent.VK_T);
-	    itemZakoncz.addActionListener(this);
 	    menuProgram.add(itemZakoncz);
 	    
-	    //Dodanie testowe przycisku do testowe
-	    itemTest = new JMenuItem("TEST");
-	    itemTest.addActionListener(this);
-	    menuProgram.add(itemTest);
+	    
 	    
 	    //Tworzenie menu Pomoc
 	    menuPomoc = new JMenu("Pomoc");
 	    menuPomoc.setMnemonic(KeyEvent.VK_H);
 	    menuBar.add(menuPomoc);
+	    
+	    itemoProgramie = new JMenuItem("O Programie!");
+	    menuPomoc.add(itemoProgramie);
 
 	    return menuBar;
     }
@@ -48,22 +52,4 @@ public class MenuBar implements ActionListener {
     public void addMenu(JMenu menu){
         menuBar.add(menu);
     }
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		Object z = arg0.getSource();
-
-		if(z.equals(itemZakoncz)){
-			//System.out.println("Nacisnieto zakoncz");
-			System.exit(1);			
-		}
-
-		if(z.equals(itemTest)){
-			System.out.println("Nacisnieto test");
-			System.out.println(menuBar.getMenuCount());
-			JMenu menuModul = new JMenu("NAZWAMODULU");
-			menuBar.add(menuModul);
-			System.out.println(menuBar.getMenuCount());
-		}		
-	}
 }

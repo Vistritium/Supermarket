@@ -270,23 +270,25 @@ public class PStorageManagment extends JPanel {
 		
 		//First update of products, suppliers and categories		
 		try{
-			updateProductsList();
+			//updateProductsList();
+			
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
 		try{
-			updateCategoryList();
+			//updateCategoryList();
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
 		try{
-			updateSuppliersList();
+			//updateSuppliersList();
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
+		//TODO Odkomentowac bo ta metoda dalek przy kategoriach powoduje krzak
 
 		
 		if(secure!=1){
@@ -389,8 +391,9 @@ public class PStorageManagment extends JPanel {
 		
 		cCategories.addItem("Wybierz kategorię...");
 		for(int i=0; i<categories.size(); i++){
-			String name = categories.get(i).getName();
+			String name = categories.get(i).getName(); 
 			cCategories.addItem(name);
+		
 		}		
 	}
 }

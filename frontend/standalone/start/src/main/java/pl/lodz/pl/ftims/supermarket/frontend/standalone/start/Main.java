@@ -27,10 +27,6 @@ public class Main {
 		instance.getSessionFactory();
 	}
 	
-/*	private static MainFrame initView(){
-		return new MainFrame();
-	}*/
-	
 	private static List<Initalizable> getModules() {
 		List<Initalizable> modules = new ArrayList<>();
 		modules.add(getInitStorageManagement());
