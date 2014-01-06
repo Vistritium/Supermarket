@@ -3,6 +3,8 @@ package pl.lodz.pl.ftims.supermarket.frontend.standalone.start;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.UIManager;
+
 import pl.lodz.pl.ftims.supermarket.frontend.standalone.core.InitView;
 import pl.lodz.pl.ftims.supermarket.frontend.standalone.core.Initalizable;
 import pl.lodz.pl.ftims.supermarket.frontend.standalone.core.MainFrame;
@@ -13,6 +15,12 @@ public class Main {
 	
 	public static void main(String[] args) {
 		initDatabase();
+		
+		try {
+			 UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
+		} catch (Exception e) {
+		   System.out.println("Using normal LookAndFeel");
+		}
 		
 		InitView initView = new InitView();
 		initView.init(getModules());
