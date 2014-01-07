@@ -13,7 +13,8 @@ public class MainPanel extends JPanel {
 
 	public MainPanel(List<Initalizable> modules) {
 		this.setLayout(new BorderLayout());
-		this.setBorder(BorderFactory.createTitledBorder("Główne okno"));
+		//Zakomentowano na czas zmiany lookandfeel bo slabo to wyglada
+		//this.setBorder(BorderFactory.createTitledBorder("Główne okno"));
 		// this.setBackground(Color.BLUE);
 		this.taby = new TabPanel();
 		this.add(taby);
