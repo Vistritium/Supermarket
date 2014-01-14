@@ -1,4 +1,4 @@
-package webapp.core;
+/*package webapp.core;
 
 public class Category {
     private int idCategory;
@@ -44,3 +44,4 @@ public class Category {
 
     
 }
+*/

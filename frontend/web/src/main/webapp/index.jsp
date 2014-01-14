@@ -27,9 +27,7 @@
 		Proin dictum metus in sagittis varius. Aliquam erat mauris, porta a adipiscing at, aliquam ut tortor. Duis eros turpis, fringilla eget laoreet sed, convallis eget dui. Ut imperdiet luctus nunc sed sagittis. Suspendisse potenti. Phasellus luctus dolor neque, ac egestas purus condimentum vel. Aenean nec libero molestie, tristique elit quis, scelerisque mi. Donec interdum mi ac placerat malesuada. Ut at felis aliquam, dignissim lacus id, iaculis ante. Cras nec cursus arcu, vel elementum velit.
 		</div>
 		<div id="footer">
-			Autorzy:<br /><br />
-			Michał Owczarczyk <br />
-			Sylwia Doryń
+			Stopka
 		</div>
 	</div>
 

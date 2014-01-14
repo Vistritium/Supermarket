@@ -41,7 +41,9 @@
 		<table id="products">
 			<%	
 			int sales = 0;
-				for(int i = 0; i < PageView.DataManager.ProductsList.size(); i++) {
+			int items = PageView.DataManager.ProductsList.size();
+			
+				for(int i = 0; i < items; i++) {
 					if(PageView.DataManager.CategoryOf(PageView.DataManager.ProductsList.get(i)) == "Wyprzedaż") {
 						sales++;
 						if(sales == 1) {
@@ -58,19 +60,17 @@
 							out.print(PageView.DataManager.ProductsList.get(i).getCount());
 							out.print("</td>");
 						out.print("</tr>");	
-						}
-					}	
-				//}
+					}
+				}
+				//	out.print(sales);
 				if(sales == 0) {
 					out.print("<div class='message'>Brak aktywnych wyprzedaży</div>");
 				}
 			%>
-			</table>
+		</table>
 		</div>
 		<div id="footer">
-			Autorzy:<br /><br />
-			Michał Owczarczyk <br />
-			Sylwia Doryń
+			Stopka
 		</div>
 	</div>
 

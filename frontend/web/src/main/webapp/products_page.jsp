@@ -62,7 +62,7 @@
 							out.print("</td>");
 							out.print("<td>");
 							out.print(PageView.DataManager.ProductsList.get(i).getCount());
-							out.print("</td>");
+							out.print("</td>"); 
 						out.print("</tr>");	
 					}
 				}
@@ -71,9 +71,7 @@
 			</table>
 		</div>
 		<div id="footer">
-			Autorzy:<br /><br />
-			Michał Owczarczyk <br />
-			Sylwia Doryń
+			Stopka
 		</div>
 	</div>
 
