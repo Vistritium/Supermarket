@@ -1,6 +1,7 @@
 package pl.lodz.pl.ftims.supermarket.frontend.standalone.security.core;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -11,10 +12,12 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
 import backend.core.model.Groups;
 import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
 
 public class HR_group extends HR_templateList{
 	private JTextField txtName;
@@ -89,35 +92,46 @@ public class HR_group extends HR_templateList{
 		
 		String[] tempStr = {"a","b","c"};
 		
-		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-		renderer.setPreferredSize(new Dimension(0, 0));
+		//DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+		//renderer.setPreferredSize(new Dimension(0, 0));
+		
+		//tableUsers = new JTable(tempTable);
+		tableUsers = new JTable(data, tempStr) {
+			public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
+			{
+				Component c = super.prepareRenderer(renderer, row, column);
+
+				if(tempRef.allGroups.get(tempMainIndex).getUsers().contains(tempRef.allUsers.get(row))){
+					c.setBackground(Color.RED);
+				}
+
+				return c;
+			}
+		};
+		//tableUsers.getTableHeader().setDefaultRenderer(renderer);
+		
+		//belong();
+		
+		//tableUsers.setTableHeader(tableHeader);// (tempObjID));
+		
+		//tableUsers.setBounds(241, 49, 170, 110);
+		//scrollPane.add(tableUsers);
 		
 		JButton btnAddUser = new JButton("+");
 		btnAddUser.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if (tableUsers.getSelectedRow() >= 0) {
-					if(!tempRef.allGroups.get(tempMainIndex).getUsers().contains(tempRef.allUsers.get(tableUsers.getSelectedRow()))) {
-						tempRef.allGroups.get(tempMainIndex).getUsers().add(tempRef.allUsers.get(tableUsers.getSelectedRow()));
-					}
+					//if(!tempRef.allGroups.get(tempMainIndex).getUsers().contains(tempRef.allUsers.get(tableUsers.getSelectedRow()))) {
+					tempRef.allGroups.get(tempMainIndex).getUsers().add(tempRef.allUsers.get(tableUsers.getSelectedRow()));
+					//}
 				}
 				//get(temp).addUser();
-				belong();
+				//belong();
 			}
 		});
 		btnAddUser.setBounds(421, 50, 41, 43);
 		add(btnAddUser);
-		
-		//tableUsers = new JTable(tempTable);
-		tableUsers = new JTable(data, tempStr);
-		//tableUsers.getTableHeader().setDefaultRenderer(renderer);
-		
-		belong();
-		
-		//tableUsers.setTableHeader(tableHeader);// (tempObjID));
-		
-		//tableUsers.setBounds(241, 49, 170, 110);
-		//scrollPane.add(tableUsers);
 		
 		scrollPane = new JScrollPane(tableUsers);
 		scrollPane.setBounds(241, 49, 170, 110);
@@ -130,12 +144,31 @@ public class HR_group extends HR_templateList{
 				/*if (tableUsers.getSelectedRow() >= 0) {
 					tempRef.allGroups.get(tempMainIndex).getUsers().remove(tempRef.allUsers.get(tableUsers.getSelectedRow()));
 				}*/
-				belong();
+				//belong();
 			}
 		});
 		btnDelUser.setBounds(420, 100, 41, 43);
 		add(btnDelUser);
+		/*
+		final JTextPane textPane1 = new JTextPane();
+		textPane1.setBounds(21, 11, 41, 20);
+		add(textPane1);
 		
+		final JTextPane textPane2 = new JTextPane();
+		textPane2.setText("");
+		textPane2.setBounds(72, 11, 41, 20);
+		add(textPane2);
+		
+		JButton btnhmm = new JButton("0");
+		btnhmm.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				tableUsers.setRowSelectionInterval(Integer.parseInt(textPane1.getText()), Integer.parseInt(textPane2.getText()));
+			}
+		});
+		btnhmm.setBounds(126, 11, 67, 20);
+		add(btnhmm);
+		*/
 		Groups temp;
 		if (mainIndex >= 0) {
 			temp = ref.allGroups.get(mainIndex);
@@ -143,7 +176,7 @@ public class HR_group extends HR_templateList{
 			txtDescription.setText(temp.getDescription());
 			txtSalary.setText("" + temp.getSalary());
 		}
-		belong();
+		//belong();
 		
 		//txtDescription.setText("" + tempRef.allGroups.get(tempMainIndex).getUsers().size());
 		//txtDescription.setText(tempRef.allGroups.get(tempMainIndex).getUsers().toArray()[0]);
@@ -194,20 +227,25 @@ public class HR_group extends HR_templateList{
 		
 	}
 	
-	public void belong(){
+	/*public void belong(){
+		int temp = tableUsers.getSelectedRow();
 		for (int i = 0; i < tempRef.allUsers.size(); ++i) {
-			for (int j = 0; j < tempRef.allGroups.get(tempMainIndex).getUsers().size(); ++j) {
+			//for (int j = 0; j < tempRef.allGroups.get(tempMainIndex).getUsers().size(); ++j) {
 				//if (tempRef.allUsers.get(i).getIdusers() == tempRef.allGroups.get(tempMainIndex).getUsers())
-				/*if ( tempRef.allGroups.get(tempMainIndex).getUsers().contains(tempRef.allUsers.get(i)) ) {
-					tableUsers.setRowSelectionInterval(0, 0); 
-					tableUsers.setBackground(Color.GREEN);
-				}*/
-				if (tempRef.allUsers.get(i).toString() == tempRef.allGroups.get(tempMainIndex).getUsers().toArray()[j].toString()){
-					tableUsers.setRowSelectionInterval(0, 0); 
+				if ( tempRef.allGroups.get(tempMainIndex).getUsers().contains(tempRef.allUsers.get(i)) ) {
+					tableUsers.setRowSelectionInterval(i, i);
+					tableUsers.setSelectionBackground(Color.GREEN);
+					
+					//tableUsers.setBackground(Color.GREEN);
+				}
+				if (tempRef.allUsers.get(i).toString() == tempRef.allGroups.get(tempMainIndex).getUsers().toArray()[j].toString())
+				{
+					tableUsers.setRowSelectionInterval(i, i); 
 					tableUsers.setBackground(Color.GREEN);
 				}
-			}
+			//}
 		}
 		txtDescription.setText("" + tempRef.allGroups.get(tempMainIndex).getUsers().size());
-	}
+		tableUsers.setRowSelectionInterval(temp, temp);
+	}*/
 }
