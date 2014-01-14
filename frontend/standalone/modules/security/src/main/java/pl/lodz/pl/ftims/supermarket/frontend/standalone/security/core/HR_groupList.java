@@ -3,19 +3,45 @@ package pl.lodz.pl.ftims.supermarket.frontend.standalone.security.core;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
-import javax.swing.JPanel;
+
+import pl.lodz.pl.ftims.supermarket.frontend.standalone.core.Stale;
 
 public class HR_groupList extends HR_templateList {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2161875489604406555L;
+	final JList<String> list;
+	
 	public HR_groupList(final HR_main ref) {
 		setLayout(null);
 		
-		JList list = new JList();
+		Integer accessLevel = Stale.getInstance().getAccessLevel();
+		
+		DefaultListModel<String> listModel = new DefaultListModel<>();
+		for (int i = 0; i < ref.allGroups.size(); ++i) {
+			listModel.addElement("" + ref.allGroups.get(i).getIdgroups() 
+								+ 	" | " + ref.allGroups.get(i).getName() 
+								+ 	" | " + ref.allGroups.get(i).getSalary());
+		
+		}
+		
+		list = new JList<>(listModel);
 		list.setBounds(50, 50, 345, 169);
 		add(list);
 		
 		JButton btnEdit = new JButton("Edit");
+		ref.helpIndex = 0;
+		btnEdit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				ref.helpIndex = list.getSelectedIndex();
+				ref.switchPanel(EComponent.group);
+			}
+		});
 		btnEdit.setBounds(218, 243, 89, 23);
 		add(btnEdit);
 		
@@ -23,7 +49,7 @@ public class HR_groupList extends HR_templateList {
 		btnCancel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				ref.switchPanel(eComponent.idle);//update(eComponent.idle);
+				ref.switchPanel(EComponent.idle);//update(eComponent.idle);
 			}
 		});
 		btnCancel.setBounds(317, 243, 89, 23);
@@ -69,7 +95,7 @@ public class HR_groupList extends HR_templateList {
 	}
 
 	@Override
-	void update(eComponent ecom) {
+	void update(EComponent ecom) {
 		// TODO Auto-generated method stub
 		
 	}

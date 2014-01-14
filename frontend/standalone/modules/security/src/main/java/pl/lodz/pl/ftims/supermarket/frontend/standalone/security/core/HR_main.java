@@ -7,12 +7,16 @@ import javax.xml.bind.Marshaller.Listener;
 import javax.xml.ws.handler.HandlerResolver;
 
 import backend.api.HumanResources;
+import backend.core.model.Groups;
+import backend.core.model.Users;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.GridLayout;
+import java.util.List;
 
 
 
@@ -25,6 +29,11 @@ public class HR_main extends HR_template{
 	HR_employeesList	panEList;
 	HR_group			panGroup;
 	HR_groupList		panGList;
+	List<Users> 		allUsers;
+	List<Groups>		allGroups;
+	HumanResources 		humanResources;
+	Users 				selfUser;
+	int					helpIndex = -1;
 	
 	public JPanel getMainPanel() {return mainPanel;}
 	
@@ -33,8 +42,13 @@ public class HR_main extends HR_template{
 		//jpan = new JPanel();
 		mainPanel = new JPanel();
 		
+		humanResources = new HumanResources();
+		allUsers = humanResources.getAllUsers();
+		allGroups = humanResources.getGroup();
+		selfUser = allUsers.get(1);
+		
 		init();
-		mainPanel.setLayout(new BorderLayout());
+		mainPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		//mainPanel.add(jpan);
 		//templatePanel = getPanel();
 		//mainPanel.setLayout(new BorderLayout());
@@ -48,7 +62,7 @@ public class HR_main extends HR_template{
 				
 	}
 	
-	public int switchPanel(eComponent panel) {
+	public int switchPanel(EComponent panel) {
 		
 		mainPanel.removeAll();
 		
@@ -56,7 +70,10 @@ public class HR_main extends HR_template{
 		case employee:
 			//panEmployee = new HR_employee();
 			//templatePanel = panEmployee.getPanel();
-			mainPanel.add(new HR_employee(this));
+			if (helpIndex >= 0) { 
+				mainPanel.add(new HR_employee(this, /*panEList.list.getSelectedIndex()*/ helpIndex));
+				helpIndex = -1;
+			}
 			break;
 		case listEmployee :
 			//panEList = new HR_employeesList(this);
@@ -75,7 +92,10 @@ public class HR_main extends HR_template{
 			break;
 		case group :
 			//panGroup = new HR_group();
-			mainPanel.add(new HR_group(this));
+			if (helpIndex >= 0) {
+				mainPanel.add(new HR_group(this, helpIndex));
+				helpIndex = -1;
+			}
 			//templatePanel = panGroup.getPanel();
 			break;
 		case listGroup:
@@ -84,6 +104,9 @@ public class HR_main extends HR_template{
 			
 			mainPanel.add(new HR_groupList(this));
 			
+			break;
+		case self:
+			mainPanel.add(new HR_employee(this,-1));//allUsers.indexOf(selfUser)));
 			break;
 		case idle :
 		default:
@@ -119,7 +142,7 @@ public class HR_main extends HR_template{
 		JButton btnSelf = new JButton("Self");
 		btnSelf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				switchPanel(eComponent.employee);
+				switchPanel(EComponent.self);
 			}
 		});
 		btnSelf.setBounds(145, 78, 89, 45);
@@ -129,7 +152,7 @@ public class HR_main extends HR_template{
 		btnEmployeeList.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				switchPanel(eComponent.listEmployee);
+				switchPanel(EComponent.listEmployee);
 			}
 		});
 		btnEmployeeList.setBounds(124, 158, 130, 23);
@@ -139,13 +162,13 @@ public class HR_main extends HR_template{
 		btnGroupList.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				switchPanel(eComponent.listGroup);
+				switchPanel(EComponent.listGroup);
 			}
 		});
 		btnGroupList.setBounds(145, 192, 89, 23);
 		templatePanel.add(btnGroupList);
 		
-		JLabel lblNewLabel = new JLabel("Name Forename");
+		JLabel lblNewLabel = new JLabel( "" + selfUser.getName() + " " + selfUser.getSurname() ); //("Name Forename");
 		lblNewLabel.setBounds(10, 11, 187, 14);
 		templatePanel.add(lblNewLabel);
 		
@@ -165,12 +188,12 @@ public class HR_main extends HR_template{
 	
 	ActionListener cancelListener = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			switchPanel(eComponent.idle);
+			switchPanel(EComponent.idle);
 		}
 	};
 
 	@Override
-	void update(eComponent ecom) {
+	void update(EComponent ecom) {
 		switchPanel(ecom);
 		
 	}

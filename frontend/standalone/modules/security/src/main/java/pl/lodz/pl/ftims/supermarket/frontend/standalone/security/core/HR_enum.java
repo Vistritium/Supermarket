@@ -1,9 +1,10 @@
 package pl.lodz.pl.ftims.supermarket.frontend.standalone.security.core;
 
-enum eComponent {
+enum EComponent {
 	idle,
 	employee,
 	group,
 	listEmployee,
-	listGroup
-};
+	listGroup,
+	self
+}

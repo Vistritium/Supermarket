@@ -15,7 +15,7 @@ public class HR_employee extends HR_templateSingle{
 	private JTextField txtName;
 	private JTextField txtSurname;
 	private JTextField txtDate;
-	public HR_employee(final HR_main ref) {
+	public HR_employee(final HR_main ref, final int mainIndex) {//final Object mainObj) {
 		setLayout(null);
 		
 		
@@ -47,7 +47,11 @@ public class HR_employee extends HR_templateSingle{
 		btnCancel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				ref.switchPanel(eComponent.idle);//update(eComponent.idle);
+				if (mainIndex < 0) {
+					ref.switchPanel(EComponent.idle);
+				} else {
+					ref.switchPanel(EComponent.listEmployee);
+				}
 			}
 		});
 		btnCancel.setBounds(248, 245, 89, 23);
@@ -57,9 +61,17 @@ public class HR_employee extends HR_templateSingle{
 		btnApply.setBounds(61, 211, 177, 23);
 		add(btnApply);
 		
-		HumanResources humanResources = new HumanResources();
-		List<Users> allUsers = humanResources.getAllUsers();
-		Users temp = allUsers.get(1);
+		//HumanResources humanResources = new HumanResources();
+		//List<Users> allUsers = humanResources.getAllUsers();
+		//Users temp = //ref.allUsers.get(1);
+		//Users temp = ref.allUsers.get(ref.allUsers.indexOf(mainObj));
+		
+		Users temp;
+		if (mainIndex >= 0) {
+			temp = ref.allUsers.get(mainIndex);
+		} else {
+			temp = ref.allUsers.get(ref.allUsers.indexOf(ref.selfUser));
+		}
 		
 		txtName.setText(temp.getName());
 		txtSurname.setText(temp.getSurname());
@@ -107,7 +119,7 @@ public class HR_employee extends HR_templateSingle{
 	}
 
 	@Override
-	void update(eComponent ecom) {
+	void update(EComponent ecom) {
 		// TODO Auto-generated method stub
 		
 	}

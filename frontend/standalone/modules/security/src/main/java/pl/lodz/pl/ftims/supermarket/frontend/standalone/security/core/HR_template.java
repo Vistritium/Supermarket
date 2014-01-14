@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 public abstract class HR_template extends JPanel {
 	protected JPanel jpan;
 	
-	abstract void update(eComponent ecom);
+	abstract void update(EComponent ecom);
 	abstract void draw();
 	abstract void init();
 	abstract void reset();
