@@ -102,9 +102,12 @@ public class HR_group extends HR_templateList{
 				Component c = super.prepareRenderer(renderer, row, column);
 
 				if(tempRef.allGroups.get(tempMainIndex).getUsers().contains(tempRef.allUsers.get(row))){
-					c.setBackground(Color.RED);
+					c.setBackground(Color.GREEN);
+				} else {
+					c.setBackground(Color.WHITE);
 				}
-
+				tableUsers.setRowSelectionAllowed(true);
+				tableUsers.setCellSelectionEnabled(false);
 				return c;
 			}
 		};
@@ -141,9 +144,9 @@ public class HR_group extends HR_templateList{
 		btnDelUser.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				/*if (tableUsers.getSelectedRow() >= 0) {
+				if (tableUsers.getSelectedRow() >= 0) {
 					tempRef.allGroups.get(tempMainIndex).getUsers().remove(tempRef.allUsers.get(tableUsers.getSelectedRow()));
-				}*/
+				}
 				//belong();
 			}
 		});
