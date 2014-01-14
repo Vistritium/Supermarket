@@ -31,6 +31,7 @@ public class HR_groupList extends HR_templateList {
 		
 		list = new JList<>(listModel);
 		list.setBounds(50, 50, 345, 169);
+		list.setSelectedIndex(0);
 		add(list);
 		
 		JButton btnEdit = new JButton("Edit");

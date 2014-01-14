@@ -90,7 +90,7 @@ public class HR_group extends HR_templateList{
 			//tempTable.addRow( tempObj );
 		}
 		
-		String[] tempStr = {"a","b","c"};
+		String[] tempStr = {"id","name","desc"};
 		
 		//DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
 		//renderer.setPreferredSize(new Dimension(0, 0));
@@ -100,14 +100,18 @@ public class HR_group extends HR_templateList{
 			public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
 			{
 				Component c = super.prepareRenderer(renderer, row, column);
-
-				if(tempRef.allGroups.get(tempMainIndex).getUsers().contains(tempRef.allUsers.get(row))){
-					c.setBackground(Color.GREEN);
+				
+				if(getSelectedRow() == row){
+					c.setBackground(Color.LIGHT_GRAY);
 				} else {
-					c.setBackground(Color.WHITE);
+					if(tempRef.allGroups.get(tempMainIndex).getUsers().contains(tempRef.allUsers.get(row))){
+						c.setBackground(Color.GREEN);
+					} else {
+						c.setBackground(Color.WHITE);
+					}
+					tableUsers.setRowSelectionAllowed(true);
+					tableUsers.setCellSelectionEnabled(false);
 				}
-				tableUsers.setRowSelectionAllowed(true);
-				tableUsers.setCellSelectionEnabled(false);
 				return c;
 			}
 		};
