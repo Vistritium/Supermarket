@@ -13,9 +13,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 public class HR_employeesList extends HR_templateList{
-	final	JList list;
+	//final	JList list;
 	private JTable table;
 			Object[][] data;
+			int[] dataIterator;
 	final	String[] dataHeader = {"id","name","surname"};
 	public	HR_main tempRef;
 	final	JTextPane textPane;
@@ -24,7 +25,7 @@ public class HR_employeesList extends HR_templateList{
 	public HR_employeesList(final HR_main ref) {
 		setLayout(null);
 		tempRef = ref;
-		
+/*		
 		DefaultListModel listModel = new DefaultListModel();
 		for (int i = 0; i < ref.allUsers.size(); ++i) {
 			listModel.addElement(	"" + ref.allUsers.get(i).getIdusers() 
@@ -37,13 +38,23 @@ public class HR_employeesList extends HR_templateList{
 		list.setSelectedIndex(0);
 		
 		//add(list);
-		
+*/		
 		JButton btnEdit = new JButton("Edit");
 		btnEdit.setBounds(252, 242, 89, 23);
 		btnEdit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				ref.helpIndex = list.getSelectedIndex();
+				
+				if (  table.getSelectedRowCount() > 0 ) { // table.getSelectedRow() >= 0 ) {
+					ref.helpIndex = dataIterator[table.getSelectedRow()];
+				} else {
+					if ( dataIterator[0] < 0) {
+						return;
+					} else {
+						ref.helpIndex = dataIterator[0];
+					}
+				}
+				
 				ref.switchPanel(EComponent.employee);
 			}
 		});
@@ -78,18 +89,21 @@ public class HR_employeesList extends HR_templateList{
 		
 		
 		data = new Object[ref.allUsers.size()][3];
+		
 		//dataHeader = {"id","name","surname"};
 		
-		for (int i = 0; i < ref.allUsers.size(); ++i) {
+		/*for (int i = 0; i < ref.allUsers.size(); ++i) {
 			data[i][0] = "" + ref.allUsers.get(i).getIdusers();
 			data[i][1] = "" + ref.allUsers.get(i).getName();
 			data[i][2] = "" + ref.allUsers.get(i).getSurname();
-		}
+		}*/
 		
 		table = new JTable(data, dataHeader);
 		scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(85, 23, 256, 200);
 		add(scrollPane);
+		
+		filter("");
 		
 		
 		
@@ -98,7 +112,12 @@ public class HR_employeesList extends HR_templateList{
 	//CEmployee list[];
 	
 	protected void filter(String text) {
-		/*data = new Object[tempRef.allUsers.size()][3];
+		data = new Object[tempRef.allUsers.size()][3];
+		dataIterator = new int[tempRef.allUsers.size()];
+		
+		dataIterator[0] = -1;
+		
+		int iter = 0;
 		for (int i = 0; i < tempRef.allUsers.size(); ++i) {
 			String temp = 
 					(  "" + tempRef.allUsers.get(i).getIdusers() 
@@ -106,19 +125,32 @@ public class HR_employeesList extends HR_templateList{
 					+ " " + tempRef.allUsers.get(i).getName()
 					);
 			if (temp.contains(text)) {
-				data[i][0] = "" + tempRef.allUsers.get(i).getIdusers();
-				data[i][1] = "" + tempRef.allUsers.get(i).getName();
-				data[i][2] = "" + tempRef.allUsers.get(i).getSurname();
+				data[iter][0] = "" + tempRef.allUsers.get(i).getIdusers();
+				data[iter][1] = "" + tempRef.allUsers.get(i).getName();
+				data[iter][2] = "" + tempRef.allUsers.get(i).getSurname();
+				dataIterator[iter] = i;
+				++iter;
 			}
-		}*/
+		}
 		//this.remove(scrollPane);
-		this.remove(this.findComponentAt(100, 100));
+		/*this.remove(this.findComponentAt(100, 100));
 		this.revalidate();
 		this.repaint();
 		table = new JTable(data, dataHeader);
 		scrollPane = new JScrollPane(table);
 		//this.add(scrollPane);
+*/		
+		this.remove(scrollPane);
+		table = new JTable(data, dataHeader);
+		scrollPane = new JScrollPane(table);
+		this.add(scrollPane);
+		scrollPane.setBounds(85, 23, 256, 200);
 		
+		JButton btnApply = new JButton("Apply");
+		btnApply.setBounds(351, 173, 89, 50);
+		add(btnApply);
+		this.revalidate();
+		this.repaint();
 	}
 
 	@Override
