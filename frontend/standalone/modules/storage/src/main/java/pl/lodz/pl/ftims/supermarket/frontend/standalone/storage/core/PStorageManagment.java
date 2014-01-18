@@ -30,6 +30,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 
+import pl.lodz.pl.ftims.supermarket.frontend.standalone.core.Stale;
+
 public class PStorageManagment extends JPanel {
 	private JPanel contentPanel;
 	private JTable tProducts;
@@ -53,10 +55,6 @@ public class PStorageManagment extends JPanel {
 	private JTextField tSearchName;
 	private JLabel lblNewLabel;
 	private JComboBox cSuppliers;
-	private JLabel lblNewLabel_1;
-	private JLabel lblIlo;
-	private JTextField tSearchPrice;
-	private JTextField tSearchCount;
 	private JLabel lblWybierzKategori;
 	private JComboBox cCategories;
 	private JButton btnSzukaj;
@@ -64,7 +62,7 @@ public class PStorageManagment extends JPanel {
 	private Validator validator;
 	
 	//User right example
-	private int secure=1;
+	private int secure=1; //Mozna zmienic na zero, wtedy pojawi sie panel sprzedawcy.
 	
 	/**
 	 * Create the panel.
@@ -167,8 +165,6 @@ public class PStorageManagment extends JPanel {
 		
 		//Fields
 		apiSM= new StorageManagement();
-		tableModel= new ModelTable();
-		tProducts.setModel(tableModel);
 		
 		lblSz = new JLabel("Wyszukiwanie:");
 		GridBagConstraints gbc_lblSz = new GridBagConstraints();
@@ -211,23 +207,6 @@ public class PStorageManagment extends JPanel {
 		gbc_cSuppliers.gridy = 3;
 		contentPanel.add(cSuppliers, gbc_cSuppliers);
 		
-		lblNewLabel_1 = new JLabel("Cena:");
-		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
-		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_1.gridx = 0;
-		gbc_lblNewLabel_1.gridy = 4;
-		contentPanel.add(lblNewLabel_1, gbc_lblNewLabel_1);
-		
-		tSearchPrice = new JTextField();
-		GridBagConstraints gbc_tSearchPrice = new GridBagConstraints();
-		gbc_tSearchPrice.insets = new Insets(0, 0, 5, 5);
-		gbc_tSearchPrice.fill = GridBagConstraints.HORIZONTAL;
-		gbc_tSearchPrice.gridx = 1;
-		gbc_tSearchPrice.gridy = 4;
-		contentPanel.add(tSearchPrice, gbc_tSearchPrice);
-		tSearchPrice.setColumns(10);
-		
 		lblWybierzKategori = new JLabel("Wybierz kategorię:");
 		GridBagConstraints gbc_lblWybierzKategori = new GridBagConstraints();
 		gbc_lblWybierzKategori.anchor = GridBagConstraints.EAST;
@@ -244,24 +223,12 @@ public class PStorageManagment extends JPanel {
 		gbc_cCategories.gridy = 4;
 		contentPanel.add(cCategories, gbc_cCategories);
 		
-		lblIlo = new JLabel("Ilość:");
-		GridBagConstraints gbc_lblIlo = new GridBagConstraints();
-		gbc_lblIlo.anchor = GridBagConstraints.EAST;
-		gbc_lblIlo.insets = new Insets(0, 0, 0, 5);
-		gbc_lblIlo.gridx = 0;
-		gbc_lblIlo.gridy = 5;
-		contentPanel.add(lblIlo, gbc_lblIlo);
-		
-		tSearchCount = new JTextField();
-		GridBagConstraints gbc_tSearchCount = new GridBagConstraints();
-		gbc_tSearchCount.insets = new Insets(0, 0, 0, 5);
-		gbc_tSearchCount.fill = GridBagConstraints.HORIZONTAL;
-		gbc_tSearchCount.gridx = 1;
-		gbc_tSearchCount.gridy = 5;
-		contentPanel.add(tSearchCount, gbc_tSearchCount);
-		tSearchCount.setColumns(10);
-		
 		btnSzukaj = new JButton("Szukaj");
+		btnSzukaj.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				searchProducts();
+			}
+		});
 		GridBagConstraints gbc_btnSzukaj = new GridBagConstraints();
 		gbc_btnSzukaj.anchor = GridBagConstraints.EAST;
 		gbc_btnSzukaj.gridx = 4;
@@ -270,25 +237,24 @@ public class PStorageManagment extends JPanel {
 		
 		//First update of products, suppliers and categories		
 		try{
-			//updateProductsList();
+			updateCategoryList();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		try{
+			updateSuppliersList();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		try{
+			updateProductsList();
 			
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
-		try{
-			//updateCategoryList();
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		try{
-			//updateSuppliersList();
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		//TODO Odkomentowac bo ta metoda dalek przy kategoriach powoduje krzak
 
 		
 		if(secure!=1){
@@ -329,19 +295,20 @@ public class PStorageManagment extends JPanel {
 					null
 					);
 			
-			if(answer==JOptionPane.OK_OPTION) validator.removeProduct(products.get(tProducts.getSelectedRow()).getIdProducts());
+			if(answer==JOptionPane.OK_OPTION){
+				validator.removeProduct(products.get(tProducts.getSelectedRow()).getIdProducts());
+				this.updateProductsList();
+			}
 		}
 	}
 	
 	//Update methods
 	public void updateProductsList(){
-		products=new ArrayList<Products>();
-		products.add(apiSM.getProduct(1, "odzież"));
 		
-		//Delete data from tableModel
-		for(int i=0; i<tableModel.getRowCount()-1; i++){
-			tableModel.removeRow(i);
-		}	
+		tableModel= new ModelTable();
+		tProducts.setModel(tableModel);
+		
+		products=apiSM.getProducts();
 		
 		//Example
 		tableModel.addColumn("Nazwa produktu");
@@ -352,10 +319,57 @@ public class PStorageManagment extends JPanel {
 		
 		
 		for(int i=0; i<products.size(); i++){
+					
+			//Finding supplier
+			String supplierName="Brak danych";
+			for(int j=0; j<suppliers.size(); j++){
+				if(suppliers.get(j).getIdManufacturer()==products.get(i).getManufacturer()){
+					supplierName=suppliers.get(j).getName().toString();
+					break;
+				}
+			}
 			
 			Object[] exx={
 				products.get(i).getName(),
-				products.get(i).getManufacturer(),
+				supplierName,
+				products.get(i).getCategory().getName(),
+				products.get(i).getCount(),
+				products.get(i).getPrice()
+			};
+			tableModel.addRow(exx);
+		}
+		
+		tProducts.changeSelection(0, 0, false, false);
+
+	}
+	
+public void updateProductsList(List<Products> products){
+		
+		tableModel= new ModelTable();
+		tProducts.setModel(tableModel);
+		
+		//Example
+		tableModel.addColumn("Nazwa produktu");
+		tableModel.addColumn("Dostawca");
+		tableModel.addColumn("Kategoria");
+		tableModel.addColumn("Ilość");
+		tableModel.addColumn("Cena");
+		
+		
+		for(int i=0; i<products.size(); i++){
+					
+			//Finding supplier
+			String supplierName="Brak danych";
+			for(int j=0; j<suppliers.size(); j++){
+				if(suppliers.get(j).getIdManufacturer()==products.get(i).getManufacturer()){
+					supplierName=suppliers.get(j).getName().toString();
+					break;
+				}
+			}
+			
+			Object[] exx={
+				products.get(i).getName(),
+				supplierName,
 				products.get(i).getCategory().getName(),
 				products.get(i).getCount(),
 				products.get(i).getPrice()
@@ -378,16 +392,7 @@ public class PStorageManagment extends JPanel {
 	}
 	
 	public void updateCategoryList(){
-		cCategories.removeAllItems();
-		categories=new ArrayList<>();
-		categories.add(apiSM.getCategory(1));
-		categories.add(apiSM.getCategory(2));
-		categories.add(apiSM.getCategory(3));
-		categories.add(apiSM.getCategory(4));
-		categories.add(apiSM.getCategory(5));
-		categories.add(apiSM.getCategory(6));
-		categories.add(apiSM.getCategory(7));
-		categories.add(apiSM.getCategory(8));
+		categories=apiSM.getCategory();
 		
 		cCategories.addItem("Wybierz kategorię...");
 		for(int i=0; i<categories.size(); i++){
@@ -395,5 +400,14 @@ public class PStorageManagment extends JPanel {
 			cCategories.addItem(name);
 		
 		}		
+	}
+	
+	private void searchProducts(){
+		String name=tSearchName.getText().toString();
+		int idCat=-1;
+		int idSup=-1;
+		if(cCategories.getSelectedIndex()-1>=0) idCat=categories.get(cCategories.getSelectedIndex()-1).getIdCategory();
+		if(cSuppliers.getSelectedIndex()-1>=0) idSup=suppliers.get(cSuppliers.getSelectedIndex()-1).getIdManufacturer();
+		updateProductsList(validator.searchProducts(name, idCat, idSup));
 	}
 }

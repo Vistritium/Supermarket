@@ -34,8 +34,8 @@ public class DAddProduct extends ModelDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField tName;
-	private JTextField tPrice;
 	private JTextField tCount;
+	private JTextField tPrice;
 	private JComboBox cSupplier;
 	private JComboBox cCategory;
 	private Validator validator;
@@ -108,18 +108,18 @@ public class DAddProduct extends ModelDialog {
 			contentPanel.add(lblIlo, "2, 10, right, default");
 		}
 		{
-			tPrice = new JTextField();
-			contentPanel.add(tPrice, "4, 10, left, default");
-			tPrice.setColumns(10);
+			tCount = new JTextField();
+			contentPanel.add(tCount, "4, 10, left, default");
+			tCount.setColumns(10);
 		}
 		{
 			JLabel lblCena = new JLabel("Cena:");
 			contentPanel.add(lblCena, "2, 12, right, default");
 		}
 		{
-			tCount = new JTextField();
-			contentPanel.add(tCount, "4, 12, left, default");
-			tCount.setColumns(10);
+			tPrice = new JTextField();
+			contentPanel.add(tPrice, "4, 12, left, default");
+			tPrice.setColumns(10);
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -168,14 +168,19 @@ public class DAddProduct extends ModelDialog {
 	}
 	
 	private void addProduct(){
-		if(validator.addProduct(tName.getText().toString(), 
-				categories.get(cCategory.getSelectedIndex()-1).getIdCategory(), 
-				suppliers.get(cSupplier.getSelectedIndex()-1).getIdManufacturer(), 
-				tPrice.getText().toString(), 
-				tCount.getText().toString())){
-			JOptionPane.showMessageDialog(this, "Dodano produkt");
-			panel.updateProductsList();
+		try{
+			if(validator.addProduct(tName.getText().toString(), 
+					categories.get(cCategory.getSelectedIndex()-1).getIdCategory(), 
+					suppliers.get(cSupplier.getSelectedIndex()-1).getIdManufacturer(), 
+					tCount.getText().toString(), 
+					tPrice.getText().toString())){
+				JOptionPane.showMessageDialog(this, "Dodano produkt");
+				panel.updateProductsList();
+			}
+			else JOptionPane.showMessageDialog(this, "Błąd dodawania produktu");
 		}
-		else JOptionPane.showMessageDialog(this, "Błąd dodawania produktu");
+		catch(ArrayIndexOutOfBoundsException e){
+			JOptionPane.showMessageDialog(this, "Nie wybrano dostawcy i/lub produktu.");
+		}
 	}
 }

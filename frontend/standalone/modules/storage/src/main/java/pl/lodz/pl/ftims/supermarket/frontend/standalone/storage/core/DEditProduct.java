@@ -11,7 +11,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import backend.api.StorageManagement;
+import backend.core.model.Category;
+import backend.core.model.Manufacturers;
 import backend.core.model.Products;
+import backend.core.model.Suppliers;
 
 import javax.swing.JLabel;
 
@@ -22,23 +26,28 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 public class DEditProduct extends ModelDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField tName;
-	private JTextField tPrice;
 	private JTextField tCount;
+	private JTextField tPrice;
 	private JComboBox cSupplier;
 	private JComboBox cCategory;
 	private Validator validator;
 	private Products product;
+	private List<Manufacturers> suppliers;
+	private List<Category> categories;
+	private StorageManagement apiSM;
 
 	/**
 	 * Create the dialog.
 	 */
 	public DEditProduct(PStorageManagment panel, Products product) {
 		super(panel);
+		apiSM= new StorageManagement();
 		
 		validator= new Validator();
 		this.product=product;
@@ -99,18 +108,18 @@ public class DEditProduct extends ModelDialog {
 			contentPanel.add(lblIlo, "2, 10, right, default");
 		}
 		{
-			tPrice = new JTextField(product.getCount()+"");
-			contentPanel.add(tPrice, "4, 10, left, default");
-			tPrice.setColumns(10);
+			tCount = new JTextField(product.getCount()+"");
+			contentPanel.add(tCount, "4, 10, left, default");
+			tCount.setColumns(10);
 		}
 		{
 			JLabel lblCena = new JLabel("Cena:");
 			contentPanel.add(lblCena, "2, 12, right, default");
 		}
 		{
-			tCount = new JTextField(product.getPrice()+"");
-			contentPanel.add(tCount, "4, 12, left, default");
-			tCount.setColumns(10);
+			tPrice = new JTextField(product.getPrice()+"");
+			contentPanel.add(tPrice, "4, 12, left, default");
+			tPrice.setColumns(10);
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -138,16 +147,54 @@ public class DEditProduct extends ModelDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+		updateCategoryList();
+		updateSuppliersList();
 	}
 	
 	private void editProduct(){
-		if(validator.editProduct(product.getIdProducts(), tName.getText().toString(), 1, 1, tPrice.getText().toString(), tCount.getText().toString())){
-			JOptionPane.showMessageDialog(this, "Edycja produktu powiodła się");
-			panel.updateProductsList();
+		try{
+			if(validator.editProduct(product.getIdProducts(), tName.getText().toString(), categories.get(cCategory.getSelectedIndex()-1).getIdCategory(), suppliers.get(cSupplier.getSelectedIndex()-1).getIdManufacturer(), tPrice.getText().toString(), tCount.getText().toString())){
+				JOptionPane.showMessageDialog(this, "Edycja produktu powiodła się");
+				panel.updateProductsList();
+			}
+			else{
+				JOptionPane.showMessageDialog(this, "Edycja produktu nie powiodła się");			
+			}
 		}
-		else{
-			JOptionPane.showMessageDialog(this, "Edycja produktu nie powiodła się");			
+		catch(IndexOutOfBoundsException e){
+			JOptionPane.showMessageDialog(this, "Nie wybrano kategorii i/lub produktu");
 		}
+
+	}
+	
+	public void updateSuppliersList(){
+		cSupplier.removeAllItems();
+		suppliers=apiSM.getManufacturer();
+		
+		cSupplier.addItem("Wybierz dostawcę...");
+		for(int i=0; i<suppliers.size(); i++){
+			cSupplier.addItem(suppliers.get(i).getName());
+		}	
+		
+		for(int i=0; i<suppliers.size(); i++){
+			if(suppliers.get(i).getIdManufacturer()==product.getManufacturer()) cSupplier.setSelectedIndex(i+1);
+		}
+		
+	}
+	
+	public void updateCategoryList(){
+		categories=apiSM.getCategory();
+		
+		cCategory.addItem("Wybierz kategorię...");
+		for(int i=0; i<categories.size(); i++){
+			String name = categories.get(i).getName(); 
+			cCategory.addItem(name);		
+		}		
+		
+		for(int i=0; i<categories.size(); i++){
+			if(categories.get(i).getIdCategory()==product.getCategory().getIdCategory()) cCategory.setSelectedIndex(i+1);
+		}
+		
 	}
 
 }

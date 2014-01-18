@@ -1,5 +1,6 @@
 package pl.lodz.pl.ftims.supermarket.frontend.standalone.storage.core;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import backend.api.StorageManagement;
@@ -27,9 +28,9 @@ public class Validator {
                                if(!(convertedName[i] >= 'a' && convertedName[i] <= 'z' || convertedName[i] >= 'A' && convertedName[i] <= 'Z' ||convertedName[i] ==' ' || convertedName[i] =='-')) errorCount++;
                     }              
             
-    int a;                
+    float a;                
     try{
-            a = Integer.parseInt(cena);
+            a = Float.parseFloat(cena);
     }  catch (NumberFormatException e){
             return false;
     }
@@ -55,7 +56,7 @@ public class Validator {
                                     }
                             }
                             
-                            if(apiSM.addProduct(new Products(name, cat.get(index), a, b, idSupplier))) return true;
+                            if(apiSM.addProduct(new Products(name, cat.get(index), b, a, idSupplier))) return true;
                             else return false;
                     }
                     else
@@ -73,9 +74,9 @@ public class Validator {
                        if(!(convertedName[i] >= 'a' && convertedName[i] <= 'z' || convertedName[i] >= 'A' && convertedName[i] <= 'Z' ||convertedName[i] ==' ' || convertedName[i] =='-')) errorCount++;
             }              
     
-            int a;                
+            float a;                
             try{
-            	a = Integer.parseInt(cena);
+            	a = Float.parseFloat(cena);
             }  catch (NumberFormatException e){
             	return false;
             }
@@ -101,7 +102,7 @@ public class Validator {
                             }
                     }
                     
-                    apiSM.editProduct(new Products(name, cat.get(index), a, b, idSupplier));
+                    apiSM.editProduct(new Products(name, cat.get(index), b, a, idSupplier));
                     return true;
             }
             else
@@ -217,6 +218,40 @@ public class Validator {
         
         public boolean sell(int idPriduct, String count){
                 return true;
+        }
+        
+        public List<Products> searchProducts(String name, int categoryId, int supplierId){
+        	List<Products> result= new ArrayList<>();
+        	
+        	result=apiSM.getProducts();
+        	
+        	if(!name.isEmpty()){
+        		for(int i=0; i<result.size(); i++)
+        			if(!result.get(i).getName().toUpperCase().equals(name.toUpperCase())){
+        				result.remove(i);
+        				i--;
+        			}
+        	}
+        	if(categoryId!=-1){
+        		for(int i=0; i<result.size(); i++){
+        			if(result.get(i).getCategory().getIdCategory()!=categoryId){
+        				result.remove(i);
+        				i--;
+        			}
+        		}
+        	}
+        	if(supplierId!=-1){
+        		for(int i=0; i<result.size(); i++){
+        			if(result.get(i).getManufacturer()!=supplierId){
+        				result.remove(i);
+        				i--;
+        			}
+        		}
+
+        	}
+        	
+        	
+        	return result;
         }
         
       
