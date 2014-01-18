@@ -170,28 +170,39 @@ public class DManageCategories extends ModelDialog {
 	}
 	
 	private void editCategory(){
-		String in=JOptionPane.showInputDialog("Wprowadź nową nazwę.");
-		if(in!=null){
-			if(validator.editCategory(categories.get(cCategories.getSelectedIndex()-1).getIdCategory(), in)){
-				panel.updateCategoryList();
-				JOptionPane.showMessageDialog(this, "Edytowano kategorię.");
-				updateFrame();
-			}
-			else{
-				JOptionPane.showMessageDialog(this, "Błąd edytowania kategorii");
+		if(cCategories.getSelectedIndex()-1>=0){
+			String in=JOptionPane.showInputDialog("Wprowadź nową nazwę.");
+			if(in!=null){
+					if(validator.editCategory(categories.get(cCategories.getSelectedIndex()-1).getIdCategory(), in)){
+						panel.updateCategoryList();
+						JOptionPane.showMessageDialog(this, "Edytowano kategorię.");
+						updateFrame();
+					}
+					else{
+						JOptionPane.showMessageDialog(this, "Błąd edytowania kategorii");
+					}
+
 			}
 		}
+
 	}
 	
 	private void removeCategory(){
-		if(validator.removeCategory(categories.get(cCategories.getSelectedIndex()-1).getIdCategory())){
-			panel.updateCategoryList();
-			JOptionPane.showMessageDialog(this, "Usunięto kategorię.");
-			updateFrame();
+		try{
+			if(validator.removeCategory(categories.get(cCategories.getSelectedIndex()-1).getIdCategory())){
+				panel.updateCategoryList();
+				panel.updateProductsList();
+				JOptionPane.showMessageDialog(this, "Usunięto kategorię.");
+				updateFrame();
+			}
+			else{
+				JOptionPane.showMessageDialog(this, "Błąd usuwania kategorii");
+			}
 		}
-		else{
-			JOptionPane.showMessageDialog(this, "Błąd usuwania kategorii");
+		catch(IndexOutOfBoundsException e){
+			JOptionPane.showMessageDialog(this, "nie wybrano kategorii");
 		}
+
 	}
 	
 	private void updateFrame(){

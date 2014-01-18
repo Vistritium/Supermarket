@@ -177,14 +177,17 @@ public class DManageSuppliers extends ModelDialog {
 	}
 	
 	private void editSupplier(){
-		String in= JOptionPane.showInputDialog("Wprowadź nową nazwę dla dostawcy.");
-		if(in!=null){
-			if(validator.editSupplier(suppliers.get(cSuppliers.getSelectedIndex()-1).getIdManufacturer(), in)){
-				panel.updateSuppliersList();
-				JOptionPane.showMessageDialog(this, "Edytowano dostawcę");
-				updateFrame();
+		if(cSuppliers.getSelectedIndex()-1>=0){
+			String in= JOptionPane.showInputDialog("Wprowadź nową nazwę dla dostawcy.");
+			if(in!=null){
+				if(validator.editSupplier(suppliers.get(cSuppliers.getSelectedIndex()-1).getIdManufacturer(), in)){
+					panel.updateSuppliersList();
+					panel.updateProductsList();
+					JOptionPane.showMessageDialog(this, "Edytowano dostawcę");
+					updateFrame();
+				}
+				else JOptionPane.showMessageDialog(this, "Błąd edytowania dostawcy");
 			}
-			else JOptionPane.showMessageDialog(this, "Błąd edytowania dostawcy");
 		}
 	}
 
