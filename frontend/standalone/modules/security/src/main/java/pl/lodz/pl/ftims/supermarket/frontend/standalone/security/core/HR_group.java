@@ -18,6 +18,7 @@ import javax.swing.table.TableColumnModel;
 import backend.core.model.Groups;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+import javax.swing.JLabel;
 
 public class HR_group extends HR_templateList{
 	private JTextField txtName;
@@ -28,35 +29,52 @@ public class HR_group extends HR_templateList{
 	private JButton btnDelUser;
 	public	HR_main tempRef;
 	public	int		tempMainIndex;
-	public HR_group(final HR_main ref, int mainIndex) {
+	private JLabel lblName;
+	private JLabel lblDescription;
+	private JLabel lblSalary;
+	private JLabel lblMembers;
+	public HR_group(final HR_main ref, final int mainIndex) {
 		setLayout(null);
 		tempRef = ref;
 		tempMainIndex = mainIndex;
 		
 		txtName = new JTextField();
 		txtName.setText("name");
-		txtName.setBounds(77, 85, 86, 20);
+		txtName.setBounds(80, 85, 151, 20);
 		add(txtName);
 		txtName.setColumns(10);
 		
 		txtDescription = new JTextField();
 		txtDescription.setText("description");
-		txtDescription.setBounds(77, 116, 154, 43);
+		txtDescription.setBounds(80, 116, 151, 43);
 		add(txtDescription);
 		txtDescription.setColumns(10);
 		
 		txtSalary = new JTextField();
 		txtSalary.setText("salary");
-		txtSalary.setBounds(77, 170, 86, 20);
+		txtSalary.setBounds(80, 170, 151, 20);
 		add(txtSalary);
 		txtSalary.setColumns(10);
 		
+		/*
 		JButton btnEdit = new JButton("edit");
 		btnEdit.setBounds(257, 191, 89, 43);
 		add(btnEdit);
+		*/
 		
 		JButton btnApply = new JButton("apply");
-		btnApply.setBounds(77, 211, 170, 23);
+		btnApply.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+				ref.allGroups.get(mainIndex).setName(txtName.getText());
+				ref.allGroups.get(mainIndex).setDescription(txtDescription.getText());
+				ref.allGroups.get(mainIndex).setSalary(Float.parseFloat(txtSalary.getText()));
+				
+				ref.switchPanel(EComponent.listGroup);//update(eComponent.idle);
+			}
+		});
+		btnApply.setBounds(77, 211, 154, 23);
 		add(btnApply);
 		
 		JButton btnCancel = new JButton("cancel");
@@ -66,7 +84,7 @@ public class HR_group extends HR_templateList{
 				ref.switchPanel(EComponent.listGroup);//update(eComponent.idle);
 			}
 		});
-		btnCancel.setBounds(257, 245, 89, 23);
+		btnCancel.setBounds(241, 211, 221, 23);
 		add(btnCancel);
 		
 		DefaultTableModel tempTable = new DefaultTableModel();
@@ -156,6 +174,22 @@ public class HR_group extends HR_templateList{
 		});
 		btnDelUser.setBounds(420, 100, 41, 43);
 		add(btnDelUser);
+		
+		lblName = new JLabel("Name");
+		lblName.setBounds(10, 88, 60, 14);
+		add(lblName);
+		
+		lblDescription = new JLabel("Description");
+		lblDescription.setBounds(10, 130, 81, 14);
+		add(lblDescription);
+		
+		lblSalary = new JLabel("Salary");
+		lblSalary.setBounds(10, 173, 60, 14);
+		add(lblSalary);
+		
+		lblMembers = new JLabel("Members");
+		lblMembers.setBounds(241, 24, 96, 14);
+		add(lblMembers);
 		/*
 		final JTextPane textPane1 = new JTextPane();
 		textPane1.setBounds(21, 11, 41, 20);
