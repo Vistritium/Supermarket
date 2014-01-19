@@ -8,7 +8,7 @@
     
 <%
 
-	wView PageView = new wView("products_page.jsp", new wDataManager(), new wResourceManager("style.css"), null);
+	wView PageView = new wView("products_page.jsp", new wDataManager(), new wResourceManager("modern.css"), null);
 	
 	if(request.getParameter("field") != null) {
 		if(request.getParameter("ord").equals("d")) {
@@ -26,20 +26,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Supermarket "Janusz" - Katalog produktów</title>
 <link rel="stylesheet" type="text/css" href="<% out.print(PageView.ResourceManager.getStylesheet()); %>" />
-<link href='http://fonts.googleapis.com/css?family=Mouse+Memoirs&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Alegreya+Sans+SC' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
 	<div id="master">
 		<div id="header">
-				LOGO SUPERMARKETU<br /><br /><br /><br /><br /><br /><br /><br />	
+				<img src="resources/modern/logo.png"/><% out.print(PageView.RenderContactInfo()); %>	
 		</div>
 		<div id="menubar">
 			<a href="index.jsp" class="menuItem" id="return">&lt; Strona główna</a>
-			<a href="sale_page.jsp" class="menuItem">Oferta sezonowa</a>
-			<a href="contact.jsp" class="menuItem">Kontakt</a>
+			<a href="sale_page.jsp" class="menuItem" id="middle">Oferta sezonowa</a>
+			<a href="contact.jsp" class="menuItem" id="right">Kontakt</a>
 		</div>
 		<div id="content">
+		
 			<table id="products">
 			<%	
 			 	
@@ -58,7 +59,7 @@
 							out.print(PageView.DataManager.CategoryOf(PageView.DataManager.ProductsList.get(i)));
 							out.print("</td>");
 							out.print("<td>");
-							out.print(PageView.DataManager.ProductsList.get(i).getPrice());
+							out.print(PageView.DataManager.ProductsList.get(i).getPrice() + " zł");
 							out.print("</td>");
 							out.print("<td>");
 							out.print(PageView.DataManager.ProductsList.get(i).getCount());
@@ -71,7 +72,7 @@
 			</table>
 		</div>
 		<div id="footer">
-			Stopka
+			<%out.print(PageView.RenderFooter()); %>
 		</div>
 	</div>
 
