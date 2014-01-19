@@ -58,14 +58,14 @@ public class PStorageManagment extends JPanel {
 	private Validator validator;
 	
 	//User right example
-	private int secure=0; //Mozna zmienic na zero, wtedy pojawi sie panel sprzedawcy.
+	private int accessLevel=1; //Mozna zmienic na zero, wtedy pojawi sie panel sprzedawcy.
 	
 	/**
 	 * Create the panel.
 	 */
 	public PStorageManagment() {
 		setLayout(new BorderLayout(0, 0));
-		
+		System.out.println(Stale.getInstance().getAccessLevel());
 		validator= new Validator();
 		
 		contentPanel = new JPanel();
@@ -91,7 +91,7 @@ public class PStorageManagment extends JPanel {
 		
 		//Verify user rights
 		String bName;
-		if(secure==1){
+		if(accessLevel==1){
 			bName="Dodaj produkt";
 		}
 		else{
@@ -253,7 +253,7 @@ public class PStorageManagment extends JPanel {
 		}
 
 		
-		if(secure!=1){
+		if(accessLevel!=1){
 			bDeleteSelectedProduct.setVisible(false);
 			bEditSelectedProduct.setVisible(false);
 			bManageCategories.setVisible(false);
@@ -262,7 +262,7 @@ public class PStorageManagment extends JPanel {
 	}
 	
 	private void addProduct(){
-		if(secure==1) new DAddProduct(this);
+		if(accessLevel==1) new DAddProduct(this);
 		else if(tProducts.getSelectedRow()!=-1){
 			Manufacturers supplier=null;
 			for(int i=0; i<suppliers.size(); i++){

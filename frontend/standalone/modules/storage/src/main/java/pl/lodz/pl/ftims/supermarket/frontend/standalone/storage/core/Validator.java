@@ -5,8 +5,12 @@ import java.util.List;
 
 
 
+
+
+import pl.lodz.pl.ftims.supermarket.frontend.standalone.core.Stale;
 import backend.api.StorageManagement;
 import backend.core.model.Category;
+import backend.core.model.FinanceRegister;
 import backend.core.model.Manufacturers;
 import backend.core.model.Orders;
 import backend.core.model.Products;
@@ -221,9 +225,15 @@ public class Validator {
         
         public boolean sell(Products product, String count){
             try{
-            	float c= Float.parseFloat(count);
+            	int c= Integer.parseInt(count);
             	if(c<=0) throw new Exception();
             	if(product.getCount()<c) throw new Exception();
+            	apiSM.editProduct(new Products(
+            			product.getName(), 
+            			product.getCategory(), 
+            			(product.getCount()-c), 
+            			product.getPrice(), 
+            			product.getManufacturer()));
             	return true;
             }
             catch(Exception e){

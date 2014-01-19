@@ -21,6 +21,8 @@ import com.jgoodies.forms.factories.FormFactory;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import pl.lodz.pl.ftims.supermarket.frontend.standalone.core.Stale;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.List;
@@ -149,6 +151,8 @@ public class DSell extends ModelDialog {
 	private void sellProduct(){
 		if(validator.sell(product, tCouny.getText().toString())){
 			JOptionPane.showMessageDialog(this, "Produkt sprzedano.");
+			this.product.setCount(product.getCount()-Integer.parseInt(tCouny.getText().toString()));
+			panel.updateProductsList();
 		}
 		else{
 			JOptionPane.showMessageDialog(this, "Wystapił problem ze sprzedażą.");

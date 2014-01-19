@@ -172,8 +172,8 @@ public class DAddProduct extends ModelDialog {
 			if(validator.addProduct(tName.getText().toString(), 
 					categories.get(cCategory.getSelectedIndex()-1).getIdCategory(), 
 					suppliers.get(cSupplier.getSelectedIndex()-1).getIdManufacturer(), 
-					tCount.getText().toString(), 
-					tPrice.getText().toString())){
+					tPrice.getText().toString(),
+					tCount.getText().toString())){
 				JOptionPane.showMessageDialog(this, "Dodano produkt");
 				panel.updateProductsList();
 			}
