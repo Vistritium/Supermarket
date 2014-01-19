@@ -12,6 +12,12 @@ import javax.swing.JTextPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import backend.core.model.Users;
+
+import java.awt.event.ActionListener;
+import java.util.Calendar;
+import java.util.Date;
+
 public class HR_employeesList extends HR_templateList{
 	//final	JList list;
 	private JTable table;
@@ -67,6 +73,7 @@ public class HR_employeesList extends HR_templateList{
 		btnCancel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				ref.cancelChanges(EComponent.listEmployee);
 				ref.switchPanel(EComponent.idle);//update(eComponent.idle);
 			}
 		});
@@ -100,12 +107,46 @@ public class HR_employeesList extends HR_templateList{
 		
 		table = new JTable(data, dataHeader);
 		scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(85, 23, 256, 200);
+		scrollPane.setBounds(85, 20, 256, 200);
 		add(scrollPane);
 		
 		filter("");
 		
+		JButton btnApply = new JButton("Apply");
+		btnApply.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				ref.applyChanges(EComponent.listEmployee);
+				ref.switchPanel(EComponent.idle);
+			}
+		});
+		btnApply.setBounds(351, 173, 89, 50);
+		add(btnApply);
 		
+		JButton btnAdd = new JButton("Add");
+		btnAdd.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				Users newUser = new Users("", "", "asd123", "", Calendar.getInstance().getTime(), null);
+				ref.allUsers.add(newUser);
+				ref.switchPanel(EComponent.listEmployee);
+			}
+		});
+		btnAdd.setBounds(350, 20, 89, 37);
+		add(btnAdd);
+		
+		JButton btnDel = new JButton("Del");
+		btnDel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if (table.getSelectedRowCount() > 0) {
+					ref.allUsers.remove(table.getSelectedRow());
+				}
+				ref.switchPanel(EComponent.listEmployee);
+			}
+		});
+		btnDel.setBounds(350, 70, 89, 37);
+		add(btnDel);
 		
 	}
 
@@ -144,11 +185,8 @@ public class HR_employeesList extends HR_templateList{
 		table = new JTable(data, dataHeader);
 		scrollPane = new JScrollPane(table);
 		this.add(scrollPane);
-		scrollPane.setBounds(85, 23, 256, 200);
+		scrollPane.setBounds(85, 20, 256, 200);
 		
-		JButton btnApply = new JButton("Apply");
-		btnApply.setBounds(351, 173, 89, 50);
-		add(btnApply);
 		this.revalidate();
 		this.repaint();
 	}
