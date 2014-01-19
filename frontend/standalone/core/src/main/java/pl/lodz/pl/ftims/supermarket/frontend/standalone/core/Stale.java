@@ -2,9 +2,9 @@ package pl.lodz.pl.ftims.supermarket.frontend.standalone.core;
 
 public class Stale {
 	   private static Stale instance = null;
-	   String login;
+	   String login ;
 	   String pass;
-	   Integer accessLevel;
+	   Integer accessLevel = 1;
 	   String program_title = new String("Supermarket Zbysio!");
 	   String login_fail = new String("Nie udało się z jakiegoś powodu zalogować!");
 	   String tekst_about = new String("Jakiś klawy tekscik about");
