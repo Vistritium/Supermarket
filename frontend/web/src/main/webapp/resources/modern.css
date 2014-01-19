@@ -1,0 +1,201 @@
+body {
+	font-size: 20px;
+	align: center;
+	font-family: 'Alegreya Sans SC', Helvetica, sans-serif;
+}
+
+#master {
+	padding : 3px;
+	width: 80%;
+	margin: auto;
+}
+
+#contact {
+	float: right;	
+}
+
+#menubar {
+	padding-left: 6px;
+	align: center;
+	width : 900px;
+	margin : auto; 
+	clear : both;
+}
+
+
+.menuItem {
+	display: block;
+	width: 300px;
+	heigth: 120px;
+	
+	float:left;
+	text-align: center;
+	vertical-align: middle;
+	padding-top: 15px;
+	padding-bottom: 60px;
+	font-size: 30px;
+	font-weight: bold;
+	text-decoration: none;
+	
+}
+
+.menuItem#left {
+	background-image: url('modern/lewy.png'); 
+}
+
+
+.menuItem#left:hover {
+	background-image: url('modern/lewyhover.png'); 
+}
+
+.menuItem#middle {
+	background-image: url('modern/srodek.png'); 
+}
+
+.menuItem#middle:hover {
+	background-image: url('modern/srodekhover.png'); 
+}
+
+.menuItem#right {
+	background-image: url('modern/prawy.png'); 
+}
+
+.menuItem#right:hover {
+	background-image: url('modern/prawyhover.png'); 
+}
+
+.menuItem#return {
+	background-image: url('modern/wroc.png'); 
+}
+
+.menuItem#return:hover {
+	background-image: url('modern/wrochover.png'); 
+}
+
+
+#content {
+	clear: both;
+	padding: 20px 100px 20px 100px;
+	width : 1000px;
+	margin: auto;
+}
+
+#footer {
+	clear: both;
+	padding : 30px;
+	width : 800px;
+	margin: auto;
+	color: #000;
+	text-align: center;	
+	background: url('modern/belka.png') no-repeat;
+}
+
+
+/*-----------------*/
+
+table#products { 
+color: #333;
+width: 640px; 
+border-collapse: collapse; 
+border-spacing: 0;
+border: 1px solid #000;
+	
+	margin-left: auto;
+	margin-right: auto;
+}
+
+table#products td, table#products th { 
+border: 1px solid transparent; /* No more visible border */
+height: 30px; 
+padding: 5px;
+transition: all 0.3s;  /* Simple transition for hover effect */
+}
+
+table#products th {
+background: #DFDFDF;  /* Darken header a bit */
+font-weight: bold;
+}
+
+table#products td {
+background: #FAFAFA;
+text-align: center;
+}
+
+/* Cells in even rows (2,4,6...) are one color */ 
+table#products tr:nth-child(even) td { background: #F1F1F1; }   
+
+/* Cells in odd rows (1,3,5...) are another (excludes header cells)  */ 
+table#products tr:nth-child(odd) td { background: #FEFEFE; }  
+
+table#products tr td:hover { background: #666; color: #FFF; } /* Hover cell effect! */
+
+/* Contact form */
+
+#contact-area {
+	width: 700px;
+	margin-top: 25px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#contact-area input {
+	padding: 5px;
+	width: 471px;
+	font-family: Helvetica, sans-serif;
+	font-size: 1.4em;
+	margin: 0px 0px 10px 0px;
+	border: 2px solid #ccc;
+}
+
+#contact-area textarea {
+	padding: 5px;
+	width: 471px;
+	font-family: Helvetica, sans-serif;
+	font-size: 1em;
+	margin: 0px 0px 10px 0px;
+	border: 2px solid #ccc;
+}
+
+#contact-area textarea {
+	height: 90px;
+}
+
+#contact-area textarea:focus, #contact-area input:focus {
+	border: 2px solid #900;
+}
+
+#contact-area input.submit-button {
+	width: 100px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+label {
+	float: left;
+	text-align: right;
+	margin-right: 50px;
+	width: 100px;
+	padding-top: 5px;
+	font-size: 1.4em;
+}
+
+
+
+.message {
+	display: block;
+	text-align: center;
+	padding: 20px;
+	margin: auto;
+	width: 600px;
+	border: 2px #000 solid;
+	background: rgb(122,188,255); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(122,188,255,1) 0%, rgba(96,171,248,1) 44%, rgba(64,150,238,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(122,188,255,1)), color-stop(44%,rgba(96,171,248,1)), color-stop(100%,rgba(64,150,238,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(122,188,255,1) 0%,rgba(96,171,248,1) 44%,rgba(64,150,238,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(122,188,255,1) 0%,rgba(96,171,248,1) 44%,rgba(64,150,238,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(122,188,255,1) 0%,rgba(96,171,248,1) 44%,rgba(64,150,238,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(122,188,255,1) 0%,rgba(96,171,248,1) 44%,rgba(64,150,238,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7abcff', endColorstr='#4096ee',GradientType=0 ); /* IE6-9 */
+
+}

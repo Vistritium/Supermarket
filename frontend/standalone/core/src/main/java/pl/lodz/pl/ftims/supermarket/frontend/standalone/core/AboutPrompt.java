@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 public class AboutPrompt extends JFrame implements ActionListener {
 	JButton zamknij;
 	JLabel tekst1,tekst2;
-	Thread fred;
+//	Thread fred;
 	int i = 0;
 	JPanel panel;
 	public AboutPrompt(){
@@ -51,28 +51,29 @@ public class AboutPrompt extends JFrame implements ActionListener {
 		this.setSize(400, 500);
 		this.setAlwaysOnTop(true);
 		this.setVisible(true);
-		fred = new Thread() {
-			public void run() {
-				while(true){				
-					setBacka(losujKolor());
-					try {
-						this.sleep(50); //Czas sleepa w ms
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-		};
-		fred.start();
+//		TODO: Epilepsja motzno
+//		fred = new Thread() {
+//			public void run() {
+//				while(true){				
+//					setBacka(losujKolor());
+//					try {
+//						this.sleep(50); //Czas sleepa w ms
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//				}
+//			}
+//		};
+//		fred.start();
 		
 		
 	}
-	
-	public void setBacka(Color kolo){
-		this.panel.setBackground(kolo);
-		this.zamknij.setBackground(losujKolor());
-	}
+
+//	public void setBacka(Color kolo){
+//		this.panel.setBackground(kolo);
+//		this.zamknij.setBackground(losujKolor());
+//	}
 	
 	public Color losujKolor(){
 		Random rand = new Random();
@@ -89,7 +90,7 @@ public class AboutPrompt extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		Object z = arg0.getSource();
 		if(z.equals(this.zamknij)){
-			fred.stop();
+//			fred.stop();
 			this.dispose();
 			
 		}
