@@ -187,7 +187,7 @@ import backend.core.model.Monitoring;
                     dane.setValue("produkt B", 25);
                     dane.setValue("produkt C", 10);
                     dane.setValue("produkt D", 45);
-                    int year = 2013;
+                    int year = 2012;
                     final JFreeChart chart = ChartFactory.createPieChart
                                     ("Ilość sprzedanych produktów w roku: " + year,
                                     createProductPieDataset(),
@@ -269,6 +269,38 @@ import backend.core.model.Monitoring;
                            
                             return chartPanel;
             }
+            
+            public JFreeChart  XYLineChart() {
+                final XYSeriesCollection data = new XYSeriesCollection(createFinanceXYSeries());
+                final JFreeChart chart = ChartFactory.createXYLineChart(
+                    "Koszta",
+                    "Miesiąc",
+                    "Kwota",
+                    data,
+                    PlotOrientation.VERTICAL,
+                    true,
+                    true,
+                    true
+                );
+                
+                return chart;
+        }
+            
+        public JFreeChart  PieChart() {
+            int year = 2013;
+            final JFreeChart chart = ChartFactory.createPieChart
+                                ("Ilość sprzedanych produktów w roku: " + year,
+                                createProductPieDataset(),
+                                true,
+                                true,
+                                true
+            );
+            	PiePlot plot = (PiePlot) chart.getPlot();
+            	PieSectionLabelGenerator gen = new StandardPieSectionLabelGenerator(
+                        "{0}: {1} ({2})", new DecimalFormat("0"), new DecimalFormat("0%"));
+                    plot.setLabelGenerator(gen);
+                  return chart;
+                }
     }
 
 
