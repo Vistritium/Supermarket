@@ -196,6 +196,19 @@ public class DrawChart {
 		
 		return pieDataset;
 	}
+	
+	
+	DefaultCategoryDataset createWorkersBarDataset() {
+		DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
+		for(int i = 0; i < statistics.getFinanceRegisterRecords().size(); i++) {
+			dataSet.setValue(daysBetween(statistics.getRecordsMonitoringWorkers().get(i).getCome(), statistics.getRecordsMonitoringWorkers().get(i).getGoOut()), "Profit", Integer.toString(statistics.getRecordsMonitoringWorkers().get(i).getIdMW()));
+		}
+		
+		
+		
+		return dataSet;
+	}
+	
 
 	public ChartPanel drawXYLineChart() {
 		final JFreeChart chart = XYLineChart();
@@ -266,8 +279,8 @@ public class DrawChart {
 		dataset.setValue(5, "Profit", "John");
 		dataset.setValue(12, "Profit", "Fred");
 		// Tworzy wykres typu Bar - słupkowy
-		JFreeChart chart = ChartFactory.createBarChart("Wykres typu Bar",
-				"X -lable", "Y -lable", dataset, PlotOrientation.VERTICAL,
+		JFreeChart chart = ChartFactory.createBarChart("Całkowity czas pracy pracownika wyrażony w dniach",
+				"ID pracownika", "Ilość przepracowanych dni", createWorkersBarDataset(), PlotOrientation.VERTICAL,
 				false, true, false);
 
 		final ChartPanel chartPanel = new ChartPanel(chart);

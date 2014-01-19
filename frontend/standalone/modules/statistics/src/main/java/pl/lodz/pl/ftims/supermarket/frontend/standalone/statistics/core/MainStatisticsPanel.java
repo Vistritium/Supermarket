@@ -83,7 +83,7 @@ import org.jfree.chart.JFreeChart;
                     panel_3.add(drawChart.drawTimeSeriesChart());
                    
                     JPanel panel_4 = new JPanel();
-                    tabbedPane.addTab("Wykres słupkowy", null, panel_4, null);
+                    tabbedPane.addTab("Całkowity czas pracy", null, panel_4, null);
                     panel_4.add(drawChart.drawBarChart());
             }
 
