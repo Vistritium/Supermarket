@@ -47,10 +47,12 @@ public class wDataManager implements wDatabaseConnector {
 	}
 	
 	public String CategoryOf(Products Product) {
+		
+		// return CategoryList.get(Product.getCategory().getIdCategory()-1).getName();
 		for(int i = 0; i < CategoryList.size(); ++i) {
-			if(Product.getCategory().getIdCategory() == i) { return CategoryList.get(i).getName(); }
-			if(Product.getCategory().getIdCategory() == i) { return CategoryList.get(i).getName(); }
+			if(CategoryList.get(i).getIdCategory() == Product.getCategory().getIdCategory()) { return CategoryList.get(i).getName(); }
 		}
+		//return String.valueOf(Product.getCategory().getIdCategory());
 		return "Brak kategorii";
 	}
 	
@@ -71,12 +73,11 @@ public class wDataManager implements wDatabaseConnector {
 			Collections.sort(ProductsList, new Comparator<Products>() {
 				@Override
 				public int compare(Products o1, Products o2) {
-					String o1Cat = null, o2Cat = null;
+					String o1Cat = CategoryOf(o1).toLowerCase(), o2Cat = CategoryOf(o2).toLowerCase();
 					
-					for(int i = 0; i < CategoryList.size(); ++i) {
-						if(o1.getCategory().getIdCategory() == i) { o1Cat = CategoryList.get(i).getName(); }
-						if(o2.getCategory().getIdCategory() == i) { o2Cat = CategoryList.get(i).getName(); }
-					}
+					//if(o1.getCategory().getIdCategory() == null || o2.getCategory().getIdCategory() == null) return 1;
+					
+					
 					return o1Cat.compareTo(o2Cat) * ascending;
 				}
 			});

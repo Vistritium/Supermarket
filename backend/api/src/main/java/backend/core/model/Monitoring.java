@@ -20,6 +20,9 @@ public class Monitoring {
     private Date date;
     private String action;
 
+    public Monitoring() {
+    	
+    };
     public Monitoring(String product, String user, Date date, String action) {
         this.product = product;
         this.user = user;

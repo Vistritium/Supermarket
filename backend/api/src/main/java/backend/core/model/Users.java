@@ -18,7 +18,29 @@ import java.util.Set;
 
 public class Users {
     
-    private int idusers;
+    @Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + idusers;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Users other = (Users) obj;
+		if (idusers != other.idusers)
+			return false;
+		return true;
+	}
+
+	private int idusers;
     private String name;
     private String surname;
     private String password;

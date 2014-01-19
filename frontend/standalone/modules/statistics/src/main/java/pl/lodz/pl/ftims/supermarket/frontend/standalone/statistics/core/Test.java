@@ -19,6 +19,11 @@ public class Test extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
+		
+		
+		
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -36,7 +41,7 @@ public class Test extends JFrame {
 	 * Create the frame.
 	 */
 	public Test(MainStatisticsPanel contentPane) {
-		setSize(new Dimension(700, 372));
+		setSize(new Dimension(700, 550));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setContentPane(contentPane);
 	}
