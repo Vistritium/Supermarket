@@ -5,10 +5,12 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import backend.api.StorageManagement;
+import backend.core.model.Manufacturers;
 import backend.core.model.Products;
 
 import com.jgoodies.forms.layout.FormLayout;
@@ -18,22 +20,26 @@ import com.jgoodies.forms.factories.FormFactory;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 public class DSell extends ModelDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JLabel lSCount;
 	private JTextField tCouny;
+	private Validator validator;
 	Products product;
 
 	/**
 	 * Create the dialog.
 	 */
-	public DSell(PStorageManagment panel, Products product) {
+	public DSell(PStorageManagment panel, Products product, Manufacturers supplier) {
 		super(panel);
 		this.product=product;
+		this.validator= new Validator();
 		setTitle("Sprzedaj produkt.");
 		setBounds(100, 100, 450, 245);
 		getContentPane().setLayout(new BorderLayout());
@@ -76,7 +82,7 @@ public class DSell extends ModelDialog {
 			contentPanel.add(lblProducent, "2, 6, right, default");
 		}
 		{
-			JLabel lblSupplier = new JLabel("Warka");
+			JLabel lblSupplier = new JLabel(supplier.getName());
 			contentPanel.add(lblSupplier, "4, 6");
 		}
 		{
@@ -84,7 +90,7 @@ public class DSell extends ModelDialog {
 			contentPanel.add(lblKategoria, "2, 8, right, default");
 		}
 		{
-			JLabel lblCategory = new JLabel("Alkohole");
+			JLabel lblCategory = new JLabel(product.getCategory().getName());
 			contentPanel.add(lblCategory, "4, 8");
 		}
 		{
@@ -118,6 +124,11 @@ public class DSell extends ModelDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Sprzedaj");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						sellProduct();
+					}
+				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
@@ -132,6 +143,15 @@ public class DSell extends ModelDialog {
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
+		}
+	}
+	
+	private void sellProduct(){
+		if(validator.sell(product, tCouny.getText().toString())){
+			JOptionPane.showMessageDialog(this, "Produkt sprzedano.");
+		}
+		else{
+			JOptionPane.showMessageDialog(this, "Wystapił problem ze sprzedażą.");
 		}
 	}
 

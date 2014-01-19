@@ -41,10 +41,6 @@ public class PStorageManagment extends JPanel {
 	private JButton bManageCategories;
 	private JButton bManageSuppliers;
 	
-	public static final String ID_PRODUCT="idProduct";
-	public static final String ID_CATEGORY="idCategory";
-	public static final String ID_MANUFACTURER="idManufacturer";
-	
 	private ModelTable tableModel;
 	private StorageManagement apiSM;
 	private List<Products> products;
@@ -62,7 +58,7 @@ public class PStorageManagment extends JPanel {
 	private Validator validator;
 	
 	//User right example
-	private int secure=1; //Mozna zmienic na zero, wtedy pojawi sie panel sprzedawcy.
+	private int secure=0; //Mozna zmienic na zero, wtedy pojawi sie panel sprzedawcy.
 	
 	/**
 	 * Create the panel.
@@ -267,7 +263,16 @@ public class PStorageManagment extends JPanel {
 	
 	private void addProduct(){
 		if(secure==1) new DAddProduct(this);
-		else if(tProducts.getSelectedRow()!=-1) new DSell(this, products.get(tProducts.getSelectedRow()));
+		else if(tProducts.getSelectedRow()!=-1){
+			Manufacturers supplier=null;
+			for(int i=0; i<suppliers.size(); i++){
+				if(suppliers.get(i).getIdManufacturer()==products.get(tProducts.getSelectedRow()).getManufacturer()){
+					supplier=suppliers.get(i);
+					break;
+				}
+			}
+			new DSell(this, products.get(tProducts.getSelectedRow()), supplier);
+		}
 	}
 	
 	private void editSelectedProduct(){ 
@@ -296,8 +301,7 @@ public class PStorageManagment extends JPanel {
 					);
 			
 			if(answer==JOptionPane.OK_OPTION){
-				validator.removeProduct(products.get(tProducts.getSelectedRow()).getIdProducts());
-				this.updateProductsList();
+				if(validator.removeProduct(products.get(tProducts.getSelectedRow()).getIdProducts())) this.updateProductsList();				
 			}
 		}
 	}

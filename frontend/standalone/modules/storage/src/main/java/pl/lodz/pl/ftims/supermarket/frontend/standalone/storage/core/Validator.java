@@ -3,9 +3,12 @@ package pl.lodz.pl.ftims.supermarket.frontend.standalone.storage.core;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 import backend.api.StorageManagement;
 import backend.core.model.Category;
 import backend.core.model.Manufacturers;
+import backend.core.model.Orders;
 import backend.core.model.Products;
 
 public class Validator {
@@ -216,8 +219,17 @@ public class Validator {
         
         
         
-        public boolean sell(int idPriduct, String count){
-                return true;
+        public boolean sell(Products product, String count){
+            try{
+            	float c= Float.parseFloat(count);
+            	if(c<=0) throw new Exception();
+            	if(product.getCount()<c) throw new Exception();
+            	return true;
+            }
+            catch(Exception e){
+            	return false;
+            }
+                
         }
         
         public List<Products> searchProducts(String name, int categoryId, int supplierId){
