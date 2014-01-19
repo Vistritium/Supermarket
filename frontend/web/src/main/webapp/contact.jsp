@@ -33,6 +33,17 @@
 		</div>
 		<div id="content">
 		
+		<%
+		if("POST".equals(request.getMethod())) {
+			String output = PageView.Validator.isValid(request.getParameter("Name"), request.getParameter("Surname"), request.getParameter("City"), request.getParameter("Email"), request.getParameter("Message"));
+			if(output.compareTo("valid") == 0) {
+				PageView.ResourceManager.SendMail("Wiadomość od klienta:" + request.getParameter("Name") + " " + request.getParameter("Surname"), "Dane klienta:\r\nImię: " + request.getParameter("Name") + "\r\nNazwisko: " + request.getParameter("Surname") + "\r\nMiasto: " + request.getParameter("City") + "\r\nE-mail: " + request.getParameter("Email") + "\r\n\r\n Wiadomość: \r\n" + request.getParameter("Message"));
+				out.print("<div class='message' id='success'>Wiadomość została wysłana</div>");
+			} else {
+				out.print("<div class='message' id='error'>" + output + "</div>");
+			}
+		}
+		%>
 			<div id="contact-area">
 			
 			<form method="post" action="contact.jsp">
