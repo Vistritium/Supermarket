@@ -17,7 +17,7 @@ public class Main {
 		initDatabase();
 		
 		try {
-			 UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
+			 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
 		   System.out.println("Using normal LookAndFeel");
 		}
