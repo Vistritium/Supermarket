@@ -227,8 +227,6 @@ public class HumanResources {
 
             Query q = s.createQuery("select g from Groups g");        
             List<Groups> result =q.list();
-            if (result.isEmpty() || result.size()==0)
-            	return null;
             return result;
 
         } 

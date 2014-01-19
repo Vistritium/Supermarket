@@ -136,16 +136,27 @@ public class HR_main extends HR_template{
 			List<Users> quickTemp = humanResources.getAllUsers();
 			for (int i=0; i<quickTemp.size(); ++i) {
 				if (!allUsers.contains(quickTemp.get(i))) {
-					//humanResources.removeUser(quickTemp.get(i).getIdusers());
-					i = i;
+					humanResources.removeUser(quickTemp.get(i).getIdusers());
 				}
 			}
 			allUsers = humanResources.getAllUsers();
 			//allUsers.a
 		} else if (panel == EComponent.listGroup) {
 			for (int i=0; i<allGroups.size(); i++) {
-				humanResources.editGroup(allGroups.get(i));
+				if ( humanResources.getGroup().size() == 0 || !humanResources.getGroup().contains(allGroups.get(i))) {//(allUsers.get(i).getIdusers()) == null ) {
+					humanResources.addGroup(allGroups.get(i));
+				} else {
+					humanResources.editGroup(allGroups.get(i));
+				}
 			}
+			
+			List<Groups> quickTemp = humanResources.getGroup();
+			for (int i=0; i<quickTemp.size(); ++i) {
+				if (!allGroups.contains(quickTemp.get(i))) {
+					humanResources.removeGroup(quickTemp.get(i).getIdgroups());
+				}
+			}
+			
 			allGroups = humanResources.getGroup();
 		}
 	}
