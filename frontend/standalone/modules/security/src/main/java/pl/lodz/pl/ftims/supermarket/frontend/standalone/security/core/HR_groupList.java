@@ -70,6 +70,13 @@ public class HR_groupList extends HR_templateList {
 		add(btnCancel);
 		
 		JButton btnApply = new JButton("Apply");
+		btnApply.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				ref.applyChanges(EComponent.listGroup);
+				ref.switchPanel(EComponent.idle);
+			}
+		});
 		btnApply.setBounds(317, 175, 89, 44);
 		add(btnApply);
 		

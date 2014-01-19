@@ -121,6 +121,42 @@ public class HR_main extends HR_template{
 		
 		return 0;
 	}
+	
+	public void applyChanges(EComponent panel) {
+		if (panel == EComponent.listEmployee){
+			for (int i=0; i<allUsers.size(); i++) {
+				//if (i >= humanResources.getAllUsers().size()) {
+				if ( humanResources.getUser(allUsers.get(i).getIdusers()) == null ) {
+					humanResources.addUser(allUsers.get(i));
+				} else {
+					humanResources.editUser(allUsers.get(i));
+				}
+			}
+			
+			List<Users> quickTemp = humanResources.getAllUsers();
+			for (int i=0; i<quickTemp.size(); ++i) {
+				if (!allUsers.contains(quickTemp.get(i))) {
+					//humanResources.removeUser(quickTemp.get(i).getIdusers());
+					i = i;
+				}
+			}
+			allUsers = humanResources.getAllUsers();
+			//allUsers.a
+		} else if (panel == EComponent.listGroup) {
+			for (int i=0; i<allGroups.size(); i++) {
+				humanResources.editGroup(allGroups.get(i));
+			}
+			allGroups = humanResources.getGroup();
+		}
+	}
+	
+	public void cancelChanges(EComponent panel) {
+		if (panel == EComponent.listEmployee){
+			allUsers = humanResources.getAllUsers();
+		} else if (panel == EComponent.listGroup) {
+			allGroups = humanResources.getGroup();
+		}
+	}
 
 	@Override
 	void draw() {
