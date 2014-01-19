@@ -32,12 +32,15 @@ public class DrawChart {
 
 	private Statistics statistics = new Statistics();
 
+	/* Creating databases for charts */
+
 	XYSeries createFinanceXYSeries(int year) {
 		XYSeries xy = new XYSeries("Kwota");
 		int[] months = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-		
+
 		for (int i = 0; i < statistics.getFinanceRegisterRecords().size(); i++) {
-			if(year == statistics.getFinanceRegisterRecords().get(i).getData().getYear() + 1900) {
+			if (year == statistics.getFinanceRegisterRecords().get(i).getData()
+					.getYear() + 1900) {
 				switch (statistics.getFinanceRegisterRecords().get(i).getData()
 						.getMonth()) {
 				case 0:
@@ -99,11 +102,10 @@ public class DrawChart {
 	}
 
 	DefaultPieDataset createProductPieDataset(int year) {
-
 		DefaultPieDataset pieDataset = new DefaultPieDataset();
 		int[] months = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		for (int i = 0; i < statistics.getRecords().size(); i++) {
-			if(year == statistics.getRecords().get(i).getDate().getYear() + 1900) {
+			if (year == statistics.getRecords().get(i).getDate().getYear() + 1900) {
 				switch (statistics.getRecords().get(i).getDate().getMonth()) {
 				case 0:
 					months[0]++;
@@ -160,147 +162,85 @@ public class DrawChart {
 
 		return pieDataset;
 	}
-	
+
 	TimeSeriesCollection createTimeProductSeries() {
 		TimeSeries pop2 = new TimeSeries("Population2", Day.class);
 		TimeSeriesCollection dataset = new TimeSeriesCollection();
-		
-		
-		for(int i = 0; i < statistics.getFinanceRegisterRecords().size(); i++) {
-			pop2.add(new Day(statistics.getFinanceRegisterRecords().get(i).getData().getDay(), statistics.getFinanceRegisterRecords().get(i).getData().getMonth() + 1, statistics.getFinanceRegisterRecords().get(i).getData().getYear() + 1900), statistics.getFinanceRegisterRecords().get(i).getPrice());
-			//System.out.println(statistics.getFinanceRegisterRecords().get(1).getData().getMonth()+ 1);
+
+		for (int i = 0; i < statistics.getFinanceRegisterRecords().size(); i++) {
+			pop2.add(new Day(statistics.getFinanceRegisterRecords().get(i)
+					.getData().getDay(), statistics.getFinanceRegisterRecords()
+					.get(i).getData().getMonth() + 1,
+					statistics.getFinanceRegisterRecords().get(i).getData()
+							.getYear() + 1900), statistics
+					.getFinanceRegisterRecords().get(i).getPrice());
+			// System.out.println(statistics.getFinanceRegisterRecords().get(1).getData().getMonth()+
+			// 1);
 		}
-		
+
 		dataset.addSeries(pop2);
 		return dataset;
 	}
-		
-		
-	public int daysBetween(Date d1, Date d2){
-        return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
-}
-	
-	DefaultPieDataset createWorkerstPieDataset(int year) {
 
+	public int daysBetween(Date d1, Date d2) {
+		return (int) ((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+	}
+
+	DefaultPieDataset createWorkerstPieDataset(int year) {
 		DefaultPieDataset pieDataset = new DefaultPieDataset();
 		int[] months = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		for (int i = 0; i < statistics.getRecordsMonitoringWorkers().size(); i++) {
-			if(year == statistics.getRecordsMonitoringWorkers().get(i).getBreakBegin().getYear() + 1900) {
-				pieDataset.setValue("id: " + Integer.toString(statistics.getRecordsMonitoringWorkers().get(i).getIdMW()), daysBetween(statistics.getRecordsMonitoringWorkers().get(i).getBreakBegin(), statistics.getRecordsMonitoringWorkers().get(i).getBreakEnd()));
-				System.out.println("days= " + daysBetween(statistics.getRecordsMonitoringWorkers().get(i).getBreakBegin(), statistics.getRecordsMonitoringWorkers().get(i).getBreakEnd()));
+			if (year == statistics.getRecordsMonitoringWorkers().get(i)
+					.getBreakBegin().getYear() + 1900) {
+				pieDataset.setValue(
+						"id: "
+								+ Integer.toString(statistics
+										.getRecordsMonitoringWorkers().get(i)
+										.getIdMW()),
+						daysBetween(statistics.getRecordsMonitoringWorkers()
+								.get(i).getBreakBegin(), statistics
+								.getRecordsMonitoringWorkers().get(i)
+								.getBreakEnd()));
+				/*
+				 * System.out.println("days= " +
+				 * daysBetween(statistics.getRecordsMonitoringWorkers()
+				 * .get(i).getBreakBegin(), statistics
+				 * .getRecordsMonitoringWorkers().get(i) .getBreakEnd()));
+				 */
 			}
 		}
-		
-		
-		
-		
+
 		return pieDataset;
 	}
-	
-	
+
 	DefaultCategoryDataset createWorkersBarDataset() {
 		DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
-		for(int i = 0; i < statistics.getFinanceRegisterRecords().size(); i++) {
-			dataSet.setValue(daysBetween(statistics.getRecordsMonitoringWorkers().get(i).getCome(), statistics.getRecordsMonitoringWorkers().get(i).getGoOut()), "Profit", Integer.toString(statistics.getRecordsMonitoringWorkers().get(i).getIdMW()));
+		for (int i = 0; i < statistics.getFinanceRegisterRecords().size(); i++) {
+			dataSet.setValue(
+					daysBetween(statistics.getRecordsMonitoringWorkers().get(i)
+							.getCome(), statistics
+							.getRecordsMonitoringWorkers().get(i).getGoOut()),
+					"Profit",
+					Integer.toString(statistics.getRecordsMonitoringWorkers()
+							.get(i).getIdMW()));
 		}
-		
-		
-		
+
 		return dataSet;
 	}
-	
 
-	public ChartPanel drawXYLineChart() {
-		final JFreeChart chart = XYLineChart();
-		final ChartPanel chartPanel = new ChartPanel(chart);
+	/* Methods of creating charts */
 
-		return chartPanel;
-	}
-
-	public ChartPanel drawPieChart() {
-		final JFreeChart chart = PieChart();
-		final ChartPanel chartPanel = new ChartPanel(chart);
-
-		return chartPanel;
-	}
-
-	public ChartPanel drawRingChart() {
-		int year = 2013;
-		DefaultPieDataset dane = new DefaultPieDataset();
-		dane.setValue("produkt A", 20);
-		dane.setValue("produkt B", 25);
-		dane.setValue("produkt C", 10);
-		dane.setValue("produkt D", 45);
-
-		final JFreeChart chart = ChartFactory.createRingChart("Ilośc dni urlopy w roku: " + year,
-				createWorkerstPieDataset(year), true, true, false);
-	
-
-		final ChartPanel chartPanel = new ChartPanel(chart);
-
-		PiePlot plot = (PiePlot) chart.getPlot();
-		PieSectionLabelGenerator gen = new StandardPieSectionLabelGenerator(
-				"{0}, dni urlopu: {1}", new DecimalFormat("0"), new DecimalFormat(
-						"0%"));
-		plot.setLabelGenerator(gen);
-		
-		return chartPanel;
-	}
-
-	public ChartPanel drawTimeSeriesChart() {
-
-		TimeSeries pop2 = new TimeSeries("Population2", Day.class);
-		TimeSeriesCollection dataset = new TimeSeriesCollection();
-		pop2.add(new Day(2, 1, 2008), 200);
-		pop2.add(new Day(2, 2, 2008), 250);
-		pop2.add(new Day(2, 3, 2008), 250);
-		pop2.add(new Day(2, 4, 2008), 275);
-		pop2.add(new Day(2, 5, 2008), 225);
-		dataset.addSeries(pop2);
-		// Wykres typu TimeSeries
-		JFreeChart chart = ChartFactory.createTimeSeriesChart("Historia kosztów", "Data",
-				"Ilość sprzedanych towarów", createTimeProductSeries(), true, true, false);
-		XYPlot plot = chart.getXYPlot();
-		DateAxis axis = (DateAxis) plot.getDomainAxis();
-		axis.setDateFormatOverride(new SimpleDateFormat("dd-MM-yyyy"));
-
-		final ChartPanel chartPanel = new ChartPanel(chart);
-
-		return chartPanel;
-	}
-
-	public ChartPanel drawBarChart() {
-
-		// Dane
-		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		dataset.setValue(6, "Profit", "Jane");
-		dataset.setValue(7, "Profit", "Tom");
-		dataset.setValue(8, "Profit", "Jill");
-		dataset.setValue(5, "Profit", "John");
-		dataset.setValue(12, "Profit", "Fred");
-		// Tworzy wykres typu Bar - słupkowy
-		JFreeChart chart = ChartFactory.createBarChart("Całkowity czas pracy pracownika wyrażony w dniach",
-				"ID pracownika", "Ilość przepracowanych dni", createWorkersBarDataset(), PlotOrientation.VERTICAL,
-				false, true, false);
-
-		final ChartPanel chartPanel = new ChartPanel(chart);
-
-		return chartPanel;
-	}
-
-	public JFreeChart XYLineChart() {
-		int year = 2014;
+	public JFreeChart XYLineChart(int year) {
 		final XYSeriesCollection data = new XYSeriesCollection(
 				createFinanceXYSeries(year));
-		final JFreeChart chart = ChartFactory.createXYLineChart("Koszta w roku: " + year ,
-				"Miesiąc", "Kwota", data, PlotOrientation.VERTICAL, true, true,
-				true);
+		final JFreeChart chart = ChartFactory.createXYLineChart(
+				"Koszta w roku: " + year, "Miesiąc", "Kwota", data,
+				PlotOrientation.VERTICAL, true, true, true);
 
 		return chart;
 	}
 
-	public JFreeChart PieChart() {
-		int year = 2013;
+	public JFreeChart PieChart(int year) {
 		final JFreeChart chart = ChartFactory.createPieChart(
 				"Ilość sprzedanych produktów w roku: " + year,
 				createProductPieDataset(year), true, true, true);
@@ -310,5 +250,76 @@ public class DrawChart {
 						"0%"));
 		plot.setLabelGenerator(gen);
 		return chart;
+	}
+
+	public JFreeChart RingChart(int year) {
+		final JFreeChart chart = ChartFactory.createRingChart(
+				"Ilośc dni urlopów w roku: " + year,
+				createWorkerstPieDataset(year), true, true, false);
+		PiePlot plot = (PiePlot) chart.getPlot();
+		PieSectionLabelGenerator gen = new StandardPieSectionLabelGenerator(
+				"{0}, dni urlopu: {1}", new DecimalFormat("0"),
+				new DecimalFormat("0%"));
+		plot.setLabelGenerator(gen);
+		return chart;
+	}
+
+	public JFreeChart TimeSeriesChart() {
+		final JFreeChart chart = ChartFactory.createTimeSeriesChart(
+				"Historia kosztów", "Data", "Ilość sprzedanych towarów",
+				createTimeProductSeries(), true, true, false);
+		XYPlot plot = chart.getXYPlot();
+		DateAxis axis = (DateAxis) plot.getDomainAxis();
+		axis.setDateFormatOverride(new SimpleDateFormat("dd-MM-yyyy"));
+
+		return chart;
+	}
+
+	public JFreeChart BarChart() {
+		final JFreeChart chart = ChartFactory.createBarChart(
+				"Całkowity czas pracy pracownika wyrażony w dniach",
+				"ID pracownika", "Ilość przepracowanych dni",
+				createWorkersBarDataset(), PlotOrientation.VERTICAL, false,
+				true, false);
+
+		return chart;
+	}
+
+	/* Methods of drawning charts */
+
+	public ChartPanel drawXYLineChart(int year) {
+		final JFreeChart chart = XYLineChart(year);
+		final ChartPanel chartPanel = new ChartPanel(chart);
+
+		return chartPanel;
+	}
+
+	public ChartPanel drawPieChart(int year) {
+		final JFreeChart chart = PieChart(year);
+		final ChartPanel chartPanel = new ChartPanel(chart);
+
+		return chartPanel;
+	}
+
+	public ChartPanel drawRingChart(int year) {
+
+		final JFreeChart chart = RingChart(year);
+		final ChartPanel chartPanel = new ChartPanel(chart);
+
+		return chartPanel;
+	}
+
+	public ChartPanel drawTimeSeriesChart() {
+		final JFreeChart chart = TimeSeriesChart();
+		final ChartPanel chartPanel = new ChartPanel(chart);
+
+		return chartPanel;
+	}
+
+	public ChartPanel drawBarChart() {
+		final JFreeChart chart = BarChart();
+		final ChartPanel chartPanel = new ChartPanel(chart);
+
+		return chartPanel;
 	}
 }

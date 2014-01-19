@@ -1,7 +1,5 @@
 package pl.lodz.pl.ftims.supermarket.frontend.standalone.statistics.core;
 
-
-
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -19,15 +17,11 @@ public class Test extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		
-		
-		
-		
-		
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainStatisticsPanel panel= new MainStatisticsPanel();
+					MainStatisticsPanel panel = new MainStatisticsPanel();
 					Test frame = new Test(panel);
 					frame.setVisible(true);
 				} catch (Exception e) {
