@@ -79,7 +79,7 @@ import org.jfree.chart.JFreeChart;
                     panel_2.add(drawChart.drawRingChart());
                    
                     JPanel panel_3 = new JPanel();
-                    tabbedPane.addTab("Wykres czasowy", null, panel_3, null);
+                    tabbedPane.addTab("Historia kosztów", null, panel_3, null);
                     panel_3.add(drawChart.drawTimeSeriesChart());
                    
                     JPanel panel_4 = new JPanel();
