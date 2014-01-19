@@ -69,6 +69,7 @@ public class HR_groupList extends HR_templateList {
 		btnCancel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				ref.cancelChanges(EComponent.listGroup);
 				ref.switchPanel(EComponent.idle);//update(eComponent.idle);
 			}
 		});

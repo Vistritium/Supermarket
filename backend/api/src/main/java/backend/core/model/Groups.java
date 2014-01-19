@@ -14,7 +14,29 @@ import java.util.Set;
  * @author Andrzej
  */
 public class Groups {
-    private int idgroups;
+    @Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + idgroups;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Groups other = (Groups) obj;
+		if (idgroups != other.idgroups)
+			return false;
+		return true;
+	}
+
+	private int idgroups;
 	private String name;
     private String description;
     private float salary;
