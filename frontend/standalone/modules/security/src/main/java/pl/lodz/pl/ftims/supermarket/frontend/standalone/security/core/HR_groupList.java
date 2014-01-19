@@ -2,6 +2,8 @@ package pl.lodz.pl.ftims.supermarket.frontend.standalone.security.core;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Calendar;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -11,21 +13,24 @@ import javax.swing.JTable;
 import pl.lodz.pl.ftims.supermarket.frontend.standalone.core.Stale;
 import javax.swing.JScrollPane;
 
+import backend.core.model.Groups;
+import backend.core.model.Users;
+
 public class HR_groupList extends HR_templateList {
 	private JTable 		table;
 			Object[][] 	data;
 	final	String[] dataHeader = {"id", "name", "description", "salary"};
 	
 	
-	private static final long serialVersionUID = -2161875489604406555L;
-	final JList<String> list;
+	//private static final long serialVersionUID = -2161875489604406555L;
+	//final JList<String> list;
 	
 	public HR_groupList(final HR_main ref) {
 		setLayout(null);
 		
 		Integer accessLevel = Stale.getInstance().getAccessLevel();
 		
-		DefaultListModel<String> listModel = new DefaultListModel<>();
+		/*DefaultListModel<String> listModel = new DefaultListModel<>();
 		for (int i = 0; i < ref.allGroups.size(); ++i) {
 			listModel.addElement("" + ref.allGroups.get(i).getIdgroups() 
 								+ 	" | " + ref.allGroups.get(i).getName() 
@@ -37,6 +42,7 @@ public class HR_groupList extends HR_templateList {
 		list.setBounds(50, 50, 257, 169);
 		list.setSelectedIndex(0);
 		//add(list);
+		*/
 		
 		JButton btnEdit = new JButton("Edit");
 		ref.helpIndex = 0;
@@ -80,8 +86,11 @@ public class HR_groupList extends HR_templateList {
 		btnApply.setBounds(317, 175, 89, 44);
 		add(btnApply);
 		
-		
-		data = new Object[ref.allUsers.size()][4];
+		if( ref.allGroups.size() > 0) {
+			data = new Object[ref.allGroups.size()][4];
+		} else {
+			data = new Object[0][4];
+		}
 		
 		for (int i = 0; i < ref.allGroups.size(); ++i) {
 			data[i][0] = "" + ref.allGroups.get(i).getIdgroups();
@@ -94,6 +103,31 @@ public class HR_groupList extends HR_templateList {
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(50, 50, 257, 169);
 		add(scrollPane);
+		
+		JButton btnAdd = new JButton("Add");
+		btnAdd.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				Groups newGrp = new Groups("", "", 0.0f);
+				ref.allGroups.add(newGrp);
+				ref.switchPanel(EComponent.listGroup);
+			}
+		});
+		btnAdd.setBounds(317, 50, 89, 37);
+		add(btnAdd);
+		
+		JButton btnDel = new JButton("Del");
+		btnDel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if (table.getSelectedRowCount() > 0) {
+					ref.allGroups.remove(table.getSelectedRow());
+				}
+				ref.switchPanel(EComponent.listGroup);
+			}
+		});
+		btnDel.setBounds(317, 100, 89, 37);
+		add(btnDel);
 	}
 	
 	//CGroup groupList[];

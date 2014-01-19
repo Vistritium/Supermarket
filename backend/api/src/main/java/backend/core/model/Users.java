@@ -22,19 +22,7 @@ public class Users {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((financeRegister == null) ? 0 : financeRegister.hashCode());
-		result = prime * result + ((groups == null) ? 0 : groups.hashCode());
-		result = prime * result + ((hired == null) ? 0 : hired.hashCode());
 		result = prime * result + idusers;
-		result = prime * result
-				+ ((last_login == null) ? 0 : last_login.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((orders == null) ? 0 : orders.hashCode());
-		result = prime * result
-				+ ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((salt == null) ? 0 : salt.hashCode());
-		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
 		return result;
 	}
 
@@ -47,52 +35,7 @@ public class Users {
 		if (getClass() != obj.getClass())
 			return false;
 		Users other = (Users) obj;
-		if (financeRegister == null) {
-			if (other.financeRegister != null)
-				return false;
-		} else if (!financeRegister.equals(other.financeRegister))
-			return false;
-		if (groups == null) {
-			if (other.groups != null)
-				return false;
-		} else if (!groups.equals(other.groups))
-			return false;
-		if (hired == null) {
-			if (other.hired != null)
-				return false;
-		} else if (!hired.equals(other.hired))
-			return false;
 		if (idusers != other.idusers)
-			return false;
-		if (last_login == null) {
-			if (other.last_login != null)
-				return false;
-		} else if (!last_login.equals(other.last_login))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (orders == null) {
-			if (other.orders != null)
-				return false;
-		} else if (!orders.equals(other.orders))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (salt == null) {
-			if (other.salt != null)
-				return false;
-		} else if (!salt.equals(other.salt))
-			return false;
-		if (surname == null) {
-			if (other.surname != null)
-				return false;
-		} else if (!surname.equals(other.surname))
 			return false;
 		return true;
 	}

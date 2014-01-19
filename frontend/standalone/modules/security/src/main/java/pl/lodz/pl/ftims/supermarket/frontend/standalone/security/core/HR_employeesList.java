@@ -140,7 +140,7 @@ public class HR_employeesList extends HR_templateList{
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if (table.getSelectedRowCount() > 0) {
-					ref.allUsers.remove(table.getSelectedRow());
+					ref.allUsers.remove(dataIterator[table.getSelectedRow()]);
 				}
 				ref.switchPanel(EComponent.listEmployee);
 			}
