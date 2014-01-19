@@ -14,7 +14,7 @@ public class Stale {
 	   String storage = new String("Daniel Kowalczyk, Damian Zdunek");
 	   String human = new String("Witold Rząsa, Bartłomiej Lewiński");
 	   String database = new String("Michał Warycha, Mateusz Grajnert");
-	   String statistics = new String("Witold Rząsa, Bartłomiej Lewiński");
+	   String statistics = new String("Kacper Kleczewski, Krystian Walaszczyk");
 	   String webapp = new String("Sylwia Doryń, Michał Owczarczyk");
 	   
 	   protected Stale() {

@@ -164,7 +164,7 @@ public class DrawChart {
 	}
 
 	TimeSeriesCollection createTimeProductSeries() {
-		TimeSeries pop2 = new TimeSeries("Population2", Day.class);
+		TimeSeries pop2 = new TimeSeries("Koszta", Day.class);
 		TimeSeriesCollection dataset = new TimeSeriesCollection();
 
 		for (int i = 0; i < statistics.getFinanceRegisterRecords().size(); i++) {
